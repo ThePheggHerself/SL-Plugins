@@ -45,7 +45,7 @@ namespace CustomCommands
 			Log.Info($"Plugin is loading...");
 
 			//EventManager.RegisterEvents<DebugTests>(this);
-			EventManager.RegisterEvents<Commands.Player.PlayerDoorControlEvents>(this);
+			EventManager.RegisterEvents<CustomCommands.Events.DoorLocking>(this);
 			EventManager.RegisterEvents<EventEffects>(this);
 			EventManager.RegisterEvents<LateJoin>(this);
 			EventManager.RegisterEvents<NameFix>(this);
