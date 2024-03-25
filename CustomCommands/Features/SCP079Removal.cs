@@ -32,16 +32,16 @@ namespace CustomCommands.Features
 {
 	public class _079Removal
 	{
-		//[PluginEvent]
+		[PluginEvent]
 		public void SpawnEvent(PlayerSpawnEvent args)
 		{
 			var scps = SCPSwap.AvailableSCPs;
 
-			if (args.Role == RoleTypeId.Scp079 && scps.Any())
+			if (args.Role == RoleTypeId.Scp079)
 			{
 				Timing.CallDelayed(0.15f, () =>
 				{
-					args.Player.SetRole(scps[new System.Random().Next(0, scps.Length)], RoleChangeReason.LateJoin);
+					args.Player.SetRole(RoleTypeId.Scp3114, RoleChangeReason.LateJoin);
 				});
 			}
 		}
@@ -83,8 +83,6 @@ namespace CustomCommands.Features
 			{
 				var a = door is IDamageableDoor iDD && door.RequiredPermissions.RequiredPermissions == KeycardPermissions.None && !door.name.Contains("LCZ");
 
-				//Log.Info($"{door.name} {door.RequiredPermissions.RequiredPermissions} || {door.Rooms.Length} {door.Rooms.First().name} {a}");
-				//Log.Info(door.name + " " + door.RequiredPermissions.RequiredPermissions + " |||| " + door.Rooms.Length + " " + door.Rooms.First().name + " ");
 				if (a)
 				{
 					door.NetworkTargetState = true;
@@ -108,7 +106,5 @@ namespace CustomCommands.Features
 
 			yield return 0f;
 		}
-
-
 	}
 }

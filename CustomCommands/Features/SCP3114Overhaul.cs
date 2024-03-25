@@ -43,7 +43,7 @@ namespace CustomCommands.Events
 		[PluginEvent]
 		public void PlayerDamaged(PlayerDamageEvent args)
 		{
-			if(args.DamageHandler is Scp3114DamageHandler sDH && sDH.Subtype == Scp3114DamageHandler.HandlerType.Slap)
+			if (args.DamageHandler is Scp3114DamageHandler sDH && sDH.Subtype == Scp3114DamageHandler.HandlerType.Slap)
 			{
 				args.Target.EffectsManager.EnableEffect<Hemorrhage>(10);
 
@@ -79,6 +79,7 @@ namespace CustomCommands.Events
 	[HarmonyPatch("ServerProcessCmd")]
 	public class Scp3114RevealPatchClass
 	{
+		public static bool canStrangle = false;
 		[HarmonyPrefix]
 		public static bool prefix(Scp3114Reveal __instance)
 		{
@@ -87,7 +88,11 @@ namespace CustomCommands.Events
 				Player.Get(__instance.Owner).ReceiveHint("You cannot yet undisguise");
 				return false;
 			}
-			else return true;
+			else
+			{
+				canStrangle = true;
+				return true;
+			}
 		}
 	}
 
@@ -98,11 +103,19 @@ namespace CustomCommands.Events
 		[HarmonyPostfix]
 		public static void postfix(Scp3114Strangle __instance, ref bool __result, ReferenceHub player)
 		{
-			if (player.playerStats.GetModule<HealthStat>().CurValue < 60)
+			if (!Scp3114RevealPatchClass.canStrangle)
 			{
-				Player.Get(__instance.Owner).ReceiveHint("They are still too strong to strangle");
+				Player.Get(__instance.Owner).ReceiveHint("You must disguise yourself to use Strangulation again!");			
 				__result = false;
 			}
+
+			Scp3114RevealPatchClass.canStrangle = false;
+
+			//if (player.playerStats.GetModule<HealthStat>().CurValue < 60)
+			//{
+			//	Player.Get(__instance.Owner).ReceiveHint("They are still too strong to strangle");
+			//	__result = false;
+			//}
 		}
 	}
 

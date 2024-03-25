@@ -15,6 +15,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordLab", "DiscordLab\Di
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomCommands", "CustomCommands\CustomCommands.csproj", "{6D3519BA-CFB9-4D54-AA04-C9027DFCFBD4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DiscordLab bot", "DiscordLab bot", "{A988B850-BE07-40CB-9D5B-62FD5065A6AB}"
+	ProjectSection(SolutionItems) = preProject
+		Bot.js = Bot.js
+		config.json = config.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

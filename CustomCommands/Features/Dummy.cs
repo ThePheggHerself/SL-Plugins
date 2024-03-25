@@ -79,8 +79,8 @@ namespace CustomCommands.Features
 		{
 			DummyManager.DummyID = 0;
 
-			DummyManager.CreateDummy("Steve");
-			Round.IsLocked = true;
+			//DummyManager.CreateDummy("Steve");
+			//Round.IsLocked = true;
 		}
 	}
 
