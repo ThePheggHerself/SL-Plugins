@@ -6,8 +6,8 @@ This plugin has no config
 
 # Commands
 | Command | Alias | Permission | Description |
-| ------------- | ------------- | ------------- |
-| ffdpause | ffdp | NONE | Pauses the detector, allowing friendly fire freely
+| ------------- | ------------- | ------------- | ------------- |
+| ffdpause | ffdp | NONE | Pauses the detector, allowing friendly fire freely |
 
 # Events
 This plugin uses the following events:
