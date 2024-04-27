@@ -24,9 +24,12 @@ namespace CustomCommands
 		AutoEventVote = 2,
 	}
 
-
-	public class Plugin
+	[PluginInfo("Custom Commands", "1.1.0", "Simple plugin for custom commands", "PheWitch")]
+	public class Plugin : PluginBase
 	{
+		[PluginConfig]
+		public static CustomCommandsConfig Config;
+
 		public static bool EventInProgress => CurrentEvent != EventType.NONE;
 		public static bool VoteInProgress => CurrentVote != VoteType.NONE;
 
@@ -34,11 +37,10 @@ namespace CustomCommands
 		public static VoteType CurrentVote = VoteType.NONE;
 		public static string CurrentVoteString = string.Empty;
 
-
-
-		[PluginEntryPoint("Custom Commands", "1.0.0", "Simple plugin for custom commands", "ThePheggHerself")]
-		public void OnPluginStart()
+		public override void OnEnable()
 		{
+			base.OnEnable();
+
 			Harmony harmony = new Harmony("CC-Patching-Phegg");
 			harmony.PatchAll();
 
@@ -60,11 +62,19 @@ namespace CustomCommands
 			EventManager.RegisterEvents<Features._079Removal>(this);
 			EventManager.RegisterEvents<SCP3114Overhaul>(this);
 
+			WaitingForPlayersEvent.Event += WaitingForPlayersEvent_Event;
+
 			//EventManager.RegisterEvents<Features.SpecialWeapons>(this);
 
 			RagdollManager.OnRagdollSpawned += MiscEvents.RagdollManager_OnRagdollSpawned;
+
+
 		}
 
-
+		public void WaitingForPlayersEvent_Event(WaitingForPlayersEvent arg)
+		{
+			var config = GetConfig<CustomCommandsConfig>();
+			Log.Info($"Debug mode: {config.DebugMode}");
+		}
 	}
 }

@@ -28,6 +28,13 @@ namespace DiscordLab
 				Config.Address = Server.ServerIpAddress;
 
 			Log.Info($"Plugin has fully loaded");
+
+			WaitingForPlayersEvent.Event += WaitingForPlayersEvent_Event;
+		}
+
+		public void WaitingForPlayersEvent_Event(WaitingForPlayersEvent obj)
+		{
+			DiscordLab.Bot.SendMessage(new Msg("**Waiting for players...**"));
 		}
 	}
 }

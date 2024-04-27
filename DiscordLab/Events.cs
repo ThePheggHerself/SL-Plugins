@@ -50,7 +50,7 @@ namespace DiscordLab
 
 		#region Round
 
-		[PluginEvent(ServerEventType.WaitingForPlayers)]
+		//[PluginEvent(ServerEventType.WaitingForPlayers)]
 		public void WaitingForPlayersEvent() => DiscordLab.Bot.SendMessage(new Msg("**Waiting for players...**"));
 
 

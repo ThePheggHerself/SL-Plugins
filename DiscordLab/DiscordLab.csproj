@@ -61,8 +61,9 @@
     <Reference Include="NWAPIPermissionSystem">
       <HintPath>..\References\NWAPIPermissionSystem.dll</HintPath>
     </Reference>
-    <Reference Include="PluginAPI">
-      <HintPath>..\References\PluginAPI.dll</HintPath>
+    <Reference Include="PluginAPI, Version=13.1.2.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\NwPluginAPI\NwPluginAPI\bin\Release\net48\PluginAPI.dll</HintPath>
     </Reference>
     <Reference Include="Pooling">
       <HintPath>..\References\Pooling.dll</HintPath>
