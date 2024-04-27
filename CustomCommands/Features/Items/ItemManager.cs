@@ -20,6 +20,7 @@ namespace CustomCommands.Features.Items
 {
 	public static class ItemManager
 	{
+		public static ushort TranqGunSerial = 0;
 		public static Vector3 RandomThrowableVelocity(Transform transform)
 		{
 			Vector3 velocity = Vector3.zero;

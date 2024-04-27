@@ -22,6 +22,7 @@ using PluginAPI.Core.Items;
 using InventorySystem;
 using PluginAPI.Core;
 using InventorySystem.Items.Firearms;
+using InventorySystem.Items.Pickups;
 
 namespace CustomCommands.Features.Items.Weapons
 {
@@ -88,9 +89,10 @@ namespace CustomCommands.Features.Items.Weapons
 			if (ev.Player == null)
 				return true;
 
-			if (ev.Player.CurrentItem.ItemTypeId == ItemType.GunCOM18)
+			if (ev.Player.CurrentItem.ItemSerial == ItemManager.TranqGunSerial && ev.Target.IsHuman)
 			{
-				ev.Target.RagdollPlayerTranqGun(ev.Player, 4, 2);
+				ev.Player.ReceiveHitMarker();
+				ev.Target.RagdollPlayerTranqGun(ev.Player, 4);
 				return false;
 			}
 
@@ -100,9 +102,12 @@ namespace CustomCommands.Features.Items.Weapons
 		[PluginEvent]
 		public bool PlayerReloadEvent(PlayerReloadWeaponEvent ev)
 		{
-			if(ev.Firearm.ItemTypeId == ItemType.GunCOM18)
+			if (!Round.IsRoundStarted || ItemManager.TranqGunSerial == 0)
+				return true;
+
+			if (ev.Firearm.ItemSerial == ItemManager.TranqGunSerial)
 			{
-				ev.Player.ReceiveHint("You cannot reload this weapon");
+				ev.Player.ReceiveHint("<voffset=1em>You cannot reload this weapon</voffset>");
 				return false;
 			}
 			return true;
@@ -111,13 +116,33 @@ namespace CustomCommands.Features.Items.Weapons
 		[PluginEvent]
 		public void PlayerChangeItemEvent(PlayerChangeItemEvent ev)
 		{
-			if (!Round.IsRoundStarted)
+			if (!Round.IsRoundStarted || ItemManager.TranqGunSerial == 0)
 				return;
 
-			if(ev.Player.CurrentItem != null && ev.Player.CurrentItem.ItemTypeId == ItemType.GunCOM18)
+			if(ev.NewItem == ItemManager.TranqGunSerial)
 			{
-				ev.Player.ReceiveHint("You equipped the tranquilizer. Humans who are shot will be ragdolled for a few seconds. This gun cannot be reloaded", 8);
+				ev.Player.ReceiveHint("<voffset=1em>You equipped the tranquilizer. It cannot be reloaded</voffset>", 8);
 			}
+		}
+
+		[PluginEvent]
+		public void ItemPickup(PlayerSearchedPickupEvent ev)
+		{
+			if(ev.Item.Info.ItemId == ItemType.GunCOM18)
+			{
+				if(ItemManager.TranqGunSerial == 0 || ev.Item.Info.Serial == ItemManager.TranqGunSerial)
+				{
+					ItemManager.TranqGunSerial = ev.Item.Info.Serial;
+
+					ev.Player.ReceiveHint("<voffset=1em>You picked up the tranquilizer</voffset>", 8);
+				}
+			}
+		}
+
+		[PluginEvent]
+		public void RoundStart(RoundStartEvent ev)
+		{
+			ItemManager.TranqGunSerial = 0;
 		}
 	}
 }

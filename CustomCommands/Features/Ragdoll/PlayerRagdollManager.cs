@@ -42,7 +42,6 @@ namespace CustomCommands.Features.Ragdoll
 
 		public static void RagdollPlayer(this Player plr, float time = 3, float forceMultiplyer = 1)
 		{
-
 			Vector3 velocity = plr.Velocity;
 			velocity += plr.Camera.transform.forward * UnityEngine.Random.Range(1, 1.5f) * forceMultiplyer;
 
@@ -66,11 +65,9 @@ namespace CustomCommands.Features.Ragdoll
 		}
 
 
-		public static void RagdollPlayerTranqGun(this Player plr, Player cause, float time = 3, float forceMultiplyer = 1)
+		public static void RagdollPlayerTranqGun(this Player plr, Player cause, float time = 3)
 		{
-
 			Vector3 velocity = plr.Velocity;
-
 			var basicRagdoll = SpawnRagdoll(plr.Nickname, plr.Role, plr.Position, plr.GameObject.transform.rotation, velocity, "guh");
 
 			var items = plr.ReferenceHub.inventory.UserInventory.Items;
