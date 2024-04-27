@@ -1,5 +1,6 @@
 ﻿using CommandSystem;
 using CustomCommands.Features;
+using CustomCommands.Features.Voting;
 using PluginAPI.Core;
 using System;
 
@@ -26,14 +27,14 @@ namespace CustomCommands.Commands.Misc
 			if (!sender.CanRun(this, arguments, out response, out var players, out var pSender))
 				return false;
 
-			if (Plugin.VoteInProgress)
+			if (VoteManager.VoteInProgress)
 			{
 				response = "There is already a vote in progress";
 				return false;
 			}
 
 			var msg = string.Join(" ", arguments).Replace(Command, string.Empty).Trim();
-			Voting.SetVote(VoteType.AdminVote, msg);
+			VoteManager.SetVote(VoteType.AdminVote, msg);
 
 			foreach (var a in Player.GetPlayers())
 			{
@@ -43,7 +44,7 @@ namespace CustomCommands.Commands.Misc
 
 			MEC.Timing.CallDelayed(3 * 60, () =>
 			{
-				Voting.EndVote();
+				VoteManager.EndVote();
 
 			});
 			response = "Vote has been started";

@@ -27,14 +27,11 @@ namespace CustomCommands
 
 	public class Plugin
 	{
+		[PluginConfig]
+		public static Config Config;
+
 		public static bool EventInProgress => CurrentEvent != EventType.NONE;
-		public static bool VoteInProgress => CurrentVote != VoteType.NONE;
-
 		public static EventType CurrentEvent = EventType.NONE;
-		public static VoteType CurrentVote = VoteType.NONE;
-		public static string CurrentVoteString = string.Empty;
-
-
 
 		[PluginEntryPoint("Custom Commands", "1.0.0", "Simple plugin for custom commands", "ThePheggHerself")]
 		public void OnPluginStart()
@@ -44,27 +41,51 @@ namespace CustomCommands
 
 			Log.Info($"Plugin is loading...");
 
-			//EventManager.RegisterEvents<DebugTests>(this);
-			EventManager.RegisterEvents<CustomCommands.Events.DoorLocking>(this);
-			EventManager.RegisterEvents<EventEffects>(this);
-			EventManager.RegisterEvents<LateJoin>(this);
-			EventManager.RegisterEvents<NameFix>(this);
-			EventManager.RegisterEvents<SCPDamageAnnouncement>(this);		
-			EventManager.RegisterEvents<SurfaceLightingFix>(this);
-			EventManager.RegisterEvents<TutorialFixes>(this);
+			if(Config.EnableDoorLocking)
+				EventManager.RegisterEvents<Features.DoorLocking.LockingEvents>(this);
 
-			EventManager.RegisterEvents<Features.DummyEvents>(this);
-			EventManager.RegisterEvents<Features.Voting>(this);
-			EventManager.RegisterEvents<Features.SCPSwap>(this);
-			
-			EventManager.RegisterEvents<Features._079Removal>(this);
-			EventManager.RegisterEvents<SCP3114Overhaul>(this);
+			if(Config.EnableDummies)
+				EventManager.RegisterEvents<Features.Dummy.DummyEvents>(this);
 
-			//EventManager.RegisterEvents<Features.SpecialWeapons>(this);
+			if (Config.EnableEvents)
+			{
+				EventManager.RegisterEvents<Features.Events.GlobalEvents>(this);
+				EventManager.RegisterEvents<Features.Events.Infection.InfectionEvents>(this);
+			}
 
-			RagdollManager.OnRagdollSpawned += MiscEvents.RagdollManager_OnRagdollSpawned;
+               
+            if(Config.EnableBetterDisarming)
+				EventManager.RegisterEvents<Features.Humans.Disarming.DisarmingEvents>(this);
+
+			if (Config.EnableLateJoin)
+				EventManager.RegisterEvents<Features.Humans.LateJoin.LateJoinEvents>(this);
+
+			if (Config.EnableTutorialFixes)
+				EventManager.RegisterEvents<Features.Humans.TutorialFix.TutorialEvents>(this);
+
+			if (Config.EnableSpecialWeapons)
+				EventManager.RegisterEvents<Features.Items.Weapons.WeaponEvents>(this);
+
+			if (Config.EnableAdditionalSurfaceLighting)
+				EventManager.RegisterEvents<Features.Map.SurfaceLightFix.LightFixEvents>(this);
+
+			if (Config.EnableDamageAnnouncements)
+				EventManager.RegisterEvents<Features.SCPs.DamageAnnouncements.AnnouncementEvents>(this);
+
+			if (Config.EnableScp079Removal)
+				EventManager.RegisterEvents<Features.SCPs.SCP079Removal.RemovalEvents>(this);
+
+			if (Config.EnableScpSwap)
+				EventManager.RegisterEvents<Features.SCPs.Swap.SwapEvents>(this);
+
+			if (Config.EnableDebugTests)
+				EventManager.RegisterEvents<Features.Testing.DebugTests>(this);
+
+			if (Config.EnablePlayerVoting)
+				EventManager.RegisterEvents<Features.Voting.VotingEvents>(this);
+
+
+			RagdollManager.OnRagdollSpawned += Features.Ragdoll.PocketRagdollHandler.RagdollManager_OnRagdollSpawned;
 		}
-
-
 	}
 }
