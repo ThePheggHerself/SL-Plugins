@@ -4,10 +4,10 @@ using PluginAPI.Core;
 using System;
 using System.Reflection;
 
-namespace CustomCommands.Commands
+namespace CustomCommands.Features.Players.Size
 {
 	[CommandHandler(typeof(RemoteAdminCommandHandler))]
-	public class Size : ICustomCommand
+	public class SizeCommand : ICustomCommand
 	{
 		public string Command => "size";
 
@@ -18,6 +18,8 @@ namespace CustomCommands.Commands
 		public PlayerPermissions? Permission => null;
 		public string PermissionString => "cuscom.size";
 		public bool RequirePlayerSender => true;
+
+		public bool SanitizeResponse => false;
 
 		public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
 		{

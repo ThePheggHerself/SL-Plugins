@@ -21,6 +21,8 @@ namespace CustomCommands.Commands.Misc
 
 		public bool RequirePlayerSender => false;
 
+		public bool SanitizeResponse => false;
+
 		public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
 		{
 			if (arguments.Count < 1)

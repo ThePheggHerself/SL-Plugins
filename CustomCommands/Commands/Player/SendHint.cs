@@ -28,7 +28,9 @@ namespace CustomCommands.Commands
 
             public bool RequirePlayerSender => false;
 
-            public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
+			public bool SanitizeResponse => false;
+
+			public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
             {
                 if (sender.CanRun(this, arguments, out response, out var plrs, out var _) && float.TryParse(arguments.Array[2], out float duration))
                 {

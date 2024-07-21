@@ -6,7 +6,7 @@ using VoiceChat;
 namespace CustomCommands.Commands.Misc
 {
 	[CommandHandler(typeof(RemoteAdminCommandHandler))]
-	public class MuteCheckCommand : ICommand, IUsageProvider
+	public class MuteCheckCommand : ICustomCommand
 	{
 		public string Command => "mutecheck";
 
@@ -15,6 +15,14 @@ namespace CustomCommands.Commands.Misc
 		public string Description => "Checks if a specific UserID is muted";
 
 		public string[] Usage { get; } = { "UserID" };
+
+		public PlayerPermissions? Permission => null;
+
+		public string PermissionString => string.Empty;
+
+		public bool RequirePlayerSender => false;
+
+		public bool SanitizeResponse => false;
 
 		public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
 		{

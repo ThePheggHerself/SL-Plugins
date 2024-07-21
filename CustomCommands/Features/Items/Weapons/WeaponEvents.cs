@@ -86,14 +86,17 @@ namespace CustomCommands.Features.Items.Weapons
 		[PluginEvent]
 		public bool PlayerAttackEvent(PlayerDamageEvent ev)
 		{
-			if (ev.Player == null)
+			if (ev.Player == null || ev.Target == null || !(ev.DamageHandler is AttackerDamageHandler aDH))
 				return true;
 
-			if (ev.Player.CurrentItem.ItemSerial == ItemManager.TranqGunSerial && ev.Target.IsHuman)
+			if (Plugin.Config.EnableTranqGun)
 			{
-				ev.Player.ReceiveHitMarker();
-				ev.Target.RagdollPlayerTranqGun(ev.Player, 4);
-				return false;
+				if (ev.Player.CurrentItem.ItemSerial == ItemManager.TranqGunSerial && ev.Target.IsHuman)
+				{
+					ev.Player.ReceiveHitMarker();
+					ev.Target.RagdollPlayerTranqGun(ev.Player, 4);
+					return false;
+				}
 			}
 
 			return true;
@@ -102,13 +105,16 @@ namespace CustomCommands.Features.Items.Weapons
 		[PluginEvent]
 		public bool PlayerReloadEvent(PlayerReloadWeaponEvent ev)
 		{
-			if (!Round.IsRoundStarted || ItemManager.TranqGunSerial == 0)
+			if (!Round.IsRoundStarted)
 				return true;
 
-			if (ev.Firearm.ItemSerial == ItemManager.TranqGunSerial)
+			if (Plugin.Config.EnableTranqGun && ItemManager.TranqGunSerial == 0)
 			{
-				ev.Player.ReceiveHint("<voffset=1em>You cannot reload this weapon</voffset>");
-				return false;
+				if (ev.Firearm.ItemSerial == ItemManager.TranqGunSerial)
+				{
+					ev.Player.ReceiveHint("<voffset=1em>You cannot reload this weapon</voffset>");
+					return false;
+				}
 			}
 			return true;
 		}
@@ -116,19 +122,22 @@ namespace CustomCommands.Features.Items.Weapons
 		[PluginEvent]
 		public void PlayerChangeItemEvent(PlayerChangeItemEvent ev)
 		{
-			if (!Round.IsRoundStarted || ItemManager.TranqGunSerial == 0)
+			if (!Round.IsRoundStarted)
 				return;
 
-			if(ev.NewItem == ItemManager.TranqGunSerial)
+			if (Plugin.Config.EnableTranqGun && ItemManager.TranqGunSerial == 0)
 			{
-				ev.Player.ReceiveHint("<voffset=1em>You equipped the tranquilizer. It cannot be reloaded</voffset>", 8);
+				if (ev.NewItem == ItemManager.TranqGunSerial)
+				{
+					ev.Player.ReceiveHint("<voffset=1em>You equipped the tranquilizer. It cannot be reloaded</voffset>", 8);
+				}
 			}
 		}
 
 		[PluginEvent]
 		public void ItemPickup(PlayerSearchedPickupEvent ev)
 		{
-			if(ev.Item.Info.ItemId == ItemType.GunCOM18)
+			if(Plugin.Config.EnableTranqGun && ev.Item.Info.ItemId == ItemType.GunCOM18)
 			{
 				if(ItemManager.TranqGunSerial == 0 || ev.Item.Info.Serial == ItemManager.TranqGunSerial)
 				{

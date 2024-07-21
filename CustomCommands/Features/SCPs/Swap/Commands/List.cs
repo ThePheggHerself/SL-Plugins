@@ -18,6 +18,8 @@ namespace CustomCommands.Features.SCPs.Swap.Commands
 		public string[] Aliases { get; } = { "slist" };
 		public string Description => "Lists all current SCPs";
 
+		public bool SanitizeResponse => false;
+
 		public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
 		{
 			if (sender is PlayerCommandSender pSender && pSender.ReferenceHub.IsSCP())

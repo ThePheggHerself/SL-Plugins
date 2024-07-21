@@ -19,6 +19,9 @@ namespace CustomCommands
 		//Enables the events such as TDM and infection
 		public bool EnableEvents { get; set; } = true;
 
+		//Enables the weekly events
+		public bool EnableWeeklyEvents { get; set; } = false;
+
 		//Enables the better disarming system (rewards more tokens for disarming and rescuing dclass and scientists)
 		public bool EnableBetterDisarming { get; set; } = true;
 

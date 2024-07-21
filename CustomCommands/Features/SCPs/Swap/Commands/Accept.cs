@@ -26,6 +26,8 @@ namespace CustomCommands.Features.SCPs.Swap.Commands
 
 		public bool RequirePlayerSender => true;
 
+		public bool SanitizeResponse => false;
+
 		public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
 		{
 			if (sender is PlayerCommandSender pSender && pSender.ReferenceHub.IsSCP() && pSender.ReferenceHub.roleManager.CurrentRole.RoleTypeId != RoleTypeId.Scp0492)

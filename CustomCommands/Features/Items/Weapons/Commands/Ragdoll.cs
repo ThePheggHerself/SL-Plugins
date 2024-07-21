@@ -24,6 +24,7 @@ namespace CustomCommands.Features.Items.Weapons.Commands
 
 		public bool RequirePlayerSender => true;
 
+		public bool SanitizeResponse => false;
 		public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
 		{
 			if (!sender.CanRun(this, arguments, out response, out _, out var pSender))

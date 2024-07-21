@@ -16,6 +16,8 @@ namespace CustomCommands.Features.Voting.Commands
 		public string[] Aliases => null;
 		public string Description => "Vote no on the current vote";
 
+		public bool SanitizeResponse => false;
+
 		public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
 		{
 			if (sender is PlayerCommandSender pSender)

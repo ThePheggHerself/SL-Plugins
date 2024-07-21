@@ -18,7 +18,7 @@ using System.Linq;
 using UnityEngine;
 using Utils.Networking;
 
-namespace CustomCommands.Events
+namespace CustomCommands.Features.SCPs.SCP3114
 {
 	public class SCP3114Overhaul
 	{
@@ -118,5 +118,4 @@ namespace CustomCommands.Events
 			//}
 		}
 	}
-
 }

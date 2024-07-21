@@ -41,11 +41,15 @@ namespace CustomCommands
 
 			Log.Info($"Plugin is loading...");
 
-			if(Config.EnableDoorLocking)
+			if (Config.EnableDoorLocking)
+			{
 				EventManager.RegisterEvents<Features.DoorLocking.LockingEvents>(this);
+			}
 
-			if(Config.EnableDummies)
+			if (Config.EnableDummies)
+			{
 				EventManager.RegisterEvents<Features.Dummy.DummyEvents>(this);
+			}
 
 			if (Config.EnableEvents)
 			{
@@ -53,39 +57,67 @@ namespace CustomCommands
 				EventManager.RegisterEvents<Features.Events.Infection.InfectionEvents>(this);
 			}
 
-               
-            if(Config.EnableBetterDisarming)
+
+			if (Config.EnableBetterDisarming)
+			{
 				EventManager.RegisterEvents<Features.Humans.Disarming.DisarmingEvents>(this);
+			}
 
 			if (Config.EnableLateJoin)
+			{
 				EventManager.RegisterEvents<Features.Humans.LateJoin.LateJoinEvents>(this);
+			}
 
 			if (Config.EnableTutorialFixes)
+			{
 				EventManager.RegisterEvents<Features.Humans.TutorialFix.TutorialEvents>(this);
+			}
 
 			if (Config.EnableSpecialWeapons)
+			{
 				EventManager.RegisterEvents<Features.Items.Weapons.WeaponEvents>(this);
+			}
 
 			if (Config.EnableAdditionalSurfaceLighting)
+			{
 				EventManager.RegisterEvents<Features.Map.SurfaceLightFix.LightFixEvents>(this);
+			}
 
 			if (Config.EnableDamageAnnouncements)
+			{
 				EventManager.RegisterEvents<Features.SCPs.DamageAnnouncements.AnnouncementEvents>(this);
+			}
 
 			if (Config.EnableScp079Removal)
+			{
 				EventManager.RegisterEvents<Features.SCPs.SCP079Removal.RemovalEvents>(this);
+				EventManager.RegisterEvents<Features.SCPs.SCP3114.SCP3114Overhaul>(this);
+			}
 
 			if (Config.EnableScpSwap)
+			{
 				EventManager.RegisterEvents<Features.SCPs.Swap.SwapEvents>(this);
+			}
 
 			if (Config.EnableDebugTests)
+			{
 				EventManager.RegisterEvents<Features.Testing.DebugTests>(this);
+			}
 
 			if (Config.EnablePlayerVoting)
+			{
 				EventManager.RegisterEvents<Features.Voting.VotingEvents>(this);
+			}
 
+			if (Config.EnableWeeklyEvents)
+			{
+				EventManager.RegisterEvents<Features.Events.WeeklyEvents.EventManager>(this);
+				EventManager.RegisterEvents<Features.Events.WeeklyEvents.Events>(this);
+			}
 
 			RagdollManager.OnRagdollSpawned += Features.Ragdoll.PocketRagdollHandler.RagdollManager_OnRagdollSpawned;
+
+			EventManager.RegisterEvents<Features.Players.Size.SizeEvents>(this);
 		}
 	}
 }

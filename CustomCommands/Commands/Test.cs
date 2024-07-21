@@ -25,6 +25,8 @@ namespace CustomCommands.Commands
 
 		public bool RequirePlayerSender => true;
 
+		public bool SanitizeResponse => false;
+
 		public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
 		{
 			if (!sender.CanRun(this, arguments, out response, out var players, out var pSender))

@@ -20,7 +20,7 @@
     <OutputPath>..\Builds\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>5</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -36,13 +36,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\References\0Harmony.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp">
+    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\References\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
       <HintPath>..\References\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
-    <Reference Include="CommandSystem.Core">
+    <Reference Include="CommandSystem.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\References\CommandSystem.Core.dll</HintPath>
     </Reference>
     <Reference Include="DnsClient">
@@ -99,6 +101,8 @@
     <Compile Include="Commands\Misc\BanCheck.cs" />
     <Compile Include="Features\Depricated\Hush.cs" />
     <Compile Include="Commands\Misc\MuteCheck.cs" />
+    <Compile Include="Features\Events\WeeklyEvents\EventManager.cs" />
+    <Compile Include="Features\Events\WeeklyEvents\Events.cs" />
     <Compile Include="Features\Humans\Disarming\DisarmingEvents.cs" />
     <Compile Include="Features\Humans\LateJoin\LateJoinEvents.cs" />
     <Compile Include="Features\Humans\TutorialFix\TutorialEvents.cs" />
@@ -107,15 +111,17 @@
     <Compile Include="Features\Items\Grenades\Commands\Ball.cs" />
     <Compile Include="Commands\Player\Drop.cs" />
     <Compile Include="Commands\Teleport\Pocket.cs" />
-    <Compile Include="Commands\Size.cs" />
+    <Compile Include="Features\Players\Size\SizeCommand.cs" />
     <Compile Include="Commands\Teleport\SendToPlayer.cs" />
     <Compile Include="Commands\Teleport\TeleportToCoords.cs" />
     <Compile Include="Commands\Test.cs" />
     <Compile Include="Commands\Teleport\Tower2.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="Features\Players\Size\SizeEvents.cs" />
+    <Compile Include="Features\Players\Size\SizeManager.cs" />
     <Compile Include="Features\Testing\DebugTests.cs" />
     <Compile Include="Features\Depricated\NameFix.cs" />
-    <Compile Include="Features\Depricated\SCP3114Overhaul.cs" />
+    <Compile Include="Features\SCPs\SCP3114\SCP3114Overhaul.cs" />
     <Compile Include="Commands\Player\SendHint.cs" />
     <Compile Include="Features\DoorLocking\Commands\Destroy.cs" />
     <Compile Include="Features\DoorLocking\Commands\Lock.cs" />

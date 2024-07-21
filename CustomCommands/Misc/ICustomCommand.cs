@@ -7,5 +7,6 @@ namespace CustomCommands
 		PlayerPermissions? Permission { get; }
 		string PermissionString { get; }
 		bool RequirePlayerSender { get; }
+		bool SanitizeResponse { get; }
 	}
 }

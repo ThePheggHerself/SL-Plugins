@@ -49,7 +49,7 @@ namespace CustomCommands.Features.SCPs.SCP079Removal
 		[PluginEvent]
 		public bool PlayerInteractDoor(PlayerInteractDoorEvent args)
 		{
-			if (!Plugin.EventInProgress && RoomLightController.IsInDarkenedRoom(args.Player.Position))
+			if (!Plugin.EventInProgress && RoomLightController.IsInDarkenedRoom(args.Player.Position) && args.Door.RequiredPermissions.RequiredPermissions == KeycardPermissions.None)
 				return false;
 
 			return args.CanOpen;
@@ -63,10 +63,12 @@ namespace CustomCommands.Features.SCPs.SCP079Removal
 
 		public IEnumerator<float> LightFailure()
 		{
-			var delay = UnityEngine.Random.Range(90, 151);
-
+			var delay = UnityEngine.Random.Range(180, 360);
 
 			yield return Timing.WaitForSeconds(delay);
+
+			if (Round.IsRoundEnded)
+				yield return 0f;
 
 			Cassie.Message("Attention all personnel . Power malfunction detected . Repair protocol delta 12 activated . Heavy containment zone power termination in 3 . 2 . 1", false, true, true);
 			yield return Timing.WaitForSeconds(18f);
