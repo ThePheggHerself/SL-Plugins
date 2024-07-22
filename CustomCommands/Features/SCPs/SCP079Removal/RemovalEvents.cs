@@ -69,8 +69,11 @@ namespace CustomCommands.Features.SCPs.SCP079Removal
 
 			yield return Timing.WaitForSeconds(delay);
 
-			if (Round.IsRoundEnded || !Blackoutable)
+			if (Round.IsRoundEnded)
 				yield return 0f;
+			
+			if (Blackoutable && Round.Duration >= TimeSpan.FromSeconds(120))
+			{
 
 			Blackoutable = false;
 
@@ -111,6 +114,7 @@ namespace CustomCommands.Features.SCPs.SCP079Removal
 			}
 
 			yield return 0f;
+			}
 		}
 	}
 }
