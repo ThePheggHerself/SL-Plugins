@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DiscordLab bot", "DiscordLa
 		config.json = config.json
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StatTracker", "StatTracker\StatTracker.csproj", "{FA233AC9-D585-42A2-A146-1AA257D1C356}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{6D3519BA-CFB9-4D54-AA04-C9027DFCFBD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D3519BA-CFB9-4D54-AA04-C9027DFCFBD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D3519BA-CFB9-4D54-AA04-C9027DFCFBD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA233AC9-D585-42A2-A146-1AA257D1C356}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA233AC9-D585-42A2-A146-1AA257D1C356}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA233AC9-D585-42A2-A146-1AA257D1C356}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA233AC9-D585-42A2-A146-1AA257D1C356}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
