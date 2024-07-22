@@ -20,6 +20,18 @@ namespace StatTracker
 		public static Dictionary<string, Stats> StatData = new Dictionary<string, Stats>();
 
 		[PluginEvent]
+		public void OnPlayerSpawn(PlayerSpawnEvent ev)
+		{
+			if (ev.Player == null || ev.Player.UserId == null)
+				return;
+
+			if(StatData.ContainsKey(ev.Player.UserId) && ev.Player.IsSCP && ev.Role != RoleTypeId.Scp0492)
+			{
+				StatData[ev.Player.UserId].SCP = (int)ev.Role;
+			}
+		}
+
+		[PluginEvent]
 		public void OnPlayerJoin(PlayerJoinedEvent ev)
 		{
 			if (Round.IsRoundStarted && !Round.IsRoundEnded)
@@ -70,9 +82,6 @@ namespace StatTracker
 			}
 
 			Timing.RunCoroutine(HandleDataSend(StatData));
-
-			var json = JsonConvert.SerializeObject(StatData.ToArray(), Formatting.Indented);
-			_ = Post(config.ApiEndpoint, new StringContent(json, Encoding.UTF8, "application/json"));
 		}
 
 		[PluginEvent]

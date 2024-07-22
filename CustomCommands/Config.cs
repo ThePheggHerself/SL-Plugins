@@ -26,38 +26,32 @@ namespace CustomCommands
 		public bool EnableBetterDisarming { get; set; } = true;
 
 		//Enables the late join system
-		public bool EnableLateJoin {  get; set; } = true;
+		public bool EnableLateJoin { get; set; } = true;
 		public int LateJoinTime { get; set; } = 30;
 
 		//Enables the tutorial fixes (blocks handcuffing)
-		public bool EnableTutorialFixes {  get; set; } = true;
+		public bool EnableTutorialFixes { get; set; } = true;
 		//Should tutorials explode when a flipped coin lands on tails
 		public bool TutorialCoinExplosion { get; set; } = false;
 
 		//Enables the special weapons.
-		public bool EnableSpecialWeapons {  get; set; } = false;
+		public bool EnableSpecialWeapons { get; set; } = false;
 		public bool EnableGrenadeLauncher { get; set; } = true;
 		public bool EnableFlashbangLauncher { get; set; } = true;
 		public bool EnableBallLauncher { get; set; } = true;
 		public bool EnableRagdollLauncher { get; set; } = true;
 		public bool EnableTranqGun { get; set; } = true;
+
 		
-		//Enables extra surface lights
-		public bool EnableAdditionalSurfaceLighting { get; set; } = true;
-
-		//Enables the SCP damage announcements at the end of the round
-		public bool EnableDamageAnnouncements { get; set; } = true;
-
-		//Enables the SCP-079 removal (Yes it's confusing, but it's being kept as Enable to keep configs consistant)
-		public bool EnableScp079Removal { get; set; } = true;
-
-		//Enables the SCP Swap system
-		public bool EnableScpSwap { get; set; } = true;
-
-		//Enables the debug tests
-		public bool EnableDebugTests { get; set; } = true;
-
-		//Enables player voting
-		public bool EnablePlayerVoting {  get; set; } = true;
+		public bool EnableAdditionalSurfaceLighting { get; set; } = true; //Enables extra surface lights
+		public bool EnableDamageAnnouncements { get; set; } = true; //Enables the SCP damage announcements at the end of the round
+		public bool EnableScp079Removal { get; set; } = true; //Enables the SCP-079 removal (Yes it's confusing, but it's being kept as Enable to keep configs consistant)
+		public bool EnableScpSwap { get; set; } = true; //Enables the SCP Swap system
+		public bool EnableDebugTests { get; set; } = true; //Enables the debug tests
+		public bool EnablePlayerVoting { get; set; } = true; //Enables player voting
+		public bool EnableBlackout { get; set; } = true; //Enables the blackouts
+		public int MinBlackoutTime { get; set; } = 180; //Minimum time between round start and blackout
+		public int MaxBlackoutTime { get; set; } = 360; //Maximum time between round start and blackout
+		public int BlackoutDuration { get; set; } = 30; //Duration of the blackout 
 	}
 }

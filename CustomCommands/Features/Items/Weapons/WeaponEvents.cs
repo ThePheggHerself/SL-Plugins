@@ -23,6 +23,7 @@ using InventorySystem;
 using PluginAPI.Core;
 using InventorySystem.Items.Firearms;
 using InventorySystem.Items.Pickups;
+using MEC;
 
 namespace CustomCommands.Features.Items.Weapons
 {
@@ -83,15 +84,15 @@ namespace CustomCommands.Features.Items.Weapons
 			}
 		}
 
-		[PluginEvent]
+		//[PluginEvent]
 		public bool PlayerAttackEvent(PlayerDamageEvent ev)
 		{
 			if (ev.Player == null || ev.Target == null || !(ev.DamageHandler is AttackerDamageHandler aDH))
 				return true;
 
-			if (Plugin.Config.EnableTranqGun)
+			if (Plugin.Config.EnableTranqGun && ItemManager.TranqGunSet)
 			{
-				if (ev.Player.CurrentItem.ItemSerial == ItemManager.TranqGunSerial && ev.Target.IsHuman)
+				if (ev.Player.CurrentItem.ItemSerial == ItemManager.TranqGun.Info.Serial && ev.Target.IsHuman)
 				{
 					ev.Player.ReceiveHitMarker();
 					ev.Target.RagdollPlayerTranqGun(ev.Player, 4);
@@ -102,56 +103,64 @@ namespace CustomCommands.Features.Items.Weapons
 			return true;
 		}
 
-		[PluginEvent]
+		//[PluginEvent]
 		public bool PlayerReloadEvent(PlayerReloadWeaponEvent ev)
 		{
 			if (!Round.IsRoundStarted)
 				return true;
 
-			if (Plugin.Config.EnableTranqGun && ItemManager.TranqGunSerial == 0)
+			if (ItemManager.TranqGunSet && ev.Firearm.ItemSerial == ItemManager.TranqGun.Info.Serial)
 			{
-				if (ev.Firearm.ItemSerial == ItemManager.TranqGunSerial)
-				{
-					ev.Player.ReceiveHint("<voffset=1em>You cannot reload this weapon</voffset>");
-					return false;
-				}
+				ev.Player.ReceiveHint("<voffset=1em>You cannot reload this weapon</voffset>");
+				return false;
 			}
 			return true;
 		}
 
-		[PluginEvent]
+		//[PluginEvent]
 		public void PlayerChangeItemEvent(PlayerChangeItemEvent ev)
 		{
-			if (!Round.IsRoundStarted)
+			if (!Round.IsRoundStarted || ev.Player.CurrentItem == null || ev.Player.CurrentItem.Category == ItemCategory.None)
 				return;
 
-			if (Plugin.Config.EnableTranqGun && ItemManager.TranqGunSerial == 0)
+			Log.Info($"Item Change: {ItemManager.TranqGun.NetworkInfo.Serial} {ev.NewItem}");
+
+			if (ItemManager.TranqGunSet && ev.NewItem == ItemManager.TranqGun.Info.Serial)
 			{
-				if (ev.NewItem == ItemManager.TranqGunSerial)
-				{
-					ev.Player.ReceiveHint("<voffset=1em>You equipped the tranquilizer. It cannot be reloaded</voffset>", 8);
-				}
+				Log.Info($"AAA4");
+
+				ev.Player.ReceiveHint("<voffset=1em>You equipped the tranquilizer. It cannot be reloaded</voffset>", 8);
 			}
 		}
 
-		[PluginEvent]
+		//[PluginEvent]
 		public void ItemPickup(PlayerSearchedPickupEvent ev)
 		{
-			if(Plugin.Config.EnableTranqGun && ev.Item.Info.ItemId == ItemType.GunCOM18)
-			{
-				if(ItemManager.TranqGunSerial == 0 || ev.Item.Info.Serial == ItemManager.TranqGunSerial)
-				{
-					ItemManager.TranqGunSerial = ev.Item.Info.Serial;
+			Log.Info($"Pickup: {ev.Item.NetworkInfo.Serial}");
 
+			if (Plugin.Config.EnableTranqGun)
+			{
+				if (ev.Item == ItemManager.TranqGun)
 					ev.Player.ReceiveHint("<voffset=1em>You picked up the tranquilizer</voffset>", 8);
-				}
 			}
 		}
 
-		[PluginEvent]
+		//[PluginEvent]
 		public void RoundStart(RoundStartEvent ev)
 		{
-			ItemManager.TranqGunSerial = 0;
+			if (Plugin.Config.EnableTranqGun)
+			{
+				var possibleItems = ItemManager.GetItemsOfType(ItemType.GunCOM18);
+				if (!possibleItems.Any())
+					Log.Warning($"Unable to find any COM-18 guns on map");
+				else
+				{
+					var selectedItem = possibleItems[Random.Range(0, possibleItems.Length)];
+
+					Log.Info($"SELECTED Location: {selectedItem.Position} {selectedItem.NetworkInfo.Serial}");
+					ItemManager.TranqGun = selectedItem;
+				}
+			}
 		}
 	}
 }

@@ -111,7 +111,7 @@ namespace CustomCommands.Features.SCPs.SCP3114
 
 			Scp3114RevealPatchClass.canStrangle = false;
 
-			if (player.playerStats.GetModule<HealthStat>().CurValue < 60)
+			if (player.playerStats.GetModule<HealthStat>().CurValue > 60)
 			{
 				Player.Get(__instance.Owner).ReceiveHint("They are still too strong to strangle");
 				__result = false;

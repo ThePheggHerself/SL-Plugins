@@ -111,6 +111,8 @@
     <Compile Include="Features\Items\Grenades\Commands\Ball.cs" />
     <Compile Include="Commands\Player\Drop.cs" />
     <Compile Include="Commands\Teleport\Pocket.cs" />
+    <Compile Include="Features\Map\RollingBlackouts\BlackoutEvents.cs" />
+    <Compile Include="Features\Map\RollingBlackouts\BlackoutManager.cs" />
     <Compile Include="Features\Players\Size\SizeCommand.cs" />
     <Compile Include="Commands\Teleport\SendToPlayer.cs" />
     <Compile Include="Commands\Teleport\TeleportToCoords.cs" />
