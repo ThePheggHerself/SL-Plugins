@@ -40,7 +40,7 @@ namespace CustomCommands.Features.SCPs.SCP3114
 			}
 		}
 
-		[PluginEvent]
+		//[PluginEvent]
 		public void PlayerDamaged(PlayerDamageEvent args)
 		{
 			if (args.DamageHandler is Scp3114DamageHandler sDH && sDH.Subtype == Scp3114DamageHandler.HandlerType.Slap)
@@ -111,11 +111,11 @@ namespace CustomCommands.Features.SCPs.SCP3114
 
 			Scp3114RevealPatchClass.canStrangle = false;
 
-			//if (player.playerStats.GetModule<HealthStat>().CurValue < 60)
-			//{
-			//	Player.Get(__instance.Owner).ReceiveHint("They are still too strong to strangle");
-			//	__result = false;
-			//}
+			if (player.playerStats.GetModule<HealthStat>().CurValue < 60)
+			{
+				Player.Get(__instance.Owner).ReceiveHint("They are still too strong to strangle");
+				__result = false;
+			}
 		}
 	}
 }
