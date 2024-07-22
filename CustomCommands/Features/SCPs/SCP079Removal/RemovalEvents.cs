@@ -32,6 +32,7 @@ namespace CustomCommands.Features.SCPs.SCP079Removal
 {
 	public class RemovalEvents
 	{
+		public static bool Blackoutable = false;
 		[PluginEvent]
 		public void SpawnEvent(PlayerSpawnEvent args)
 		{
@@ -58,6 +59,7 @@ namespace CustomCommands.Features.SCPs.SCP079Removal
 		[PluginEvent]
 		public void RoundStartEvent(RoundStartEvent args)
 		{
+			Blackoutable = true;
 			Timing.RunCoroutine(LightFailure());
 		}
 
@@ -67,8 +69,10 @@ namespace CustomCommands.Features.SCPs.SCP079Removal
 
 			yield return Timing.WaitForSeconds(delay);
 
-			if (Round.IsRoundEnded)
+			if (Round.IsRoundEnded || !Blackoutable)
 				yield return 0f;
+
+			Blackoutable = false;
 
 			Cassie.Message("Attention all personnel . Power malfunction detected . Repair protocol delta 12 activated . Heavy containment zone power termination in 3 . 2 . 1", false, true, true);
 			yield return Timing.WaitForSeconds(18f);
