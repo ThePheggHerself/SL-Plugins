@@ -32,18 +32,7 @@ namespace CustomCommands.Commands
 			if (!sender.CanRun(this, arguments, out response, out var players, out var pSender))
 				return false;
 
-			Log.Info("AA");
-
 			int index = 0;
-
-			Log.Info($"{pSender?.ReferenceHub == null} {pSender?.ReferenceHub?.gameObject == null}");
-
-			foreach (var a in pSender.ReferenceHub.roleManager.CurrentRole.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic))
-			{
-				Log.Info($"{index++} {a.Name} | {a.GetType()} |");
-			}
-
-
 
 			response = $"Never gonna give you up,\nNever gonna let you down.\nNever gonna run around,\nAnd desert you.\nNever gonna make you cry,\nNever gonna say goodbye.\nNever gonna tell a lie,\nAnd hurt you.";
 			return true;

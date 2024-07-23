@@ -58,13 +58,17 @@ namespace StatTracker
 		[PluginEvent]
 		public void OnPlayerLeave(PlayerLeftEvent ev)
 		{
-			if (Round.IsRoundStarted && !Round.IsRoundEnded)
-			{
-				if (StatData.ContainsKey(ev.Player.UserId))
+			try{
+				if (Round.IsRoundStarted && !Round.IsRoundEnded)
 				{
-					StatData[ev.Player.UserId].SecondsPlayed += (int)(DateTime.UtcNow - StatData[ev.Player.UserId].Jointime).TotalSeconds;
+					if (StatData.ContainsKey(ev.Player.UserId))
+					{
+						StatData[ev.Player.UserId].SecondsPlayed += (int)(DateTime.UtcNow - StatData[ev.Player.UserId].Jointime).TotalSeconds;
+					}
 				}
 			}
+			//To stop it throwing an error if round is null (for like forced round restarts)
+			catch(Exception) { }
 		}
 
 		[PluginEvent]

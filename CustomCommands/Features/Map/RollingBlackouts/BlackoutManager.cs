@@ -11,20 +11,39 @@ namespace CustomCommands.Features.Map.RollingBlackouts
 {
 	public class BlackoutManager
 	{
-		public static int MinTime = 180, MaxTime = 360, DelayThisRound;
-		public static bool Pause, TriggeredThisRound;
-		public static CoroutineHandle Coroutine;
+		BlackoutManager Instance;
 
-		public void StartBlackoutManager()
+		public BlackoutManager()
 		{
-			Coroutine = Timing.CallContinuously(0f, () => LightFailure(), Segment.FixedUpdate);
+			Instance = this;
+
+			Log.Info($"Starting blackout manager");
+
+			Timing.CallDelayed(5, () => {
+				CheckForLights();
+			}
+			);
+		}
+
+
+		public static int DelayThisRound;
+		public static bool Pause, TriggeredThisRound;
+		public IEnumerator<float> CheckForLights()
+		{
+			if (!Pause && Round.IsRoundStarted && !Round.IsRoundEnded && Round.Duration.TotalSeconds > DelayThisRound && !TriggeredThisRound)
+			{
+				Log.Warning($"Running Blackout");
+				TriggeredThisRound = true;
+				Timing.RunCoroutine(LightFailure());
+			}
+
+			yield return Timing.WaitForSeconds(2);
+
+			Timing.RunCoroutine(CheckForLights());
 		}
 
 		public IEnumerator<float> LightFailure()
 		{
-			if (Pause || !Round.IsRoundStarted || Round.IsRoundEnded || Round.Duration.TotalSeconds < DelayThisRound || TriggeredThisRound)
-				yield break;
-
 			TriggeredThisRound = true;
 			Cassie.Message("Attention all personnel . Power malfunction detected . Repair protocol delta 12 activated . Heavy containment zone power termination in 3 . 2 . 1", false, true, true);
 			yield return Timing.WaitForSeconds(18f);
@@ -32,17 +51,16 @@ namespace CustomCommands.Features.Map.RollingBlackouts
 			if (!Round.IsRoundStarted || Round.IsRoundEnded)
 				yield break;
 
-			foreach (RoomLightController instance in RoomLightController.Instances)			
+			foreach (RoomLightController instance in RoomLightController.Instances)
 				if (instance.Room.Zone == MapGeneration.FacilityZone.HeavyContainment)
 					instance.ServerFlickerLights(Plugin.Config.BlackoutDuration);
-				
-			foreach (var door in DoorVariant.AllDoors.Where(r => r.IsInZone(MapGeneration.FacilityZone.HeavyContainment)))		
+
+			foreach (var door in DoorVariant.AllDoors.Where(r => r.IsInZone(MapGeneration.FacilityZone.HeavyContainment)))
 				if (door is IDamageableDoor iDD && door.RequiredPermissions.RequiredPermissions == KeycardPermissions.None && !door.name.Contains("LCZ"))
 					door.NetworkTargetState = true;
-				
+
 			foreach (var tesla in TeslaGateController.Singleton.TeslaGates)
 				tesla.enabled = false;
-			
 
 			yield return Timing.WaitForSeconds(Plugin.Config.BlackoutDuration);
 
@@ -53,7 +71,7 @@ namespace CustomCommands.Features.Map.RollingBlackouts
 
 			foreach (var tesla in TeslaGateController.Singleton.TeslaGates)
 				tesla.enabled = true;
-			
+
 			yield return 0f;
 		}
 	}

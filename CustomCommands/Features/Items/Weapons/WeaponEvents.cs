@@ -123,12 +123,8 @@ namespace CustomCommands.Features.Items.Weapons
 			if (!Round.IsRoundStarted || ev.Player.CurrentItem == null || ev.Player.CurrentItem.Category == ItemCategory.None)
 				return;
 
-			Log.Info($"Item Change: {ItemManager.TranqGun.NetworkInfo.Serial} {ev.NewItem}");
-
 			if (ItemManager.TranqGunSet && ev.NewItem == ItemManager.TranqGun.Info.Serial)
 			{
-				Log.Info($"AAA4");
-
 				ev.Player.ReceiveHint("<voffset=1em>You equipped the tranquilizer. It cannot be reloaded</voffset>", 8);
 			}
 		}
@@ -136,8 +132,6 @@ namespace CustomCommands.Features.Items.Weapons
 		//[PluginEvent]
 		public void ItemPickup(PlayerSearchedPickupEvent ev)
 		{
-			Log.Info($"Pickup: {ev.Item.NetworkInfo.Serial}");
-
 			if (Plugin.Config.EnableTranqGun)
 			{
 				if (ev.Item == ItemManager.TranqGun)

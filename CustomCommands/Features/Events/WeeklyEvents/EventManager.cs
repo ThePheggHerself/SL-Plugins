@@ -60,8 +60,6 @@ namespace CustomCommands.Features.Events.WeeklyEvents
 		{
 			var e = IsWeekend();
 
-			Log.Info(e.ToString());
-
 			if(IsWeekend() && CurrentEvent == EventType.NONE)
 			{
 				CurrentEvent = EventType.CoinFlipDeath;

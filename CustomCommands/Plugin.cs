@@ -1,4 +1,5 @@
 ﻿using CustomCommands.Events;
+using CustomCommands.Features.Map.RollingBlackouts;
 using HarmonyLib;
 using PlayerRoles.Ragdolls;
 using PluginAPI.Core;
@@ -114,6 +115,13 @@ namespace CustomCommands
 				EventManager.RegisterEvents<Features.Events.WeeklyEvents.EventManager>(this);
 				EventManager.RegisterEvents<Features.Events.WeeklyEvents.Events>(this);
 			}
+
+			if(Config.EnableBlackout)
+			{
+				EventManager.RegisterEvents<BlackoutEvents>(this);
+				new BlackoutManager();
+			}
+
 
 			RagdollManager.OnRagdollSpawned += Features.Ragdoll.PocketRagdollHandler.RagdollManager_OnRagdollSpawned;
 
