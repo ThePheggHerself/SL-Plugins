@@ -25,9 +25,12 @@ namespace StatTracker
 			if (ev.Player == null || ev.Player.UserId == null)
 				return;
 
-			if(StatData.ContainsKey(ev.Player.UserId) && ev.Player.IsSCP && ev.Role != RoleTypeId.Scp0492)
+			if(StatData.ContainsKey(ev.Player.UserId) && ev.Player.Role != RoleTypeId.Spectator)
 			{
-				StatData[ev.Player.UserId].SCP = (int)ev.Role;
+				if (StatData[ev.Player.UserId].Spawns.ContainsKey((int)ev.Player.Role))
+					StatData[ev.Player.UserId].Spawns[(int)ev.Player.Role] += 1;
+				else
+					StatData[ev.Player.UserId].Spawns.Add((int)ev.Player.Role, 1);
 			}
 		}
 
@@ -103,7 +106,7 @@ namespace StatTracker
 			var targ = ev.Target;
 			var atkr = new Player(aDH.Attacker.Hub);
 
-			if (aDH.IsFriendlyFire && targ.Role != RoleTypeId.ClassD)
+			if (!aDH.IsFriendlyFire && targ.Role != RoleTypeId.ClassD)
 			{
 				StatData[targ.UserId].DamageTaken += (int)aDH.Damage;
 				StatData[atkr.UserId].DamageDealt += (int)aDH.Damage;

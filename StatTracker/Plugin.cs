@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Events;
@@ -42,7 +43,7 @@ namespace StatTracker
 			public int DamageDealt = 0; //How much damage the player has dealt
 			public int DamageTaken = 0; //How much damage the player has taken
 			public int Deaths = 0; //How many times the player has died
-			public int SCP = 0;//This is rounds where you spawned as any SCP
+			public Dictionary<int, int> Spawns = new Dictionary<int, int>(); //How many times this player has spawned as a role
 			public DateTime Jointime;
 		}
 	}

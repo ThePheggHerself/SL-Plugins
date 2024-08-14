@@ -60,6 +60,7 @@ namespace CustomCommands.Features.SCPs.Swap.Commands
 				var scps = SwapManager.AvailableSCPs;
 
 				player.SetRole(scps[new Random().Next(0, scps.Length)], RoleChangeReason.LateJoin);
+				player.TemporaryData.Add("replacedscp", player.Role.ToString());
 
 				SwapManager.SCPsToReplace--;
 

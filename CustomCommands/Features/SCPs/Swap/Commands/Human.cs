@@ -40,6 +40,11 @@ namespace CustomCommands.Features.SCPs.Swap.Commands
 					response = "You cannot swap as you have taken damage";
 					return false;
 				}
+				if (player.TemporaryData.Contains("replacedscp"))
+				{
+					response = "You cannot swap back to human";
+					return false;
+				}
 				if (Round.Duration > TimeSpan.FromMinutes(1))
 				{
 					response = "You can only swap from SCP within the first 1 minute of a round";

@@ -24,7 +24,7 @@ namespace DiscordLab
 		public Msg(string message)
 		{
 			Type = MessageType.msg;
-			Message = BotConnector.MsgRgx.Replace(message, string.Empty);
+			Message = BotSocketConnection.MsgRgx.Replace(message, string.Empty);
 		}
 
 		public string Message;
@@ -81,7 +81,7 @@ namespace DiscordLab
 						if (plr.IsServer)
 							continue;
 						if (!plr.DoNotTrack)
-							plrNames.Add(BotConnector.NameRgx.Replace(plr.Nickname, string.Empty));
+							plrNames.Add(BotSocketConnection.NameRgx.Replace(plr.Nickname, string.Empty));
 						else
 							DntCount++;
 					}
@@ -89,13 +89,16 @@ namespace DiscordLab
 					if (DntCount > 0)
 						plrNames.Add($"{(Player.Count > 1 ? "and " : "")}{DntCount}{(Player.Count > 1 ? " other" : "")} DNT user{(DntCount > 1 ? "s" : "")}");
 
-					PlayerNames = $"**{Player.Count}/{Server.MaxPlayers}**\n```\n{string.Join(", ", plrNames)}```";
+					PlayerNames = $"{string.Join(", ", plrNames)}";
 				}
+
+				CurrentPlayers = Player.Count + "/" + Server.MaxPlayers;
 			}
 		}
 
 		public string PlayerNames;
 		public string ChannelID;
+		public string CurrentPlayers;
 	}
 
 	/// <summary>

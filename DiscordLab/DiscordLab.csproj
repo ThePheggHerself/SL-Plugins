@@ -34,7 +34,8 @@
     <Reference Include="0Harmony">
       <HintPath>..\References\0Harmony.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp">
+    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\References\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
@@ -46,7 +47,8 @@
     <Reference Include="DnsClient">
       <HintPath>..\References\DnsClient.dll</HintPath>
     </Reference>
-    <Reference Include="Mirror">
+    <Reference Include="Mirror, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\References\Mirror.dll</HintPath>
     </Reference>
     <Reference Include="Mirror.Components">
@@ -61,7 +63,8 @@
     <Reference Include="NWAPIPermissionSystem">
       <HintPath>..\References\NWAPIPermissionSystem.dll</HintPath>
     </Reference>
-    <Reference Include="PluginAPI">
+    <Reference Include="PluginAPI, Version=13.1.3.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\References\PluginAPI.dll</HintPath>
     </Reference>
     <Reference Include="Pooling">
@@ -95,7 +98,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BotConnector.cs" />
+    <Compile Include="BotSocketConnection.cs" />
     <Compile Include="DiscordLabConfig.cs" />
     <Compile Include="DataClasses.cs" />
     <Compile Include="Events.cs" />

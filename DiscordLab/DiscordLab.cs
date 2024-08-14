@@ -12,14 +12,14 @@ namespace DiscordLab
 	{
 		[PluginConfig]
 		public static DiscordLabConfig Config;
-		public static BotConnector Bot;
+		public static BotSocketConnection Bot;
 
 		[PluginEntryPoint("DiscordLab", "1.0.0", "Bridge between SCP:SL servers, and Discord", "ThePheggHerself"), PluginPriority(PluginAPI.Enums.LoadPriority.Highest)]
 		public void OnPluginStart()
 		{
 			Log.Info($"Plugin is loading...");
 
-			Bot = new BotConnector();
+			Bot = new BotSocketConnection();
 
 			EventManager.RegisterEvents<Events>(this);
 

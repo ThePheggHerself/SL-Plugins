@@ -11,10 +11,11 @@ using Newtonsoft.Json.Linq;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using MEC;
+using System.Data;
 
 namespace DiscordLab
 {
-    public class BotConnector
+    public class BotSocketConnection
     {
         /// <summary>
         /// <see cref="Regex"/> used for cleaning messages (Prevents broken JSON strings and URLs/Discord invites).
@@ -42,12 +43,12 @@ namespace DiscordLab
 
         Timer StatusTimer, KeepAliveTimer;
 
-        public BotConnector()
+        public BotSocketConnection()
         {
             try
             {
-                StatusTimer = new Timer(timer => StatusUpdate(), null, TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(10));
-                KeepAliveTimer = new Timer(timer => KeepAlive(), null, TimeSpan.FromMinutes(25), TimeSpan.FromMinutes(20));
+                StatusTimer = new Timer(t1 => StatusUpdate(), null, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(30));
+                KeepAliveTimer = new Timer(t2 => KeepAlive(), null, TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(1));
                 new Thread(() =>
                 {
                     BotListener();
@@ -64,9 +65,11 @@ namespace DiscordLab
         /// <summary>
         /// Updates the status for the bot.
         /// </summary>
-        public void StatusUpdate()
+        public void StatusUpdate(bool force = false)
         {
-            if (_lastStatus == null || _lastStatus.CurrentPlayers != (Player.Count + "/" + Server.MaxPlayers))
+			//Log.Info($"Updating Status!");
+
+			if (force || (_lastStatus == null || _lastStatus.CurrentPlayers != (Player.Count + "/" + Server.MaxPlayers)))
             {
                 var msg = new Status();
                 SendMessage(msg);
@@ -79,7 +82,8 @@ namespace DiscordLab
         /// </summary>
         private void KeepAlive()
         {
-            SendMessage(new KeepAlive());
+			//Log.Info($"Keep Alive!");
+			SendMessage(new KeepAlive());
         }
 
         /// <summary>
@@ -153,6 +157,8 @@ namespace DiscordLab
                                 var msg = new PlayerList(jObj["channel"].ToString());
 
                                 SendMessage(msg);
+
+								StatusUpdate(true);
                             }
                             else if (jObj["Type"].ToString().ToLower() == "cmd")
                                 Commands(jObj);

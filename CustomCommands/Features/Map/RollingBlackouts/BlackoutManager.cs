@@ -19,10 +19,11 @@ namespace CustomCommands.Features.Map.RollingBlackouts
 
 			Log.Info($"Starting blackout manager");
 
-			Timing.CallDelayed(5, () => {
-				CheckForLights();
-			}
-			);
+			Timing.CallDelayed(5, () =>
+			{
+				Timing.RunCoroutine(CheckForLights());
+			});
+			
 		}
 
 
