@@ -29,6 +29,10 @@ namespace CustomCommands
 		public bool EnableLateJoin { get; set; } = true;
 		public int LateJoinTime { get; set; } = 30;
 
+		//Enables the late spawn system
+		public bool EnableLateSpawn { get; set; } = true;
+		public int LateSpawnTime { get; set; } = 10;
+
 		//Enables the tutorial fixes (blocks handcuffing)
 		public bool EnableTutorialFixes { get; set; } = true;
 		//Should tutorials explode when a flipped coin lands on tails

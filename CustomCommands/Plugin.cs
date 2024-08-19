@@ -69,6 +69,11 @@ namespace CustomCommands
 				EventManager.RegisterEvents<Features.Humans.LateJoin.LateJoinEvents>(this);
 			}
 
+			if (Config.EnableLateSpawn)
+			{
+				EventManager.RegisterEvents<Features.Humans.LateSpawn.LateSpawnEvents>(this);
+			}
+
 			if (Config.EnableTutorialFixes)
 			{
 				EventManager.RegisterEvents<Features.Humans.TutorialFix.TutorialEvents>(this);

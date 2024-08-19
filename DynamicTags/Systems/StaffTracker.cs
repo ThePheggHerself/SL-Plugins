@@ -23,120 +23,167 @@ namespace DynamicTags.Systems
 		[PluginEvent(ServerEventType.PlayerJoined)]
 		public void OnPlayerJoin(PlayerJoinedEvent args)
 		{
-			var details = new PlayerDetails
+			try
 			{
-				UserId = args.Player.UserId,
-				UserName = args.Player.Nickname,
-				Address = args.Player.IpAddress,
-				ServerAddress = Server.ServerIpAddress,
-				ServerPort = Server.Port.ToString()
-			};
+				var details = new PlayerDetails
+				{
+					UserId = args.Player.UserId,
+					UserName = args.Player.Nickname,
+					Address = args.Player.IpAddress,
+					ServerAddress = Server.ServerIpAddress,
+					ServerPort = Server.Port.ToString()
+				};
 
-			Extensions.Post(Plugin.Config.ApiEndpoint + "scpsl/playerjoin", new StringContent(JsonConvert.SerializeObject(details), Encoding.UTF8, "application/json"));
+				Extensions.Post(Plugin.Config.ApiEndpoint + "scpsl/playerjoin", new StringContent(JsonConvert.SerializeObject(details), Encoding.UTF8, "application/json"));
+			}
+			catch (Exception e)
+			{
+				Log.Error($"Error during PlayerJoinedEvent: " + e.ToString());
+			}
 		}
 
 		[PluginEvent(ServerEventType.PlayerLeft)]
 		public void OnPlayerLeave(PlayerLeftEvent args)
-        {
-            var details = new PlayerDetails
-            {
-                UserId = args.Player.UserId,
-                UserName = args.Player.Nickname,
-                Address = args.Player.IpAddress,
-                ServerAddress = Server.ServerIpAddress,
-                ServerPort = Server.Port.ToString()
-            };
+		{
+			try
+			{
+				var details = new PlayerDetails
+				{
+					UserId = args.Player.UserId,
+					UserName = args.Player.Nickname,
+					Address = args.Player.IpAddress,
+					ServerAddress = Server.ServerIpAddress,
+					ServerPort = Server.Port.ToString()
+				};
 
-            Extensions.Post(Plugin.Config.ApiEndpoint + "scpsl/playerleave", new StringContent(JsonConvert.SerializeObject(details), Encoding.UTF8, "application/json"));
+				Extensions.Post(Plugin.Config.ApiEndpoint + "scpsl/playerleave", new StringContent(JsonConvert.SerializeObject(details), Encoding.UTF8, "application/json"));
+
+			}
+			catch (Exception e)
+			{
+				Log.Error($"Error during PlayerLeftEvent: " + e.ToString());
+			}
 		}
 
 
 		[PluginEvent(ServerEventType.PlayerBanned)]
 		public void OnPlayerBanned(PlayerBannedEvent args)
 		{
-			var details = new PlayerBanDetails
+			try
 			{
-				PlayerName = args.Player.Nickname.Replace(':', ' '),
-				PlayerID = args.Player.UserId,
-				PlayerAddress = args.Player.IpAddress,
-				AdminName = args.Issuer.Nickname.Replace(':', ' '),
-				AdminID = args.Issuer.UserId,
-				Duration = (args.Duration / 60).ToString(),
-				Reason = string.IsNullOrEmpty(args.Reason) ? "No reason provided" : args.Reason
-			};
+				var details = new PlayerBanDetails
+				{
+					PlayerName = args.Player.Nickname.Replace(':', ' '),
+					PlayerID = args.Player.UserId,
+					PlayerAddress = args.Player.IpAddress,
+					AdminName = args.Issuer.Nickname.Replace(':', ' '),
+					AdminID = args.Issuer.UserId,
+					Duration = (args.Duration / 60).ToString(),
+					Reason = string.IsNullOrEmpty(args.Reason) ? "No reason provided" : args.Reason
+				};
 
-			Extensions.Post(Plugin.Config.ApiEndpoint + "scpsl/playerban", new StringContent(JsonConvert.SerializeObject(details), Encoding.UTF8, "application/json"));
+				Extensions.Post(Plugin.Config.ApiEndpoint + "scpsl/playerban", new StringContent(JsonConvert.SerializeObject(details), Encoding.UTF8, "application/json"));
+
+			}
+			catch (Exception e)
+			{
+				Log.Error($"Error during PlayerBannedEvent: " + e.ToString());
+			}
 		}
 
 		[PluginEvent(ServerEventType.PlayerKicked)]
 		public void OnPlayerKicked(PlayerKickedEvent args)
 		{
-			PlayerBanDetails details;
-
-			if (args.Issuer is PlayerCommandSender pCS)
+			try
 			{
-				var admin = Player.Get(pCS.PlayerId);
+				PlayerBanDetails details;
 
-				details = new PlayerBanDetails
+				if (args.Issuer is PlayerCommandSender pCS)
 				{
-					PlayerName = args.Player.Nickname.Replace(':', ' '),
-					PlayerID = args.Player.UserId,
-                    PlayerAddress = args.Player.IpAddress,
-                    AdminName = admin.Nickname.Replace(':', ' '),
-					AdminID = admin.UserId,
-					Duration = "0",
-					Reason = string.IsNullOrEmpty(args.Reason) ? "No reason provided" : args.Reason
-				};				
+					var admin = Player.Get(pCS.PlayerId);
+
+					details = new PlayerBanDetails
+					{
+						PlayerName = args.Player.Nickname.Replace(':', ' '),
+						PlayerID = args.Player.UserId,
+						PlayerAddress = args.Player.IpAddress,
+						AdminName = admin.Nickname.Replace(':', ' '),
+						AdminID = admin.UserId,
+						Duration = "0",
+						Reason = string.IsNullOrEmpty(args.Reason) ? "No reason provided" : args.Reason
+					};
+				}
+				else
+				{
+					details = new PlayerBanDetails
+					{
+						PlayerName = args.Player.Nickname.Replace(':', ' '),
+						PlayerID = args.Player.UserId,
+						PlayerAddress = args.Player.IpAddress,
+						AdminName = "SERVER",
+						AdminID = "server",
+						Duration = "0",
+						Reason = string.IsNullOrEmpty(args.Reason) ? "No reason provided" : args.Reason
+					};
+
+				}
+				Extensions.Post(Plugin.Config.ApiEndpoint + "scpsl/playerkick", new StringContent(JsonConvert.SerializeObject(details), Encoding.UTF8, "application/json"));
+
 			}
-			else
+			catch (Exception e)
 			{
-				details = new PlayerBanDetails
-				{
-                    PlayerName = args.Player.Nickname.Replace(':', ' '),
-                    PlayerID = args.Player.UserId,
-                    PlayerAddress = args.Player.IpAddress,
-                    AdminName = "SERVER",
-					AdminID = "server",
-					Duration = "0",
-                    Reason = string.IsNullOrEmpty(args.Reason) ? "No reason provided" : args.Reason
-                };
-
+				Log.Error($"Error during PlayerKickedEvent: " + e.ToString());
 			}
-			Extensions.Post(Plugin.Config.ApiEndpoint + "scpsl/playerkick", new StringContent(JsonConvert.SerializeObject(details), Encoding.UTF8, "application/json"));
 		}
 
 		[PluginEvent(ServerEventType.PlayerMuted)]
 		public void PlayerMuteEvent(PlayerMutedEvent args)
 		{
-			var details = new PlayerBanDetails
+			try
 			{
-				PlayerName = args.Player.Nickname.Replace(':', ' '),
-				PlayerID = args.Player.UserId,
-                PlayerAddress = args.Player.IpAddress,
-                AdminName = args.Issuer.Nickname.Replace(':', ' '),
-				AdminID = args.Issuer.UserId,
-				Duration = args.IsIntercom.ToString(),
-				Reason = "No reason provided"
-			};
+				var details = new PlayerBanDetails
+				{
+					PlayerName = args.Player.Nickname.Replace(':', ' '),
+					PlayerID = args.Player.UserId,
+					PlayerAddress = args.Player.IpAddress,
+					AdminName = args.Issuer.Nickname.Replace(':', ' '),
+					AdminID = args.Issuer.UserId,
+					Duration = args.IsIntercom.ToString(),
+					Reason = "No reason provided"
+				};
 
-			Extensions.Post(Plugin.Config.ApiEndpoint + "scpsl/playermute", new StringContent(JsonConvert.SerializeObject(details), Encoding.UTF8, "application/json"));
+				Extensions.Post(Plugin.Config.ApiEndpoint + "scpsl/playermute", new StringContent(JsonConvert.SerializeObject(details), Encoding.UTF8, "application/json"));
+
+			}
+			catch (Exception e)
+			{
+				Log.Error($"Error during PlayerMutedEvent: " + e.ToString());
+			}
 		}
 
 		[PluginEvent(ServerEventType.PlayerUnmuted)]
 		public void PlayerUnmuteEvent(PlayerUnmutedEvent args)
-        {
-            var details = new PlayerBanDetails
-            {
-                PlayerName = args.Player.Nickname.Replace(':', ' '),
-                PlayerID = args.Player.UserId,
-                PlayerAddress = args.Player.IpAddress,
-                AdminName = args.Issuer.Nickname.Replace(':', ' '),
-                AdminID = args.Issuer.UserId,
-                Duration = args.IsIntercom.ToString(),
-                Reason = "No reason provided"
-            };
+		{
+			try
+			{
+				var details = new PlayerBanDetails
+				{
+					PlayerName = args.Player.Nickname.Replace(':', ' '),
+					PlayerID = args.Player.UserId,
+					PlayerAddress = args.Player.IpAddress,
+					AdminName = args.Issuer.Nickname.Replace(':', ' '),
+					AdminID = args.Issuer.UserId,
+					Duration = args.IsIntercom.ToString(),
+					Reason = "No reason provided"
+				};
 
-            Extensions.Post(Plugin.Config.ApiEndpoint + "scpsl/playerunmute", new StringContent(JsonConvert.SerializeObject(details), Encoding.UTF8, "application/json"));
+				Extensions.Post(Plugin.Config.ApiEndpoint + "scpsl/playerunmute", new StringContent(JsonConvert.SerializeObject(details), Encoding.UTF8, "application/json"));
+
+			}
+			catch (Exception e)
+			{
+				Log.Error($"Error during PlayerUnmutedEvent: " + e.ToString());
+			}
 		}
 	}
 }

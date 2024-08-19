@@ -31,10 +31,6 @@ namespace StatTracker
 
 			public string UserID; 
 			public bool DNT = true;
-			public int SCPsKilled = 0; //How many SCPs the player has killed
-			public int SCPKills = 0; //How many kills the player has as SCP
-			public int HumansKilled = 0; //How many human kills the player has
-			public int HumanKills = 0; //How many kills the player has as a human
 			public int MedicalItems = 0; 
 			public bool Escaped = false; //Has the player escaped
 			public bool RoundWon = false; //Is the player alive as the winning team when the round ends
@@ -42,8 +38,10 @@ namespace StatTracker
 			public int PlayersDisarmed = 0; //How many people has the player disarmed
 			public int DamageDealt = 0; //How much damage the player has dealt
 			public int DamageTaken = 0; //How much damage the player has taken
-			public int Deaths = 0; //How many times the player has died
 			public Dictionary<int, int> Spawns = new Dictionary<int, int>(); //How many times this player has spawned as a role
+			public Dictionary<int, int> Kills = new Dictionary<int, int>(); //How many kills this player has as this role
+			public Dictionary<int, int> Killed = new Dictionary<int, int>(); //How many times this player has killed this role
+			public Dictionary<int, int> Deaths = new Dictionary<int, int>(); //How many times this player has died as this role
 			public DateTime Jointime;
 		}
 	}

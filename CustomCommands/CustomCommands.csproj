@@ -105,6 +105,7 @@
     <Compile Include="Features\Events\WeeklyEvents\Events.cs" />
     <Compile Include="Features\Humans\Disarming\DisarmingEvents.cs" />
     <Compile Include="Features\Humans\LateJoin\LateJoinEvents.cs" />
+    <Compile Include="Features\Humans\LateSpawn\LateSpawnEvents.cs" />
     <Compile Include="Features\Humans\TutorialFix\TutorialEvents.cs" />
     <Compile Include="Features\Items\Grenades\Commands\Flash.cs" />
     <Compile Include="Features\Items\Grenades\Commands\Grenade.cs" />

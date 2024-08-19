@@ -122,17 +122,15 @@ namespace StatTracker
 			var targ = ev.Player;
 			var atkr = new Player(aDH.Attacker.Hub);
 
-			if (targ.IsSCP)
-				StatData[atkr.UserId].SCPsKilled += 1;
+			if(StatData[targ.UserId].Deaths.ContainsKey((int)targ.Role))
+				StatData[targ.UserId].Deaths[(int)targ.Role] += 1;
 			else
-				StatData[atkr.UserId].HumansKilled += 1;
+				StatData[targ.UserId].Deaths.Add((int)targ.Role, 1);
 
-			if (atkr.IsSCP)
-				StatData[atkr.UserId].SCPKills += 1;
+			if (StatData[atkr.UserId].Killed.ContainsKey((int)targ.Role))
+				StatData[atkr.UserId].Killed[(int)targ.Role] += 1;
 			else
-				StatData[atkr.UserId].HumanKills += 1;
-
-			StatData[targ.UserId].Deaths += 1;
+				StatData[atkr.UserId].Killed.Add((int)targ.Role, 1);
 		}
 
 		[PluginEvent]
@@ -163,12 +161,6 @@ namespace StatTracker
 
 			StatData[ev.Player.UserId].MedicalItems += 1;
 		}
-
-
-
-
-
-
 
 		//Gets the data and sends it off to the API for handling.
 		//This is done as a co-routine so that it doesn't interfere with normal server running.
