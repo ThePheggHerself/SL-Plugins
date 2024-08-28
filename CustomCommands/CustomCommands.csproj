@@ -97,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\Grenade\Explode.cs" />
+    <Compile Include="Commands\Misc\rmute.cs" />
     <Compile Include="Commands\Misc\Vote.cs" />
     <Compile Include="Commands\Misc\BanCheck.cs" />
     <Compile Include="Features\Depricated\Hush.cs" />
