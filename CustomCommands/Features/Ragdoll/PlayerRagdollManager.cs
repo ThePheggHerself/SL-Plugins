@@ -42,6 +42,8 @@ namespace CustomCommands.Features.Ragdoll
 
 		public static void RagdollPlayer(this Player plr, float time = 3, float forceMultiplyer = 1)
 		{
+			if (!plr.IsAlive)
+				return;
 			Vector3 velocity = plr.Velocity;
 			velocity += plr.Camera.transform.forward * UnityEngine.Random.Range(1, 1.5f) * forceMultiplyer;
 
