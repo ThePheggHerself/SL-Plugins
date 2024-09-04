@@ -50,6 +50,20 @@ namespace CustomCommands.Features.SCPs.SCP3114
 			}
 		}
 
+		[PluginEvent]
+		public bool PlayerItemPickupEvent(PlayerSearchPickupEvent ev)
+		{
+			if(ev.Player.Role == RoleTypeId.Scp3114)
+			{
+				if(ev.Item.Info.ItemId == ItemType.MicroHID || ev.Item.Info.ItemId == ItemType.SCP268 || ev.Item.Info.ItemId == ItemType.SCP207)
+				{
+					ev.Player.ReceiveHint($"You cannot pick up this item", 3);
+					return false;
+				}
+			}
+			return true;
+		}
+
 		public static HumanRole Disguise3114(Player plr)
 		{
 			#region Spawns Ragdoll
