@@ -39,36 +39,36 @@ namespace CustomCommands.Commands.Misc
 
                 internal const string prefixes = "Main prefixes: (This will make more sense if I add the scuffed ones back)\n" +
                                                 "   - A: Renames everyone based on the provided string\n" +
-                                                //"   - Rx,y,z,...: Renames everyone matching a desired role(s)\n" +
-                                                //"   - Tx,y,z,...: Renames everyone matching a desired team(s)\n" +
-                                                //"   - Nx: Renames only the specified number of players (replace x with number, e.g. \"N5\"\n" +
-                                                "   - h: Shows this text!";// Or if used with a prefix, shows the available options (e.g. \"hT\")\n";// +
-                                                //"Sub-prefixes:\n" +
-                                                //"(These are 'modifiers' so to speak of the main prefixes)\n" +
-                                                //"   - u: Only renames people without a nickname already (use before main prefix, e.g. \"uA\")\n" +
-                                                //"   - a: Proccesses players sorted alphabetically ascending (use before main prefix, e.g. \"aA\")\n" +
-                                                //"   - d: Proccesses players sorted alphabetically descending\n" +
-                                                //"   - !: Renames people based on the opposite of the criteria (use before main prefix, e.g. \"!T0\", \"!uA\")\n";// +
-                                                                                                                                                                 //"   - &: Combines multiple criteria/conditions (e.g. \"N5&T4\")";
+                                                "   - Rx,y,z,...: Renames everyone matching a desired role(s)\n" + //borked
+                                                "   - Tx,y,z,...: Renames everyone matching a desired team(s)\n" + //borked
+                                                "   - Nx: Renames only the specified number of players (replace x with number, e.g. \"N5\"\n" +
+                                                "   - h: Shows this text! Or if used with a prefix, shows the available options (e.g. \"hT\")\n" +
+                                                "Sub-prefixes:\n" +
+                                                "(These are 'modifiers' so to speak of the main prefixes)\n" +
+                                                "   - u: Only renames people without a nickname already (use before main prefix, e.g. \"uA\")\n" +
+                                                "   - a: Proccesses players sorted alphabetically ascending (use before main prefix, e.g. \"aA\")\n" +
+                                                "   - d: Proccesses players sorted alphabetically descending\n" +
+                                                "   - !: Renames people based on the opposite of the criteria (use before main prefix, e.g. \"!T0\", \"!uA\")\n";// +
+                                                                                                                                                                 //"   - &: Combines multiple criteria/conditions (e.g. \"N5&T4\")"; //TODO
 
                 internal const string parsing = "There are a few special tags that get replaced which you can use in the nickname string:\n" +
                                                 "   - {b}: Gets replaced with the player's default name\n" +
-                                                //"      - {b:i:j}: The players name but with a certain number of characters chopped off ('i' from the start, and 'j' from the end)\n" +
-                                                //"      - {b:v+i:v+j}: The players name but with all the characters before/after the first/last vowel chopped off, plus an optional extra i/j characters\n" +
+                                                //"      - {b:i:j}: The players name but with a certain number of characters chopped off ('i' from the start, and 'j' from the end)\n" + //TODO
+                                                //"      - {b:v+i:v+j}: The players name but with all the characters before/after the first/last vowel chopped off, plus an optional extra i/j characters\n" + //TODO
                                                 "   - {n}: A number that counts up for each player renamed\n" +
                                                 "   - {a}: A letter of the alphabet that increases for each player renamed (gets funky after 26)\n" +
-                                                //"   - {rnd:x:y}: A random integer between x (inclusive) and y (exclusive)\n" +
-                                                //"   - {rndu:x:y}: A random unique (no repeats) integer between x (inclusive) and y (exclusive)\n" +
+                                                //"   - {rnd:x:y}: A random integer between x (inclusive) and y (exclusive)\n" + //TODO
+                                                //"   - {rndu:x:y}: A random unique (no repeats) integer between x (inclusive) and y (exclusive)\n" + //TODO
                                                 "   - {r}: The player's role\n" +
                                                 "   - {C}: The player's class";
                 private static string _rHelp()
                 {
                     string s = "Available roles (use the number):\n";
                     foreach (var c in Enum.GetValues(typeof(RoleTypeId)))
-                        s += ((byte)c).ToString() + " : " + c.ToString() + "\n";
+                        s += ((sbyte)c).ToString() + " : " + c.ToString() + "\n";
                     return s;
                 }
-                internal static string cHelp => _rHelp();
+                internal static string rHelp => _rHelp();
 
                 private static string _tHelp()
                 {
@@ -87,13 +87,13 @@ namespace CustomCommands.Commands.Misc
                     string prefix = arguments.FirstOrDefault();
                     if (prefix.StartsWith("h"))
                     {
-                        //switch (prefix.Last())
-                        //{
-                        //    case 'C':
-                        //        response = help.cHelp; return true;
-                        //    case 'T':
-                        //        response = help.tHelp; return true;
-                        //}
+                        switch (prefix.Last())
+                        {
+                            case 'R':
+                                response = help.rHelp; return true;
+                            case 'T':
+                                response = help.tHelp; return true;
+                        }
 
                         response = $"<b>Welcome to mass renaming 101!</b>\n\n{help.general}\n\n{help.unname}\n\n{help.prefixes}\n\n{help.parsing}";
                         return true;
@@ -106,26 +106,26 @@ namespace CustomCommands.Commands.Misc
                     players = Player.GetPlayers();
 
                     bool prfxA = prefix.Contains('A');
-                    //bool prfxN = prefix.Contains('N');
-                    //bool prfxR = prefix.Contains('R');
-                    //bool prfxT = prefix.Contains('T');
-                    //bool prfxU = prefix.Contains('u');
-                    if (!(prfxA))// || prfxN || prfxR || prfxT))
+                    bool prfxN = prefix.Contains('N');
+                    bool prfxR = prefix.Contains('R');
+                    bool prfxT = prefix.Contains('T');
+                    bool prfxU = prefix.Contains('u');
+                    if (!(prfxA || prfxN || prfxR || prfxT))
                     {
                         response = "Invalid prefix";
                         return false;
                     }
 
-                    //bool prfxAsc = prefix.Contains('a');
-                    //bool prfxDesc = prefix.Contains('d');
-                    //bool prfxNOT = prefix.Contains('!');
+                    bool prfxAsc = prefix.Contains('a');
+                    bool prfxDesc = prefix.Contains('d');
+                    bool prfxNOT = prefix.Contains('!');
 
 
-                    Func<char, string, List<int>> f = (c, x) =>
+                    Func<char, string, HashSet<int>> f = (c, x) =>
                     {
                         bool cNum = false;
-                        int temp = 0;
-                        List<int> ret = new List<int>();
+                        int curr = -1;
+                        HashSet<int> ret = new HashSet<int>();
                         foreach (var y in x)
                         {
                             if (y == c)
@@ -133,67 +133,81 @@ namespace CustomCommands.Commands.Misc
                                 cNum = true;
                                 continue;
                             }
-                            if ('0' <= y && y <= '9' && cNum == true)
-                                temp = temp * 10 + (y - '0');
-                            else if (y == ',' && cNum == true)
-                            {
-                                ret.Add(temp);
-                                temp = 0;
-                                continue;
-                            }
-                            else break;
+                            if (cNum)
+                                if ('0' <= y && y <= '9')
+                                    curr = curr * 10 + (y - '0');
+                                else if (y == ',')
+                                {
+                                    ret.Add(curr);
+                                    curr = -1;
+                                    continue;
+                                }
+                                else break;
                         }
+                        if (cNum && curr != -1)
+                            ret.Add(curr);
                         return ret;
                     };
 
                     int n = Player.Count;
-                    //if (prfxN)
-                    //{
-                    //    n = f('N', prefix).FirstOrDefault();
-                    //    if (prfxNOT)
-                    //        n = Player.Count - n;
-                    //}
+                    if (prfxN)
+                    {
+                        n = f('N', prefix).FirstOrDefault();
+                        if (prfxNOT)
+                            n = Player.Count - n;
+                    }
+                    var roles = f('R', prefix).Select(y => (RoleTypeId)y);
+                    var teams = f('T', prefix).Select(y => (Team)y);
 
-                    //var roles = f('R', prefix).Select(y => (RoleTypeId)y);
-                    //var teams = f('T', prefix).Select(y => (Team)y);
+                    if (prfxAsc || prfxDesc)
+                    {
+                        players.Sort(Comparer<Player>.Create((x, y) => x.Nickname.CompareTo(y.Nickname)));
 
-                    //if (prfxAsc || prfxDesc)
-                    //{
-                    //    players.Sort(Comparer<Player>.Create((x, y) => x.Nickname.CompareTo(y.Nickname)));
-
-                    //    if (prfxDesc)
-                    //        players.Reverse();
-                    //}
-                    /*else*/ players.ShuffleList();
+                        if (prfxDesc)
+                            players.Reverse();
+                    }
+                    else
+                        players.ShuffleList();
 
                     string nick = string.Join(" ", arguments.Skip(1));
 
-                    int i = 0;
-                    while (i < n && i < players.Count)
+                    int p = 0;
+                    for (int i = 0; i < n && i < players.Count; i++)
                     {
                         var plr = players.ElementAt(i);
-                        //if (!(prfxNOT != (
-                        //    prfxA ||
-                        //    prfxR && roles.Contains(plr.Role) ||
-                        //   prfxT && teams.Contains(plr.Team) ||
-                        //    prfxU && plr.DisplayNickname == ""
-                        //    ))) continue;
+                        if (plr == null || plr.IsServer)
+                        {
+                            if (prfxN && prfxNOT) n++;
+                            continue;
+                        }
+
+                        bool conditions = prfxA ||
+                                            prfxR && roles.Contains(plr.RoleBase.RoleTypeId) ||
+                                            prfxT && teams.Contains(plr.Team) ||
+                                            prfxU && plr.DisplayNickname == "";
+
+                        if (!(prfxNOT != conditions)) // if not ( not condition XOR other conditions )
+                        {
+                            n++;
+                            continue;
+                        }
 
                         StringBuilder temp = new StringBuilder(nick);
                         temp.Replace("{b}", plr.Nickname);
-                        temp.Replace("{n}", (i + 1).ToString());
-                        temp.Replace("{a}", ((char)(i + 'A')).ToString());
+                        temp.Replace("{n}", (p + 1).ToString());
+                        temp.Replace("{a}", ((char)(p + 'A')).ToString());
                         temp.Replace("{t}", plr.Team.ToString());
                         temp.Replace("{r}", plr.Role.ToString());
 
                         plr.DisplayNickname = temp.ToString();
-                        i++;
+                        p++;
                     }
 
-                    response = $"Renamed {n} {(n != 1 ? "people" : "person")}";
+                    response = $"Renamed {p} {(p != 1 ? "people" : "person")}\n{roles.Count()} {teams.Count()}";
 
                     return true;
-                } catch (Exception e)
+                }
+                catch (Exception e)
                 {
                     response = "You borked something\n" + e.Message;
                     return false;
