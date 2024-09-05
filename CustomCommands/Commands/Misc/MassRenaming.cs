@@ -39,10 +39,10 @@ namespace CustomCommands.Commands.Misc
 
                 internal const string prefixes = "Main prefixes: (This will make more sense if I add the scuffed ones back)\n" +
                                                 "   - A: Renames everyone based on the provided string\n" +
-                                                "   - Rx,y,z,...: Renames everyone matching a desired role(s)\n" + //borked
-                                                "   - Tx,y,z,...: Renames everyone matching a desired team(s)\n" + //borked
+                                                //"   - Rx,y,z,...: Renames everyone matching a desired role(s)\n" + //borked
+                                                //"   - Tx,y,z,...: Renames everyone matching a desired team(s)\n" + //borked
                                                 "   - Nx: Renames only the specified number of players (replace x with number, e.g. \"N5\"\n" +
-                                                "   - h: Shows this text! Or if used with a prefix, shows the available options (e.g. \"hT\")\n" +
+                                                "   - h: Shows this text!\n"+// Or if used with a prefix, shows the available options (e.g. \"hT\")\n" +
                                                 "Sub-prefixes:\n" +
                                                 "(These are 'modifiers' so to speak of the main prefixes)\n" +
                                                 "   - u: Only renames people without a nickname already (use before main prefix, e.g. \"uA\")\n" +
@@ -60,7 +60,7 @@ namespace CustomCommands.Commands.Misc
                                                 //"   - {rnd:x:y}: A random integer between x (inclusive) and y (exclusive)\n" + //TODO
                                                 //"   - {rndu:x:y}: A random unique (no repeats) integer between x (inclusive) and y (exclusive)\n" + //TODO
                                                 "   - {r}: The player's role\n" +
-                                                "   - {C}: The player's class";
+                                                "   - {t}: The player's team";
                 private static string _rHelp()
                 {
                     string s = "Available roles (use the number):\n";
@@ -107,10 +107,10 @@ namespace CustomCommands.Commands.Misc
 
                     bool prfxA = prefix.Contains('A');
                     bool prfxN = prefix.Contains('N');
-                    bool prfxR = prefix.Contains('R');
-                    bool prfxT = prefix.Contains('T');
-                    bool prfxU = prefix.Contains('u');
-                    if (!(prfxA || prfxN || prfxR || prfxT))
+                    //bool prfxR = prefix.Contains('R');
+                    //bool prfxT = prefix.Contains('T');
+                    //bool prfxU = prefix.Contains('u');
+                    if (!(prfxA || prfxN))// || prfxR || prfxT))
                     {
                         response = "Invalid prefix";
                         return false;
@@ -156,8 +156,8 @@ namespace CustomCommands.Commands.Misc
                         if (prfxNOT)
                             n = Player.Count - n;
                     }
-                    var roles = f('R', prefix).Select(y => (RoleTypeId)y);
-                    var teams = f('T', prefix).Select(y => (Team)y);
+                    //var roles = f('R', prefix).Select(y => (RoleTypeId)y);
+                    //var teams = f('T', prefix).Select(y => (Team)y);
 
                     if (prfxAsc || prfxDesc)
                     {
@@ -181,16 +181,16 @@ namespace CustomCommands.Commands.Misc
                             continue;
                         }
 
-                        bool conditions = prfxA ||
-                                            prfxR && roles.Contains(plr.RoleBase.RoleTypeId) ||
-                                            prfxT && teams.Contains(plr.Team) ||
-                                            prfxU && plr.DisplayNickname == "";
+                        bool conditions = prfxA;// ||
+                                                //prfxR && roles.Contains(plr.Role) || //Doesnt work and I blame Northwood
+                                                //prfxT && teams.Contains(plr.Team) || //Doesnt work and I blame Northwood
+                                                //prfxU && plr.DisplayNickname == "";  //Doesnt work and I blame Northwood
 
-                        if (!(prfxNOT != conditions)) // if not ( not condition XOR other conditions )
+                        /*if (!(prfxNOT != conditions)) // if not ( not condition XOR other conditions )
                         {
                             n++;
                             continue;
-                        }
+                        }*/
 
                         StringBuilder temp = new StringBuilder(nick);
                         temp.Replace("{b}", plr.Nickname);
@@ -203,7 +203,7 @@ namespace CustomCommands.Commands.Misc
                         p++;
                     }
 
-                    response = $"Renamed {p} {(p != 1 ? "people" : "person")}\n{roles.Count()} {teams.Count()}";
+                    response = $"Renamed {p} {(p != 1 ? "people" : "person")}";
 
                     return true;
                 }
