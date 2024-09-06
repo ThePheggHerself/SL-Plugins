@@ -107,6 +107,7 @@
     <Compile Include="Features\Events\WeeklyEvents\EventManager.cs" />
     <Compile Include="Features\Events\WeeklyEvents\Events.cs" />
     <Compile Include="Features\Humans\Disarming\DisarmingEvents.cs" />
+    <Compile Include="Features\Humans\Evaporate\EvaporateOnBan.cs" />
     <Compile Include="Features\Humans\Evaporate\EvaporatePlayer.cs" />
     <Compile Include="Features\Humans\LateJoin\LateJoinEvents.cs" />
     <Compile Include="Features\Humans\LateSpawn\LateSpawnEvents.cs" />

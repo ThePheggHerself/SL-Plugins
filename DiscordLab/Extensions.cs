@@ -97,7 +97,7 @@ namespace DiscordLab
             var victimRole = victim.ReferenceHub.roleManager.CurrentRole;
             var AttackerRole = Attacker.ReferenceHub.roleManager.CurrentRole;
 
-            if (victimRole.Team == Team.SCPs || AttackerRole.Team == Team.SCPs)
+            if (victimRole.Team == Team.SCPs || AttackerRole.Team == Team.SCPs || Attacker.IsServer)
                 return false;
 
             if ((victimRole.RoleTypeId == RoleTypeId.ClassD || IsChaos(victim)) && (AttackerRole.Team == Team.ClassD || IsChaos(Attacker)))
