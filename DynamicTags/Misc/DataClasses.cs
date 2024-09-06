@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace DynamicTags
 {
+	public enum ActionType
+	{
+		NONE = 0,
+		Warn = 1,
+		Kick = 2,
+	}
+
 	public class TagData
 	{
 		public bool ReservedSlot { get; set; }
@@ -55,5 +62,12 @@ namespace DynamicTags
 
 		public string ServerAddress { get; set; }
 		public string ServerPort { get; set; }
+	}
+
+	public class APIResponse
+	{
+		public ActionType Action { get; set; }
+		public string ReasonPlayer { get; set; }
+		public string ReasonServer { get; set; }	
 	}
 }

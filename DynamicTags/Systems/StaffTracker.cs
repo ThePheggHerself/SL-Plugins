@@ -15,11 +15,45 @@ using System.Net.Http;
 using RemoteAdmin;
 using CommandSystem;
 using PluginAPI.Events;
+using MEC;
 
 namespace DynamicTags.Systems
 {
 	public class StaffTracker
 	{
+		[PluginEvent]
+		public void OnPlayerPreauth(PlayerPreauthEvent args)
+		{
+			Timing.RunCoroutine(CheckPreauth(args));
+		}
+
+		public IEnumerator<float> CheckPreauth(PlayerPreauthEvent args)
+		{
+			try
+			{
+				var details = new PlayerDetails
+				{
+					UserId = args.UserId,
+					Address = args.IpAddress,
+					ServerAddress = Server.ServerIpAddress,
+					ServerPort = Server.Port.ToString()
+				};
+
+				var httpRM = Extensions.Post(Plugin.Config.ApiEndpoint + "scpsl/playerpreauth", new StringContent(JsonConvert.SerializeObject(details), Encoding.UTF8, "application/json")).Result;
+				var response = JsonConvert.DeserializeObject<APIResponse>(httpRM.Content.ReadAsStringAsync().Result);
+
+				Log.Info($"{response.Action} | {response.ReasonPlayer} | {response.ReasonPlayer}");
+
+				args.ConnectionRequest.RejectForce();
+			}
+			catch (Exception e)
+			{
+				Log.Error($"Error during PlayerPreauthEvent: " + e.ToString());
+			}
+
+			yield return 0f;
+		}
+
 		[PluginEvent(ServerEventType.PlayerJoined)]
 		public void OnPlayerJoin(PlayerJoinedEvent args)
 		{
