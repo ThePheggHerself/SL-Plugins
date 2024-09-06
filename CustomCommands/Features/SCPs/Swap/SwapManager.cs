@@ -11,7 +11,11 @@ namespace CustomCommands.Features.SCPs.Swap
 	public static class SwapManager
 	{
 		public static int SCPsToReplace = 0;
-		public static void ReplaceBroadcast() => Server.SendBroadcast($"There {(SCPsToReplace == 1 ? "is" : "are")} now {SCPsToReplace} SCP spot{(SCPsToReplace == 1 ? "" : "s")} available. Run \".scp\" to queue for an SCP", 5);
+		public static void ReplaceBroadcast()
+		{
+			Server.ClearBroadcasts();
+			Server.SendBroadcast($"There {(SCPsToReplace == 1 ? "is" : "are")} now {SCPsToReplace} SCP spot{(SCPsToReplace == 1 ? "" : "s")} available. Run \".scp\" to queue for an SCP", 5);
+		}
 		public static bool LateTimer = false;
 
 		public static RoleTypeId[] AvailableSCPs
