@@ -57,5 +57,6 @@ namespace CustomCommands
 		public int MinBlackoutTime { get; set; } = 180; //Minimum time between round start and blackout
 		public int MaxBlackoutTime { get; set; } = 360; //Maximum time between round start and blackout
 		public int BlackoutDuration { get; set; } = 30; //Duration of the blackout 
+		public bool EvaporateOnBan { get; set; } = true; //Uses particle disrupter death animation when a player dies to getting banned
 	}
 }

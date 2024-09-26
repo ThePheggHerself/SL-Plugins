@@ -1,4 +1,5 @@
 ﻿using CustomCommands.Events;
+using CustomCommands.Features.Humans.Evaporate;
 using CustomCommands.Features.Map.RollingBlackouts;
 using HarmonyLib;
 using PlayerRoles.Ragdolls;
@@ -121,10 +122,15 @@ namespace CustomCommands
 				EventManager.RegisterEvents<Features.Events.WeeklyEvents.Events>(this);
 			}
 
-			if(Config.EnableBlackout)
+			if (Config.EnableBlackout)
 			{
 				EventManager.RegisterEvents<BlackoutEvents>(this);
 				new BlackoutManager();
+			}
+
+			if (Config.EvaporateOnBan)
+			{
+				EventManager.RegisterEvents<EvaporateOnBan>(this);
 			}
 
 
