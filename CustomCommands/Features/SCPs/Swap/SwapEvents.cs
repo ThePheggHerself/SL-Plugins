@@ -35,6 +35,7 @@ namespace CustomCommands.Features.SCPs.Swap
 		{
 			SwapManager.SCPsToReplace = 0;
 			SwapManager.LateTimer = false;
+			SwapManager.triggers.Clear();
 		}
 
 		[PluginEvent]

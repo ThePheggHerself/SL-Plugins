@@ -38,7 +38,7 @@ namespace CustomCommands
 		public void OnPluginStart()
 		{
 			Harmony harmony = new Harmony("CC-Patching-Phegg");
-			harmony.PatchAll();
+			//harmony.PatchAll();
 
 			Log.Info($"Plugin is loading...");
 

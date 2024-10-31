@@ -51,10 +51,26 @@ namespace CustomCommands.Features.SCPs.Swap.Commands
 					return false;
 				}
 
-				if (SwapManager.Cooldown.TryGetValue(player.UserId, out int roundCount) && (RoundRestart.UptimeRounds - roundCount) < 3)
+				if (SwapManager.Cooldown.TryGetValue(player.UserId, out int roundCount))
 				{
-					response = "You have already recently replaced an SCP and are still on cooldown";
-					return false;
+					if (roundCount > RoundRestart.UptimeRounds)
+					{
+						if (SwapManager.triggers.TryGetValue(player.UserId, out int count))
+						{
+							if (count > 2)
+							{
+								SwapManager.Cooldown[player.UserId]++;
+								SwapManager.triggers[player.UserId] = 0;
+							}
+							else SwapManager.triggers[player.UserId]++;
+						}
+						else
+							SwapManager.triggers.Add(player.UserId, 1);
+
+
+						response = $"You are on cooldown for another {SwapManager.Cooldown[player.UserId] - RoundRestart.UptimeRounds} round(s).";
+						return false;
+					}
 				}
 
 				var scps = SwapManager.AvailableSCPs;
@@ -65,9 +81,9 @@ namespace CustomCommands.Features.SCPs.Swap.Commands
 				SwapManager.SCPsToReplace--;
 
 				if (SwapManager.Cooldown.ContainsKey(player.UserId))
-					SwapManager.Cooldown[player.UserId] = RoundRestart.UptimeRounds;
+					SwapManager.Cooldown[player.UserId] = RoundRestart.UptimeRounds + SwapManager.ReplaceBaseCooldown;
 				else
-					SwapManager.Cooldown.Add(player.UserId, RoundRestart.UptimeRounds);
+					SwapManager.Cooldown.Add(player.UserId, RoundRestart.UptimeRounds + SwapManager.ReplaceBaseCooldown);
 
 				response = "You have replaced an SCP";
 				return true;

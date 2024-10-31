@@ -11,6 +11,9 @@ namespace CustomCommands.Features.SCPs.Swap
 	public static class SwapManager
 	{
 		public static int SCPsToReplace = 0;
+		public static int ReplaceBaseCooldown = 4;
+		public static Dictionary<string, int> triggers = new Dictionary<string, int>();
+
 		public static void ReplaceBroadcast()
 		{
 			Server.ClearBroadcasts();
