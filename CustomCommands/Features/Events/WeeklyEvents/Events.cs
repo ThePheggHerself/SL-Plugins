@@ -40,30 +40,28 @@ namespace CustomCommands.Features.Events.WeeklyEvents
 					}
 				}
 
-				if (EventManager.CurrentEvent == EventType.CoinCardUpgrade)
-				{
-					MEC.Timing.CallDelayed(2, () =>
-					{
-						ev.Player.RemoveItem(ev.Player.CurrentItem);
-						ev.Player.CurrentItem = null;
+				//if (EventManager.CurrentEvent == EventType.CoinCardUpgrade)
+				//{
+				//	MEC.Timing.CallDelayed(2, () =>
+				//	{
+				//		ev.Player.RemoveItem(ev.Player.CurrentItem);
+				//		ev.Player.CurrentItem = null;
 
-						Log.Info("EEE");
+				//		var itemHash = HashSetPool<ushort>.Shared.Rent();
 
-						var itemHash = HashSetPool<ushort>.Shared.Rent();
+				//		for (int i = 0; i < ev.Player.Items.Count; i++)
+				//		{
+				//			var item = ev.Player.Items.ElementAt(i);
 
-						for (int i = 0; i < ev.Player.Items.Count; i++)
-						{
-							var item = ev.Player.Items.ElementAt(i);
+				//			if (item.Category == ItemCategory.Keycard && item.TryGetComponent<Scp914ItemProcessor>(out Scp914ItemProcessor processor))
+				//			{
+				//				processor.OnInventoryItemUpgraded(!ev.IsTails ? Scp914KnobSetting.Fine : Scp914KnobSetting.Coarse, ev.Player.ReferenceHub, item.ItemSerial);
+				//			}
+				//		}
 
-							if (item.Category == ItemCategory.Keycard && item.TryGetComponent<Scp914ItemProcessor>(out Scp914ItemProcessor processor))
-							{
-								processor.OnInventoryItemUpgraded(!ev.IsTails ? Scp914KnobSetting.Fine : Scp914KnobSetting.Coarse, ev.Player.ReferenceHub, item.ItemSerial);
-							}
-						}
-
-						ev.Player.ReceiveHint($"Your keycards have been {(!ev.IsTails ? "upgraded" : "downgraded")}", 5);
-					});
-				}
+				//		ev.Player.ReceiveHint($"Your keycards have been {(!ev.IsTails ? "upgraded" : "downgraded")}", 5);
+				//	});
+				//}
 			}
 		}
 

@@ -31,7 +31,7 @@ namespace CustomCommands.Features.Map.SurfaceLightFix
 			surfaceLight.NetworkLightIntensity = lightIntensity;
 			surfaceLight.NetworkLightRange = 250;
 			surfaceLight.NetworkLightColor = Color.white;
-			surfaceLight.NetworkLightShadows = false;
+			surfaceLight.NetworkShadowType = LightShadows.None;
 		}
 
 

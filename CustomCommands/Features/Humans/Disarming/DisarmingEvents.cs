@@ -4,6 +4,7 @@ using Hints;
 using InventorySystem.Items;
 using InventorySystem.Items.Armor;
 using InventorySystem.Items.Firearms;
+using InventorySystem.Items.Firearms.Modules;
 using MapGeneration;
 using Mirror;
 using PlayerRoles;
@@ -92,7 +93,10 @@ namespace CustomCommands.Features.Humans.Disarming
 					{
 						if (a.Category == ItemCategory.Firearm && a is Firearm firearm)
 						{
-							switch (firearm.AmmoType)
+							if (!firearm.TryGetModule<IPrimaryAmmoContainerModule>(out var iPACM))
+								continue;
+
+							switch (iPACM.AmmoType)
 							{
 								case ItemType.Ammo12gauge:
 									{
@@ -111,7 +115,7 @@ namespace CustomCommands.Features.Humans.Disarming
 								case ItemType.Ammo9x19:
 									{
 										ushort ammoCount = (ushort)UnityEngine.Random.Range(20, 41);
-										cuffer.AddAmmo(firearm.AmmoType, ammoCount);
+										cuffer.AddAmmo(iPACM.AmmoType, ammoCount);
 										break;
 									}
 								default: break;

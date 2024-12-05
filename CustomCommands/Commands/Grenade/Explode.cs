@@ -32,7 +32,7 @@ namespace CustomCommands.Commands.Grenade
 			{
 				if (plr.Role == PlayerRoles.RoleTypeId.Spectator || plr.Role == PlayerRoles.RoleTypeId.Overwatch)
 					continue;
-				ExplosionUtils.ServerExplode(plr.ReferenceHub);
+				ExplosionUtils.ServerExplode(plr.ReferenceHub, ExplosionType.PinkCandy);
 			}
 			response = "Player successfully detonated";
 			return true;

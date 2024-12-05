@@ -24,6 +24,7 @@ using PluginAPI.Core;
 using InventorySystem.Items.Firearms;
 using InventorySystem.Items.Pickups;
 using MEC;
+using InventorySystem.Items.Firearms.Modules;
 
 namespace CustomCommands.Features.Items.Weapons
 {
@@ -61,7 +62,9 @@ namespace CustomCommands.Features.Items.Weapons
 
 					PlayerRoleLoader.TryGetRoleTemplate(role, out FpcStandardRoleBase pRB);
 
-					var dh = new FirearmDamageHandler(args.Firearm, 10);
+					var hasHSHRMB = args.Firearm.TryGetModule<HitscanHitregModuleBase>(out var hSHRMB);
+
+					var dh = new FirearmDamageHandler(args.Firearm, 10, hasHSHRMB ? hSHRMB.DisplayPenetration : 10);
 
 					Vector3 velocity = Vector3.zero;
 					velocity += args.Player.Camera.transform.forward * Random.Range(5f, 10f);

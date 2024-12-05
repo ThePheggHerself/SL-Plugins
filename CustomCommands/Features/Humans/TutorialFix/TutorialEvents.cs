@@ -31,7 +31,7 @@ namespace CustomCommands.Features.Humans.TutorialFix
 				{
 					if (!args.IsTails)
 					{
-						ExplosionUtils.ServerExplode(args.Player.ReferenceHub);
+						ExplosionUtils.ServerExplode(args.Player.ReferenceHub, ExplosionType.PinkCandy);
 					}
 				});
 			}
