@@ -52,6 +52,20 @@ namespace CustomCommands.Features.Humans.Disarming
 		}
 
 		[PluginEvent]
+		public bool PlayerFreed(PlayerRemoveHandcuffsEvent args)
+		{
+			int x=120, y=900, z=5;
+			if (args.Target.Position.x < x || args.Target.Position.y < y || args.Target.Position.z < z) return true; //If target player is far enough from escape, return true
+
+			if (args.Player.Team == Team.FoundationForces && args.Target.Team == Team.ClassD || args.Player.Team == Team.ChaosInsurgency && args.Target.Team == Team.Scientists)
+			{
+                args.Player.ReceiveHint("You are too close to the escape point to uncuff this player", 5);
+				return false;
+			}
+			return true;
+		}
+
+		[PluginEvent]
 		public void PlayerEscaped(PlayerEscapeEvent args)
 		{
 			if (args.Player.IsDisarmed && args.Player.TemporaryData.Contains("cuffedBy"))
