@@ -35,9 +35,9 @@ namespace CustomCommands.Features.Humans.Disarming
 			if (!args.Target.TemporaryData.Contains("cuffTokens"))
 			{
 				if (args.Target.Role == RoleTypeId.ClassD)
-					Respawn.AddTickets(Respawning.SpawnableTeamType.NineTailedFox, 0.2f);
+					Respawn.AddTickets(Faction.FoundationStaff, 0.2f);
 				else if (args.Target.Role == RoleTypeId.Scientist)
-					Respawn.AddTickets(Respawning.SpawnableTeamType.ChaosInsurgency, 0.2f);
+					Respawn.AddTickets(Faction.FoundationEnemy, 0.2f);
 
 				args.Target.TemporaryData.Add("cuffTokens", string.Empty);
 			}

@@ -17,7 +17,7 @@ namespace CustomCommands.Features.Humans.LateSpawn
 	public class LateSpawnEvents
 	{
 		public DateTime LastRespawn = new DateTime();
-		public SpawnableTeamType LastTeam = SpawnableTeamType.None;
+		public Faction LastTeam = Faction.Unclassified;
 
 		[PluginEvent, PluginPriority(LoadPriority.Low)]
 		public void RespawnEvent(TeamRespawnEvent ev)
@@ -34,16 +34,13 @@ namespace CustomCommands.Features.Humans.LateSpawn
 
 			if ((DateTime.Now - LastRespawn).TotalSeconds < Plugin.Config.LateSpawnTime && (ev.Attacker != null && ev.Attacker.Team != Team.SCPs))
 			{
-				if (LastTeam != SpawnableTeamType.None)
+				Timing.CallDelayed(1f, () =>
 				{
-					Timing.CallDelayed(1f, () =>
-					{
-						if (LastTeam == SpawnableTeamType.NineTailedFox)
-							ev.Player.SetRole(RoleTypeId.NtfPrivate);
-						else if (LastTeam == SpawnableTeamType.ChaosInsurgency)
-							ev.Player.SetRole(RoleTypeId.ChaosRifleman);
-					});
-				}
+					if (LastTeam == Faction.FoundationStaff)
+						ev.Player.SetRole(RoleTypeId.NtfPrivate);
+					else if (LastTeam == Faction.FoundationEnemy)
+						ev.Player.SetRole(RoleTypeId.ChaosRifleman);
+				});
 			}
 		}
 	}
