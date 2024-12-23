@@ -1,4 +1,4 @@
-﻿using CustomCommands.Features.SCPs.Settings;
+﻿using CustomCommands.Features.SCPs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +16,13 @@ namespace CustomCommands.ServerSettings
 			SCP_SwapFromHuman = 1,
 			SCP_NeverSCP = 2,
 			SCP_ZombieSuicide = 3,
+			Human_HealOther = 4,
+			Human_Suicide = 5,
 		}
 
 		public static readonly CustomSettingsBase[] CustomSettings =
 		{
-			new CustomSCPSettings(),
+			new CustomSCPSettings()
 		};
 
 		public static ServerSpecificSettingBase[] GetAllSettings(bool deactivate = false)

@@ -110,6 +110,7 @@
     <Compile Include="Features\Dummy\Commands\Fill.cs" />
     <Compile Include="Features\Events\WeeklyEvents\EventManager.cs" />
     <Compile Include="Features\Events\WeeklyEvents\Events.cs" />
+    <Compile Include="Features\Humans\CustomHumanSettings.cs" />
     <Compile Include="Features\Humans\Disarming\DisarmingEvents.cs" />
     <Compile Include="Features\Humans\LateJoin\LateJoinEvents.cs" />
     <Compile Include="Features\Humans\LateSpawn\LateSpawnEvents.cs" />
@@ -129,7 +130,7 @@
     <Compile Include="Config.cs" />
     <Compile Include="Features\Players\Size\SizeEvents.cs" />
     <Compile Include="Features\Players\Size\SizeManager.cs" />
-    <Compile Include="Features\SCPs\Settings\CustomSCPSettings.cs" />
+    <Compile Include="Features\SCPs\CustomSCPSettings.cs" />
     <Compile Include="Features\Testing\DebugTests.cs" />
     <Compile Include="Features\Depricated\NameFix.cs" />
     <Compile Include="Features\SCPs\SCP3114\SCP3114Overhaul.cs" />

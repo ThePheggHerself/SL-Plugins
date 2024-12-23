@@ -88,7 +88,7 @@ namespace CustomCommands
 
 			if (Config.EnableAdditionalSurfaceLighting)
 			{
-				EventManager.RegisterEvents<Features.Map.SurfaceLightFix.LightFixEvents>(this);
+				//EventManager.RegisterEvents<Features.Map.SurfaceLightFix.LightFixEvents>(this);
 			}
 
 			if (Config.EnableDamageAnnouncements)

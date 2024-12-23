@@ -38,6 +38,8 @@ namespace CustomCommands.Features.SCPs.SCP3114
 					scpid.FpcModule.MouseLook.CurrentHorizontal = rot;
 				});
 			}
+
+
 		}
 
 		[PluginEvent]

@@ -35,8 +35,6 @@ namespace CustomCommands.Features.SCPs.SCP079Removal
 		[PluginEvent]
 		public void SpawnEvent(PlayerSpawnEvent args)
 		{
-			var scps = Swap.SwapManager.AvailableSCPs;
-
 			if (args.Role == RoleTypeId.Scp079)
 			{
 				Timing.CallDelayed(0.15f, () =>

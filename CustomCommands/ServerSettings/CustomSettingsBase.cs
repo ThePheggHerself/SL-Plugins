@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using UserSettings.ServerSpecific.Examples;
 using UserSettings.ServerSpecific;
-using CustomCommands.Features.SCPs.Settings;
 
 namespace CustomCommands.ServerSettings
 {
@@ -27,5 +26,6 @@ namespace CustomCommands.ServerSettings
 
 		public abstract void Activate();
 		public abstract void Deactivate();
+		public abstract void ProcessUserInput(ReferenceHub hub, ServerSpecificSettingBase setting);
 	}
 }

@@ -12,7 +12,7 @@ using UserSettings.ServerSpecific;
 using UserSettings.ServerSpecific.Examples;
 using UserSettings.UserInterfaceSettings;
 
-namespace CustomCommands.Features.SCPs.Settings
+namespace CustomCommands.Features.SCPs
 {
 	public class CustomSCPSettings : CustomSettingsBase
 	{
@@ -29,21 +29,14 @@ namespace CustomCommands.Features.SCPs.Settings
 		public override void Activate()
 		{
 			ServerSpecificSettingsSync.ServerOnSettingValueReceived += this.ProcessUserInput;
-			ReferenceHub.OnPlayerRemoved = (Action<ReferenceHub>)Delegate.Combine(ReferenceHub.OnPlayerRemoved, new Action<ReferenceHub>(this.OnPlayerDisconnected));
 		}
 
 		public override void Deactivate()
 		{
 			ServerSpecificSettingsSync.ServerOnSettingValueReceived -= this.ProcessUserInput;
-			ReferenceHub.OnPlayerRemoved = (Action<ReferenceHub>)Delegate.Remove(ReferenceHub.OnPlayerRemoved, new Action<ReferenceHub>(this.OnPlayerDisconnected));
 		}
 
-		private void OnPlayerDisconnected(ReferenceHub hub)
-		{
-			throw new NotImplementedException();
-		}
-
-		private void ProcessUserInput(ReferenceHub hub, ServerSpecificSettingBase setting)
+		public override void ProcessUserInput(ReferenceHub hub, ServerSpecificSettingBase setting)
 		{
 			switch (setting.SettingId)
 			{
@@ -55,7 +48,6 @@ namespace CustomCommands.Features.SCPs.Settings
 								SwapManager.SwapScpToHuman(hub);
 							else
 								hub.gameConsoleTransmission.SendToClient(reason, "green");
-
 						}
 						break;
 					}
@@ -68,7 +60,6 @@ namespace CustomCommands.Features.SCPs.Settings
 								SwapManager.SwapHumanToScp(hub);
 							else
 								hub.gameConsoleTransmission.SendToClient(reason, "green");
-
 						}
 
 						break;
