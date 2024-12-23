@@ -51,6 +51,7 @@ namespace CustomCommands
 		public bool EnableDamageAnnouncements { get; set; } = true; //Enables the SCP damage announcements at the end of the round
 		public bool EnableScp079Removal { get; set; } = true; //Enables the SCP-079 removal (Yes it's confusing, but it's being kept as Enable to keep configs consistant)
 		public bool EnableScpSwap { get; set; } = true; //Enables the SCP Swap system
+		public bool HumanToScpSwapRaffleMode { get; set; } = true; //Uses a raffle system instead of a first come first served system for human to SCP swaps
 		public bool EnableDebugTests { get; set; } = true; //Enables the debug tests
 		public bool EnablePlayerVoting { get; set; } = true; //Enables player voting
 		public bool EnableBlackout { get; set; } = true; //Enables the blackouts

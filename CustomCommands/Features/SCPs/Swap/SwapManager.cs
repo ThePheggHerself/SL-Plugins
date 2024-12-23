@@ -11,138 +11,184 @@ using System.Threading.Tasks;
 
 namespace CustomCommands.Features.SCPs.Swap
 {
-	public static class SwapManager
-	{
-		public static int SCPsToReplace = 0;
-		public static int ReplaceBaseCooldownRounds = 4;
-		public static int SwapSeconds = 60;
-		public static Dictionary<string, int> triggers = new Dictionary<string, int>();
+    public static class SwapManager
+    {
+        public static int SCPsToReplace = 0;
+        public static int ReplaceBaseCooldownRounds = 4;
+        public static int SwapSeconds = 60;
+        public static Dictionary<string, int> triggers = new Dictionary<string, int>();
+        public static List<string> SwapToSCPRaffle = new List<string>();
+        public static List<string> SpectatorSwapToSCPRaffle = new List<string>();
 
-		public static void ReplaceBroadcast()
-		{
-			Server.ClearBroadcasts();
-			Server.SendBroadcast($"There {(SCPsToReplace == 1 ? "is" : "are")} now {SCPsToReplace} SCP spot{(SCPsToReplace == 1 ? "" : "s")} available. Run \".scp\" to queue for an SCP", 5);
-		}
-		public static bool LateTimer = false;
+        public static void ReplaceBroadcast()
+        {
+            Server.ClearBroadcasts();
+            Server.SendBroadcast($"There {(SCPsToReplace == 1 ? "is" : "are")} now {SCPsToReplace} SCP spot{(SCPsToReplace == 1 ? "" : "s")} available. Run \".scp\" to queue for an SCP", 5);
+        }
+        public static bool LateTimer = false;
 
-		public static RoleTypeId[] AvailableSCPs
-		{
-			get
-			{
-				var Roles = new List<RoleTypeId>() { RoleTypeId.Scp049, /*RoleTypeId.Scp079, */RoleTypeId.Scp106, RoleTypeId.Scp173, RoleTypeId.Scp939, RoleTypeId.Scp096 };
+        public static RoleTypeId[] AvailableSCPs
+        {
+            get
+            {
+                var Roles = new List<RoleTypeId>() { RoleTypeId.Scp049, /*RoleTypeId.Scp079, */RoleTypeId.Scp106, RoleTypeId.Scp173, RoleTypeId.Scp939, RoleTypeId.Scp096 };
 
-				var scpRoles = Player.GetPlayers().Where(r => r.ReferenceHub.IsSCP()).Select(r => r.Role);
-				//if (scpRoles.Any())
-				foreach (var r in scpRoles)
-				{
-					if (Roles.Contains(r))
-						Roles.Remove(r);
-				}
-				//else
-				//    Roles.Remove(RoleTypeId.Scp079);
+                var scpRoles = Player.GetPlayers().Where(r => r.ReferenceHub.IsSCP()).Select(r => r.Role);
+                //if (scpRoles.Any())
+                foreach (var r in scpRoles)
+                {
+                    if (Roles.Contains(r))
+                        Roles.Remove(r);
+                }
+                //else
+                //    Roles.Remove(RoleTypeId.Scp079);
 
-				return Roles.ToArray();
-			}
-		}
+                return Roles.ToArray();
+            }
+        }
 
-		public static Dictionary<string, int> Cooldown = new Dictionary<string, int>();
+        public static Dictionary<string, int> Cooldown = new Dictionary<string, int>();
 
-		public static bool CanScpSwapToHuman(ReferenceHub plr, out string reason) => CanScpSwapToHuman(Player.Get(plr), out reason);
-		public static bool CanScpSwapToHuman(Player plr, out string reason)
-		{
+        public static bool CanScpSwapToHuman(ReferenceHub plr, out string reason) => CanScpSwapToHuman(Player.Get(plr), out reason);
+        public static bool CanScpSwapToHuman(Player plr, out string reason)
+        {
             if (!plr.IsSCP || plr.Role == RoleTypeId.Scp0492)
             {
-				reason = "You must be an SCP to run this command";
-				return false;
-			}
+                reason = "You must be an SCP to run this command";
+                return false;
+            }
 
             if (plr.Health != plr.MaxHealth)
-			{
-				reason = "You cannot swap as you have taken damage";
-				return false;
-			}
-			if (plr.TemporaryData.Contains("replacedscp"))
-			{
-				reason = "You cannot swap back to human";
-				return false;
-			}
-			if (Round.Duration > TimeSpan.FromSeconds(SwapSeconds))
-			{
-				reason = $"You can only swap from SCP within the first {SwapSeconds} seconds of a round";
-				return false;
-			}
+            {
+                reason = "You cannot swap as you have taken damage";
+                return false;
+            }
+            if (plr.TemporaryData.Contains("replacedscp"))
+            {
+                reason = "You cannot swap back to human";
+                return false;
+            }
+            if (Round.Duration > TimeSpan.FromSeconds(SwapSeconds))
+            {
+                reason = $"You can only swap from SCP within the first {SwapSeconds} seconds of a round";
+                return false;
+            }
 
-			reason = string.Empty;
-			return true;
-		}
+            reason = string.Empty;
+            return true;
+        }
 
-		public static bool CanHumanSwapToScp(ReferenceHub plr, out string reason) => CanHumanSwapToScp(Player.Get(plr), out reason);
-		public static bool CanHumanSwapToScp(Player plr, out string reason)
-		{
-			if (SCPsToReplace < 1)
-			{
-				reason = "There are no SCPs to replace";
-				return false;
-			}
-			if (plr.TemporaryData.Contains("startedasscp"))
-			{
-				reason = "You were already an SCP this round";
-				return false;
-			}
-			if (Round.Duration > TimeSpan.FromSeconds(SwapSeconds * 1.5) && !SwapManager.LateTimer || Round.Duration > TimeSpan.FromSeconds(SwapSeconds * 2))
-			{
-				reason = $"You can only replace an SCP within the first {SwapSeconds * 1.5} seconds of the round";
-				return false;
-			}
-			if (SwapManager.Cooldown.TryGetValue(plr.UserId, out int roundCount))
-			{
-				if (roundCount > RoundRestart.UptimeRounds)
-				{
-					if (SwapManager.triggers.TryGetValue(plr.UserId, out int count))
-					{
-						if (count > 2)
-						{
-							SwapManager.Cooldown[plr.UserId]++;
-							SwapManager.triggers[plr.UserId] = 0;
-						}
-						else SwapManager.triggers[plr.UserId]++;
-					}
-					else
-						SwapManager.triggers.Add(plr.UserId, 1);
+        public static bool CanHumanSwapToScp(ReferenceHub plr, out string reason) => CanHumanSwapToScp(Player.Get(plr), out reason);
+        public static bool CanHumanSwapToScp(Player plr, out string reason)
+        {
+            if (SCPsToReplace < 1)
+            {
+                reason = "There are no SCPs to replace";
+                return false;
+            }
+            if (plr.TemporaryData.Contains("startedasscp"))
+            {
+                reason = "You were already an SCP this round";
+                return false;
+            }
+            if (Round.Duration > TimeSpan.FromSeconds(SwapSeconds * 1.5) && !SwapManager.LateTimer || Round.Duration > TimeSpan.FromSeconds(SwapSeconds * 2))
+            {
+                reason = $"You can only replace an SCP within the first {SwapSeconds * 1.5} seconds of the round";
+                return false;
+            }
+            if (SwapManager.Cooldown.TryGetValue(plr.UserId, out int roundCount))
+            {
+                if (roundCount > RoundRestart.UptimeRounds)
+                {
+                    if (SwapManager.triggers.TryGetValue(plr.UserId, out int count))
+                    {
+                        if (count > 2)
+                        {
+                            SwapManager.Cooldown[plr.UserId]++;
+                            SwapManager.triggers[plr.UserId] = 0;
+                        }
+                        else SwapManager.triggers[plr.UserId]++;
+                    }
+                    else
+                        SwapManager.triggers.Add(plr.UserId, 1);
 
 
-					reason = $"You are on cooldown for another {SwapManager.Cooldown[plr.UserId] - RoundRestart.UptimeRounds} round(s).";
-					return false;
-				}
-			}
+                    reason = $"You are on cooldown for another {SwapManager.Cooldown[plr.UserId] - RoundRestart.UptimeRounds} round(s).";
+                    return false;
+                }
+            }
 
-			reason = string.Empty;
-			return true;
-		}
+            reason = string.Empty;
+            return true;
+        }
 
-		public static void SwapScpToHuman(ReferenceHub plr) => SwapScpToHuman(Player.Get(plr));
-		public static void SwapScpToHuman(Player plr)
-		{
-			SwapManager.SCPsToReplace++;
-			HumanSpawner.SpawnLate(plr.ReferenceHub);
-			plr.TemporaryData.Add("startedasscp", true.ToString());
-			SwapManager.ReplaceBroadcast();
-		}
+        public static void SwapScpToHuman(ReferenceHub plr) => SwapScpToHuman(Player.Get(plr));
+        public static void SwapScpToHuman(Player plr)
+        {
+            SwapManager.SCPsToReplace++;
+            HumanSpawner.SpawnLate(plr.ReferenceHub);
+            plr.TemporaryData.Add("startedasscp", true.ToString());
+            SwapManager.ReplaceBroadcast();
+        }
 
-		public static void SwapHumanToScp(ReferenceHub plr) => SwapHumanToScp(Player.Get(plr));
-		public static void SwapHumanToScp(Player plr)
-		{
-			var scps = SwapManager.AvailableSCPs;
+        public static void QueueSwapHumanToScp(ReferenceHub plr) => QueueSwapHumanToScp(Player.Get(plr));
+        public static void QueueSwapHumanToScp(Player plr)
+        {
+            bool first = SwapToSCPRaffle.Count == 0 && SpectatorSwapToSCPRaffle.Count == 0;
 
-			plr.SetRole(scps[new Random().Next(0, scps.Length)], RoleChangeReason.LateJoin);
-			plr.TemporaryData.Add("replacedscp", plr.Role.ToString());
+            if (plr.Role == RoleTypeId.Spectator)
+                SpectatorSwapToSCPRaffle.Add(plr.UserId);
+            else
+                SwapToSCPRaffle.Add(plr.UserId);
 
-			SwapManager.SCPsToReplace--;
+            if (first)
+            {
+                MEC.Timing.CallDelayed(5f, () =>
+                {
+                    bool rand = Plugin.Config.HumanToScpSwapRaffleMode;
+                    string draw = "";
+                yoinkus: //Makes sure the person didn't leave in the 5 second draw time
+                    if (SpectatorSwapToSCPRaffle.Count > 0)
+                    {
+                        draw = rand ? SpectatorSwapToSCPRaffle.PullRandomItem() : SpectatorSwapToSCPRaffle.First();
+                        if (!rand) SpectatorSwapToSCPRaffle.RemoveAt(0);
+                    }
+                    else if (SwapToSCPRaffle.Count > 0)
+                    {
+                        draw = rand ? SwapToSCPRaffle.PullRandomItem() : SwapToSCPRaffle.First();
+                        if (!rand) SwapToSCPRaffle.RemoveAt(0);
+                    }
+                    else
+                    {
+                        SpectatorSwapToSCPRaffle.Clear();
+                        SwapToSCPRaffle.Clear();
+                        return;
+                    }
 
-			if (SwapManager.Cooldown.ContainsKey(plr.UserId))
-				SwapManager.Cooldown[plr.UserId] = RoundRestart.UptimeRounds + SwapManager.ReplaceBaseCooldownRounds;
-			else
-				SwapManager.Cooldown.Add(plr.UserId, RoundRestart.UptimeRounds + SwapManager.ReplaceBaseCooldownRounds);
-		}
-	}
+
+                    if (!Player.TryGet(draw, out var drawPlr)) goto yoinkus;
+                    else SwapHumanToScp(drawPlr);
+
+                    SpectatorSwapToSCPRaffle.Clear();
+                    SwapToSCPRaffle.Clear();
+                });
+            }
+        }
+
+        public static void SwapHumanToScp(ReferenceHub plr) => SwapHumanToScp(Player.Get(plr));
+        public static void SwapHumanToScp(Player plr)
+        {
+            var scps = SwapManager.AvailableSCPs;
+
+            plr.SetRole(scps[new Random().Next(0, scps.Length)], RoleChangeReason.LateJoin);
+            plr.TemporaryData.Add("replacedscp", plr.Role.ToString());
+
+            SwapManager.SCPsToReplace--;
+
+            if (SwapManager.Cooldown.ContainsKey(plr.UserId))
+                SwapManager.Cooldown[plr.UserId] = RoundRestart.UptimeRounds + SwapManager.ReplaceBaseCooldownRounds;
+            else
+                SwapManager.Cooldown.Add(plr.UserId, RoundRestart.UptimeRounds + SwapManager.ReplaceBaseCooldownRounds);
+        }
+    }
 }

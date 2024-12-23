@@ -65,7 +65,8 @@ namespace CustomCommands.Features.SCPs.Settings
 						if (setting is SSKeybindSetting kbSetting && kbSetting.SyncIsPressed)
 						{
 							if (SwapManager.CanHumanSwapToScp(hub, out string reason))
-								SwapManager.SwapHumanToScp(hub);
+								SwapManager.QueueSwapHumanToScp(hub);
+								//SwapManager.SwapHumanToScp(hub);
 							else
 								hub.gameConsoleTransmission.SendToClient(reason, "green");
 
