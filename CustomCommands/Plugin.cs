@@ -1,11 +1,13 @@
 ﻿using CustomCommands.Events;
 using CustomCommands.Features.Map.RollingBlackouts;
+using CustomCommands.ServerSettings;
 using HarmonyLib;
 using PlayerRoles.Ragdolls;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Events;
 using System;
+using UserSettings.ServerSpecific;
 
 namespace CustomCommands
 {
@@ -127,6 +129,8 @@ namespace CustomCommands
 				new BlackoutManager();
 			}
 
+			ServerSpecificSettingsSync.DefinedSettings = CustomSettingsManager.GetAllSettings();
+			ServerSpecificSettingsSync.SendToAll();
 
 			RagdollManager.OnRagdollSpawned += Features.Ragdoll.PocketRagdollHandler.RagdollManager_OnRagdollSpawned;
 

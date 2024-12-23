@@ -129,6 +129,7 @@
     <Compile Include="Config.cs" />
     <Compile Include="Features\Players\Size\SizeEvents.cs" />
     <Compile Include="Features\Players\Size\SizeManager.cs" />
+    <Compile Include="Features\SCPs\Settings\CustomSCPSettings.cs" />
     <Compile Include="Features\Testing\DebugTests.cs" />
     <Compile Include="Features\Depricated\NameFix.cs" />
     <Compile Include="Features\SCPs\SCP3114\SCP3114Overhaul.cs" />
@@ -180,6 +181,8 @@
     <Compile Include="Features\Voting\Commands\Yes.cs" />
     <Compile Include="Features\Voting\VoteManager.cs" />
     <Compile Include="Features\Voting\VotingEvents.cs" />
+    <Compile Include="ServerSettings\CustomSettingsBase.cs" />
+    <Compile Include="ServerSettings\CustomSettingsManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.editorconfig">

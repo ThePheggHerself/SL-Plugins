@@ -35,29 +35,15 @@ namespace CustomCommands.Features.SCPs.Swap.Commands
 			{
 				var player = Player.Get(pSender.ReferenceHub);
 
-				if (player.Health != player.MaxHealth)
+				if (SwapManager.CanScpSwapToHuman(player, out response))
 				{
-					response = "You cannot swap as you have taken damage";
-					return false;
-				}
-				if (player.TemporaryData.Contains("replacedscp"))
-				{
-					response = "You cannot swap back to human";
-					return false;
-				}
-				if (Round.Duration > TimeSpan.FromMinutes(1))
-				{
-					response = "You can only swap from SCP within the first 1 minute of a round";
-					return false;
+					SwapManager.SwapScpToHuman(pSender.ReferenceHub);
+
+					response = "You have now swapped to Human from SCP";
+					return true;
 				}
 
-				SwapManager.SCPsToReplace++;
-				HumanSpawner.SpawnLate(pSender.ReferenceHub);
-				player.TemporaryData.Add("startedasscp", true.ToString());
-				SwapManager.ReplaceBroadcast();
-
-				response = "You have now swapped to Human from SCP";
-				return true;
+				return false;				
 			}
 
 			response = "You must be an SCP to run this command";

@@ -35,58 +35,15 @@ namespace CustomCommands.Features.SCPs.Swap.Commands
 			{
 				var player = Player.Get(pSender.ReferenceHub);
 
-				if (SwapManager.SCPsToReplace < 1)
+				if (SwapManager.CanHumanSwapToScp(player, out response))
 				{
-					response = "There are no SCPs to replace";
-					return false;
-				}
-				if (player.TemporaryData.Contains("startedasscp"))
-				{
-					response = "You were already an SCP this round";
-					return false;
-				}
-				if (Round.Duration > TimeSpan.FromSeconds(90) && !SwapManager.LateTimer || Round.Duration > TimeSpan.FromSeconds(120))
-				{
-					response = "You can only swap within the first 90 seconds of the round";
-					return false;
+					SwapManager.SwapHumanToScp(player);
+					
+					response = "You have replaced an SCP";
+					return true;
 				}
 
-				if (SwapManager.Cooldown.TryGetValue(player.UserId, out int roundCount))
-				{
-					if (roundCount > RoundRestart.UptimeRounds)
-					{
-						if (SwapManager.triggers.TryGetValue(player.UserId, out int count))
-						{
-							if (count > 2)
-							{
-								SwapManager.Cooldown[player.UserId]++;
-								SwapManager.triggers[player.UserId] = 0;
-							}
-							else SwapManager.triggers[player.UserId]++;
-						}
-						else
-							SwapManager.triggers.Add(player.UserId, 1);
-
-
-						response = $"You are on cooldown for another {SwapManager.Cooldown[player.UserId] - RoundRestart.UptimeRounds} round(s).";
-						return false;
-					}
-				}
-
-				var scps = SwapManager.AvailableSCPs;
-
-				player.SetRole(scps[new Random().Next(0, scps.Length)], RoleChangeReason.LateJoin);
-				player.TemporaryData.Add("replacedscp", player.Role.ToString());
-
-				SwapManager.SCPsToReplace--;
-
-				if (SwapManager.Cooldown.ContainsKey(player.UserId))
-					SwapManager.Cooldown[player.UserId] = RoundRestart.UptimeRounds + SwapManager.ReplaceBaseCooldown;
-				else
-					SwapManager.Cooldown.Add(player.UserId, RoundRestart.UptimeRounds + SwapManager.ReplaceBaseCooldown);
-
-				response = "You have replaced an SCP";
-				return true;
+				return false;
 			}
 
 			response = "You must be a living human role to run this command";

@@ -1,8 +1,11 @@
 ﻿using PlayerRoles;
+using PlayerRoles.RoleAssign;
 using PluginAPI.Core;
+using RoundRestarting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,7 +14,8 @@ namespace CustomCommands.Features.SCPs.Swap
 	public static class SwapManager
 	{
 		public static int SCPsToReplace = 0;
-		public static int ReplaceBaseCooldown = 4;
+		public static int ReplaceBaseCooldownRounds = 4;
+		public static int SwapSeconds = 60;
 		public static Dictionary<string, int> triggers = new Dictionary<string, int>();
 
 		public static void ReplaceBroadcast()
@@ -42,5 +46,103 @@ namespace CustomCommands.Features.SCPs.Swap
 		}
 
 		public static Dictionary<string, int> Cooldown = new Dictionary<string, int>();
+
+		public static bool CanScpSwapToHuman(ReferenceHub plr, out string reason) => CanScpSwapToHuman(Player.Get(plr), out reason);
+		public static bool CanScpSwapToHuman(Player plr, out string reason)
+		{
+            if (!plr.IsSCP || plr.Role == RoleTypeId.Scp0492)
+            {
+				reason = "You must be an SCP to run this command";
+				return false;
+			}
+
+            if (plr.Health != plr.MaxHealth)
+			{
+				reason = "You cannot swap as you have taken damage";
+				return false;
+			}
+			if (plr.TemporaryData.Contains("replacedscp"))
+			{
+				reason = "You cannot swap back to human";
+				return false;
+			}
+			if (Round.Duration > TimeSpan.FromSeconds(SwapSeconds))
+			{
+				reason = $"You can only swap from SCP within the first {SwapSeconds} seconds of a round";
+				return false;
+			}
+
+			reason = string.Empty;
+			return true;
+		}
+
+		public static bool CanHumanSwapToScp(ReferenceHub plr, out string reason) => CanHumanSwapToScp(Player.Get(plr), out reason);
+		public static bool CanHumanSwapToScp(Player plr, out string reason)
+		{
+			if (SCPsToReplace < 1)
+			{
+				reason = "There are no SCPs to replace";
+				return false;
+			}
+			if (plr.TemporaryData.Contains("startedasscp"))
+			{
+				reason = "You were already an SCP this round";
+				return false;
+			}
+			if (Round.Duration > TimeSpan.FromSeconds(SwapSeconds * 1.5) && !SwapManager.LateTimer || Round.Duration > TimeSpan.FromSeconds(SwapSeconds * 2))
+			{
+				reason = $"You can only replace an SCP within the first {SwapSeconds * 1.5} seconds of the round";
+				return false;
+			}
+			if (SwapManager.Cooldown.TryGetValue(plr.UserId, out int roundCount))
+			{
+				if (roundCount > RoundRestart.UptimeRounds)
+				{
+					if (SwapManager.triggers.TryGetValue(plr.UserId, out int count))
+					{
+						if (count > 2)
+						{
+							SwapManager.Cooldown[plr.UserId]++;
+							SwapManager.triggers[plr.UserId] = 0;
+						}
+						else SwapManager.triggers[plr.UserId]++;
+					}
+					else
+						SwapManager.triggers.Add(plr.UserId, 1);
+
+
+					reason = $"You are on cooldown for another {SwapManager.Cooldown[plr.UserId] - RoundRestart.UptimeRounds} round(s).";
+					return false;
+				}
+			}
+
+			reason = string.Empty;
+			return true;
+		}
+
+		public static void SwapScpToHuman(ReferenceHub plr) => SwapScpToHuman(Player.Get(plr));
+		public static void SwapScpToHuman(Player plr)
+		{
+			SwapManager.SCPsToReplace++;
+			HumanSpawner.SpawnLate(plr.ReferenceHub);
+			plr.TemporaryData.Add("startedasscp", true.ToString());
+			SwapManager.ReplaceBroadcast();
+		}
+
+		public static void SwapHumanToScp(ReferenceHub plr) => SwapHumanToScp(Player.Get(plr));
+		public static void SwapHumanToScp(Player plr)
+		{
+			var scps = SwapManager.AvailableSCPs;
+
+			plr.SetRole(scps[new Random().Next(0, scps.Length)], RoleChangeReason.LateJoin);
+			plr.TemporaryData.Add("replacedscp", plr.Role.ToString());
+
+			SwapManager.SCPsToReplace--;
+
+			if (SwapManager.Cooldown.ContainsKey(plr.UserId))
+				SwapManager.Cooldown[plr.UserId] = RoundRestart.UptimeRounds + SwapManager.ReplaceBaseCooldownRounds;
+			else
+				SwapManager.Cooldown.Add(plr.UserId, RoundRestart.UptimeRounds + SwapManager.ReplaceBaseCooldownRounds);
+		}
 	}
 }
