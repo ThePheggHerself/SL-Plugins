@@ -37,7 +37,7 @@ namespace CustomCommands.Features.SCPs.Swap.Commands
 
 				if (SwapManager.CanHumanSwapToScp(player, out response))
 				{
-					SwapManager.SwapHumanToScp(player);
+					SwapManager.QueueSwapHumanToScp(player);
 					
 					response = "You have replaced an SCP";
 					return true;

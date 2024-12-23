@@ -17,8 +17,9 @@ namespace CustomCommands.Features.SCPs.Swap
 		public static int ReplaceBaseCooldownRounds = 4;
 		public static int SwapSeconds = 60;
 		public static Dictionary<string, int> triggers = new Dictionary<string, int>();
+        public static List<KeyValuePair<string, uint>> RaffleParticipants = new List<KeyValuePair<string, uint>>();
 
-		public static void ReplaceBroadcast()
+        public static void ReplaceBroadcast()
 		{
 			Server.ClearBroadcasts();
 			Server.SendBroadcast($"There {(SCPsToReplace == 1 ? "is" : "are")} now {SCPsToReplace} SCP spot{(SCPsToReplace == 1 ? "" : "s")} available. Run \".scp\" to queue for an SCP", 5);
@@ -120,7 +121,7 @@ namespace CustomCommands.Features.SCPs.Swap
 			return true;
 		}
 
-		public static void SwapScpToHuman(ReferenceHub plr) => SwapScpToHuman(Player.Get(plr));
+        public static void SwapScpToHuman(ReferenceHub plr) => SwapScpToHuman(Player.Get(plr));
 		public static void SwapScpToHuman(Player plr)
 		{
 			SwapManager.SCPsToReplace++;
@@ -129,13 +130,62 @@ namespace CustomCommands.Features.SCPs.Swap
 			SwapManager.ReplaceBroadcast();
 		}
 
+        public static void QueueSwapHumanToScp(ReferenceHub plr) => QueueSwapHumanToScp(Player.Get(plr));
+        public static void QueueSwapHumanToScp(Player plr)
+        {
+            bool first = RaffleParticipants.Count == 0;
+
+            ScpTicketsLoader tix = new ScpTicketsLoader();
+            int numTix = tix.GetTickets(plr.ReferenceHub, 10);
+            tix.Dispose();
+            uint rGroup = 1;
+            if (numTix >= 13) rGroup = (uint)numTix;
+            if (plr.Role == RoleTypeId.Spectator) rGroup <<= 8;
+
+            RaffleParticipants.Add(new KeyValuePair<string, uint>(plr.UserId, rGroup));
+
+            if (first)
+            {
+                MEC.Timing.CallDelayed(5f, () =>
+                {
+                    string draw = "";
+                yoinkus: //Makes sure the person didn't leave in the 5 second draw time
+                    if (RaffleParticipants.Count > 0)
+                    {
+                        List<string> DrawGroup = new List<string>();
+                        if (RaffleParticipants.Count >= 6)
+                        {
+                            RaffleParticipants.Sort((x, y) => -x.Value.CompareTo(y.Value)); //I think this is descending order?
+                            DrawGroup = RaffleParticipants.Take(RaffleParticipants.Count / 2).Select(x => x.Key).ToList();
+                        }
+                        else DrawGroup = RaffleParticipants.Select(x => x.Key).ToList();
+
+                        draw = DrawGroup.PullRandomItem();
+                    }
+                    else
+                    {
+                        return;
+                    }
+
+                    if (!Player.TryGet(draw, out var drawPlr)) goto yoinkus;
+                    else
+                        SwapHumanToScp(drawPlr);
+
+                    RaffleParticipants.Clear();
+                });
+            }
+        }
+
 		public static void SwapHumanToScp(ReferenceHub plr) => SwapHumanToScp(Player.Get(plr));
 		public static void SwapHumanToScp(Player plr)
 		{
 			var scps = SwapManager.AvailableSCPs;
 
 			plr.SetRole(scps[new Random().Next(0, scps.Length)], RoleChangeReason.LateJoin);
-			plr.TemporaryData.Add("replacedscp", plr.Role.ToString());
+            ScpTicketsLoader tix = new ScpTicketsLoader();
+            tix.ModifyTickets(plr.ReferenceHub, 10);
+			tix.Dispose();
+            plr.TemporaryData.Add("replacedscp", plr.Role.ToString());
 
 			SwapManager.SCPsToReplace--;
 
