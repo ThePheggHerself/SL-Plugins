@@ -184,6 +184,7 @@ namespace CustomCommands.Features.SCPs.Swap
 			plr.SetRole(scps[new Random().Next(0, scps.Length)], RoleChangeReason.LateJoin);
             ScpTicketsLoader tix = new ScpTicketsLoader();
             tix.ModifyTickets(plr.ReferenceHub, 10);
+			tix.Dispose();
             plr.TemporaryData.Add("replacedscp", plr.Role.ToString());
 
 			SwapManager.SCPsToReplace--;
