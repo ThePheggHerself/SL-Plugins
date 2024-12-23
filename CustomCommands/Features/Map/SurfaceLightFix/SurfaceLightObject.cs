@@ -46,6 +46,7 @@ namespace CustomCommands.Features.Map.SurfaceLightFix
             ready = true;
         }
 
+        private float previousTargetIntensity = lightIntensity;
         private void Update()
         {
             if (NetworkServer.active && ready)
@@ -54,13 +55,13 @@ namespace CustomCommands.Features.Map.SurfaceLightFix
 
                 fadeTimer += Time.deltaTime;
 
-                float currentIntensity = Mathf.Lerp(surfaceLight.NetworkLightIntensity, targetIntensity, fadeTimer / fadeDuration);
-                surfaceLight.NetworkLightIntensity = currentIntensity;
+                if (fadeTimer <= fadeDuration)
+                    surfaceLight.NetworkLightIntensity = Mathf.Lerp(surfaceLight.NetworkLightIntensity, targetIntensity, fadeTimer / fadeDuration);
 
-                if (currentIntensity == targetIntensity)
-                {
-                    fadeTimer = 0f;
-                }
+                if (previousTargetIntensity != targetIntensity)
+                    fadeTimer = 0;
+
+                previousTargetIntensity = targetIntensity;
 
                 surfaceLight.NetworkLightColor = AlphaWarheadController.InProgress ? Color.red : Color.white;
             }
