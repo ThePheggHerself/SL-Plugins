@@ -1,6 +1,7 @@
 ﻿using CommandSystem;
 using InventorySystem.Items.Firearms;
 using InventorySystem.Items.Firearms.Attachments;
+using InventorySystem.Items.Firearms.Modules;
 using MapGeneration;
 using PluginAPI.Core;
 using System;
@@ -64,14 +65,16 @@ namespace CustomCommands.Features.Events.DClassBattle
 				var itemBase = plr.AddItem(item);
 
 				plr.ReferenceHub.inventory.ServerSelectItem(itemBase.ItemSerial);
-				plr.ReferenceHub.inventory.CmdSelectItem(itemBase.ItemSerial);
 
 				if (item == ItemType.GunRevolver)
 				{
 					var firearm = itemBase as Firearm;
 
 					AttachmentsUtils.ApplyAttachmentsCode(firearm, 1170, true);
-					firearm.Status = new FirearmStatus(firearm.AmmoManagerModule.MaxAmmo, FirearmStatusFlags.Chambered, 1170);
+					if(firearm.TryGetModule<IPrimaryAmmoContainerModule>(out var iPACM))
+					{
+						iPACM.ServerModifyAmmo(firearm.GetTotalMaxAmmo());
+					}
 				}
 
 				plr.ReceiveHint("Kill them all!!!");

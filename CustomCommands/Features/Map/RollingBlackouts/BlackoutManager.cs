@@ -60,7 +60,7 @@ namespace CustomCommands.Features.Map.RollingBlackouts
 				if (door is IDamageableDoor iDD && door.RequiredPermissions.RequiredPermissions == KeycardPermissions.None && !door.name.Contains("LCZ"))
 					door.NetworkTargetState = true;
 
-			foreach (var tesla in TeslaGateController.Singleton.TeslaGates)
+			foreach (var tesla in TeslaGate.AllGates)
 				tesla.enabled = false;
 
 			yield return Timing.WaitForSeconds(Plugin.Config.BlackoutDuration);
@@ -70,7 +70,7 @@ namespace CustomCommands.Features.Map.RollingBlackouts
 
 			Cassie.Message("Power system repair complete . System back online", false, true, true);
 
-			foreach (var tesla in TeslaGateController.Singleton.TeslaGates)
+			foreach (var tesla in TeslaGate.AllGates)
 				tesla.enabled = true;
 
 			yield return 0f;

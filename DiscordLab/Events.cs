@@ -250,12 +250,18 @@ namespace DiscordLab
 		[PluginEvent(ServerEventType.RemoteAdminCommand)]
 		public void RemoteAdminCommandEvent(RemoteAdminCommandEvent args)
 		{
-			if (!(args.Sender is PlayerCommandSender pCS))
-				return;
+			if (args.Sender is ServerConsoleSender SCS)
+			{
+				DiscordLab.Bot.SendMessage(new Msg($"(CONSOLE) Command run: **{(args.Arguments.Length > 0 ? $"{args.Command} {string.Join(" ", args.Arguments)}" : $"{args.Command}")}**"));
+			}
 
-			var admin = Player.Get(pCS.PlayerId);
+			if (args.Sender is PlayerCommandSender pCS)
+			{
 
-			DiscordLab.Bot.SendMessage(new Msg($"(RA) {admin.ToLogString()} ran: **{(args.Arguments.Length > 0 ? $"{args.Command} {string.Join(" ", args.Arguments)}" : $"{args.Command}")}**"));
+				var admin = Player.Get(pCS.PlayerId);
+
+				DiscordLab.Bot.SendMessage(new Msg($"(RA) {admin.ToLogString()} ran: **{(args.Arguments.Length > 0 ? $"{args.Command} {string.Join(" ", args.Arguments)}" : $"{args.Command}")}**"));
+			}
 		}
 
 		[PluginEvent(ServerEventType.ConsoleCommand)]

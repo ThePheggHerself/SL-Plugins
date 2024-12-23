@@ -1,11 +1,13 @@
 ﻿using CustomCommands.Events;
 using CustomCommands.Features.Map.RollingBlackouts;
+using CustomCommands.ServerSettings;
 using HarmonyLib;
 using PlayerRoles.Ragdolls;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Events;
 using System;
+using UserSettings.ServerSpecific;
 
 namespace CustomCommands
 {
@@ -38,7 +40,7 @@ namespace CustomCommands
 		public void OnPluginStart()
 		{
 			Harmony harmony = new Harmony("CC-Patching-Phegg");
-			//harmony.PatchAll();
+			harmony.PatchAll();
 
 			Log.Info($"Plugin is loading...");
 
@@ -86,7 +88,7 @@ namespace CustomCommands
 
 			if (Config.EnableAdditionalSurfaceLighting)
 			{
-				EventManager.RegisterEvents<Features.Map.SurfaceLightFix.LightFixEvents>(this);
+				//EventManager.RegisterEvents<Features.Map.SurfaceLightFix.LightFixEvents>(this);
 			}
 
 			if (Config.EnableDamageAnnouncements)
@@ -127,6 +129,8 @@ namespace CustomCommands
 				new BlackoutManager();
 			}
 
+			ServerSpecificSettingsSync.DefinedSettings = CustomSettingsManager.GetAllSettings();
+			ServerSpecificSettingsSync.SendToAll();
 
 			RagdollManager.OnRagdollSpawned += Features.Ragdoll.PocketRagdollHandler.RagdollManager_OnRagdollSpawned;
 

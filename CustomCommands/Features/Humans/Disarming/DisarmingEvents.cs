@@ -4,6 +4,7 @@ using Hints;
 using InventorySystem.Items;
 using InventorySystem.Items.Armor;
 using InventorySystem.Items.Firearms;
+using InventorySystem.Items.Firearms.Modules;
 using MapGeneration;
 using Mirror;
 using PlayerRoles;
@@ -34,9 +35,9 @@ namespace CustomCommands.Features.Humans.Disarming
 			if (!args.Target.TemporaryData.Contains("cuffTokens"))
 			{
 				if (args.Target.Role == RoleTypeId.ClassD)
-					Respawn.AddTickets(Respawning.SpawnableTeamType.NineTailedFox, 0.2f);
+					Respawn.AddTickets(Faction.FoundationStaff, 0.2f);
 				else if (args.Target.Role == RoleTypeId.Scientist)
-					Respawn.AddTickets(Respawning.SpawnableTeamType.ChaosInsurgency, 0.2f);
+					Respawn.AddTickets(Faction.FoundationEnemy, 0.2f);
 
 				args.Target.TemporaryData.Add("cuffTokens", string.Empty);
 			}
@@ -48,6 +49,20 @@ namespace CustomCommands.Features.Humans.Disarming
 
 				args.Target.TemporaryData.StoredData.Add("cuffedBy", args.Player.UserId);
 			}
+		}
+
+		[PluginEvent]
+		public bool PlayerFreed(PlayerRemoveHandcuffsEvent args)
+		{
+			int x=120, y=900, z=5;
+			if (args.Target.Position.x < x || args.Target.Position.y < y || args.Target.Position.z < z) return true; //If target player is far enough from escape, return true
+
+			if (args.Player.Team == Team.FoundationForces && args.Target.Team == Team.ClassD || args.Player.Team == Team.ChaosInsurgency && args.Target.Team == Team.Scientists)
+			{
+                args.Player.ReceiveHint("You are too close to the escape point to uncuff this player", 5);
+				return false;
+			}
+			return true;
 		}
 
 		[PluginEvent]
@@ -92,7 +107,10 @@ namespace CustomCommands.Features.Humans.Disarming
 					{
 						if (a.Category == ItemCategory.Firearm && a is Firearm firearm)
 						{
-							switch (firearm.AmmoType)
+							if (!firearm.TryGetModule<IPrimaryAmmoContainerModule>(out var iPACM))
+								continue;
+
+							switch (iPACM.AmmoType)
 							{
 								case ItemType.Ammo12gauge:
 									{
@@ -111,7 +129,7 @@ namespace CustomCommands.Features.Humans.Disarming
 								case ItemType.Ammo9x19:
 									{
 										ushort ammoCount = (ushort)UnityEngine.Random.Range(20, 41);
-										cuffer.AddAmmo(firearm.AmmoType, ammoCount);
+										cuffer.AddAmmo(iPACM.AmmoType, ammoCount);
 										break;
 									}
 								default: break;
