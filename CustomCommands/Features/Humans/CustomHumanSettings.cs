@@ -1,6 +1,7 @@
 ﻿using CustomCommands.Features.Ragdoll;
 using CustomCommands.Features.SCPs.Swap;
 using CustomCommands.ServerSettings;
+using CustomPlayerEffects;
 using InventorySystem;
 using PlayerRoles;
 using PlayerRoles.FirstPersonControl;
@@ -28,9 +29,7 @@ namespace CustomCommands.Features.Humans
 		{
 			new SSGroupHeader(Name, false, Description),
 			new SSKeybindSetting((int)CustomSettingsManager.SettingsIDs.Human_HealOther, "Heal Player", KeyCode.K, true, "Heals the player you are currently looking at (Requires a medkit)"),
-			new SSKeybindSetting((int)CustomSettingsManager.SettingsIDs.Human_Suicide, "KABOOM!", KeyCode.KeypadEquals, true, "KABOOM! :)"),
-			new SSKeybindSetting((int)CustomSettingsManager.SettingsIDs.Human_Suicide2, "KABOOMN'T!", KeyCode.KeypadMinus, true, "KABOOMN'T! :("),
-			new SSKeybindSetting((int)CustomSettingsManager.SettingsIDs.Human_Ragdoll, "Errbdy do the flop!", KeyCode.KeypadPlus, true, "Aaaaaaand you failed")
+			new SSKeybindSetting((int)CustomSettingsManager.SettingsIDs.Human_Suicide, "Suicide", KeyCode.KeypadEquals, true, "Kill yourself and become a spectator"),
 		};
 
 		public override void Activate()
@@ -51,25 +50,8 @@ namespace CustomCommands.Features.Humans
 					{
 						if (setting is SSKeybindSetting kbSetting && kbSetting.SyncIsPressed && hub.IsHuman())
 						{
-							ExplosionUtils.ServerSpawnEffect(hub.GetPosition(), ItemType.GrenadeHE);
-							hub.playerStats.DealDamage(new ExplosionDamageHandler(new Footprinting.Footprint(hub), hub.PlayerCameraReference.up * 2, 1000, 1000, ExplosionType.Grenade));
-						}
-						break;
-					}
-				case (int)CustomSettingsManager.SettingsIDs.Human_Suicide2:
-					{
-						if (setting is SSKeybindSetting kbSetting && kbSetting.SyncIsPressed && hub.IsHuman())
-						{
+							hub.playerEffectsController.DisableEffect<SpawnProtected>();
 							hub.playerStats.DealDamage(new CustomReasonDamageHandler("Sudden loss of brain function", 1000));
-						}
-						break;
-					}
-
-				case (int)CustomSettingsManager.SettingsIDs.Human_Ragdoll:
-					{
-						if (setting is SSKeybindSetting kbSetting && kbSetting.SyncIsPressed && hub.IsHuman())
-						{
-							Player.Get(hub).RagdollPlayer(3, 1);
 						}
 						break;
 					}

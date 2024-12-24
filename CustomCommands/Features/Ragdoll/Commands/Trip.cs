@@ -40,7 +40,7 @@ namespace CustomCommands.Features.Ragdoll.Commands
 				float.TryParse(arguments.ElementAt(2), out time);
 
 			foreach (PluginAPI.Core.Player plr in players)
-				plr.RagdollPlayer(time, forceMultiplyer);
+				plr.RagdollPlayer(time, forceMultiplyer, false);
 
 			response = $"{players.Count} player{(players.Count == 1 ? "s" : "")} ragdolled";
 
