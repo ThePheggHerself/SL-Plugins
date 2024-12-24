@@ -17,12 +17,25 @@ namespace CustomCommands.Features.Map.Navigation
 		[PluginEvent]
 		public void MapGeneratedEvent(MapGeneratedEvent ev)
 		{
+			foreach(var door in Facility.Doors)
+			{
+				if(door.Permissions == Interactables.Interobjects.DoorUtils.KeycardPermissions.None)
+				{
+					var nmo = door.GameObject.AddComponent<NavMeshObstacle>();
+					nmo.carving = true;
+				}
+			}
+
 			var rooms = GameObject.Find("LightRooms");
 			if (rooms != null)
 			{
 				var meshSurface = rooms.AddComponent<NavMeshSurface>();
+				var settings = meshSurface.GetBuildSettings();
 				meshSurface.useGeometry = NavMeshCollectGeometry.PhysicsColliders;
+				meshSurface.ignoreNavMeshObstacle = true;
 				meshSurface.voxelSize = 0.08f;
+				meshSurface.buildHeightMesh = true;
+				settings.agentSlope = 90;
 				meshSurface.BuildNavMesh();
 			}
 
@@ -30,8 +43,12 @@ namespace CustomCommands.Features.Map.Navigation
 			if (rooms != null)
 			{
 				var meshSurface = rooms.AddComponent<NavMeshSurface>();
+				var settings = meshSurface.GetBuildSettings();
 				meshSurface.useGeometry = NavMeshCollectGeometry.PhysicsColliders;
+				meshSurface.ignoreNavMeshObstacle = true;
 				meshSurface.voxelSize = 0.08f;
+				meshSurface.buildHeightMesh = true;
+				settings.agentSlope = 90;
 				meshSurface.BuildNavMesh();
 			}
 
@@ -39,8 +56,12 @@ namespace CustomCommands.Features.Map.Navigation
 			if (rooms != null)
 			{
 				var meshSurface = rooms.AddComponent<NavMeshSurface>();
+				var settings = meshSurface.GetBuildSettings();
 				meshSurface.useGeometry = NavMeshCollectGeometry.PhysicsColliders;
+				meshSurface.ignoreNavMeshObstacle = true;
 				meshSurface.voxelSize = 0.08f;
+				meshSurface.buildHeightMesh = true;
+				settings.agentSlope = 90;
 				meshSurface.BuildNavMesh();
 			}
 
@@ -48,8 +69,12 @@ namespace CustomCommands.Features.Map.Navigation
 			if (rooms != null)
 			{
 				var meshSurface = rooms.AddComponent<NavMeshSurface>();
+				var settings = meshSurface.GetBuildSettings();
 				meshSurface.useGeometry = NavMeshCollectGeometry.PhysicsColliders;
+				meshSurface.ignoreNavMeshObstacle = true;
 				meshSurface.voxelSize = 0.08f;
+				meshSurface.buildHeightMesh = true;
+				settings.agentSlope = 90;
 				meshSurface.BuildNavMesh();
 			}
 		}

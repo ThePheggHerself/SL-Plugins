@@ -79,37 +79,39 @@ namespace CustomCommands.Features.Testing
 
 			if (sender is PlayerCommandSender pSender)
 			{
-				foreach (var a in ReferenceHub.AllHubs)
+				foreach (var dummyHub in ReferenceHub.AllHubs)
 				{
-					if (a.IsDummy)
+					if (dummyHub.IsDummy)
 					{
-						if (!a.gameObject.TryGetComponent<NavMeshAgent>(out var agent))
+						if (!dummyHub.gameObject.TryGetComponent<NavMeshAgent>(out var agent))
 						{
-							agent = a.gameObject.AddComponent<NavMeshAgent>();
+							agent = dummyHub.gameObject.AddComponent<NavMeshAgent>();
 
 							agent.baseOffset = 0.98f;
 							agent.updateRotation = true;
 							agent.angularSpeed = 360;
-							agent.acceleration = 600;
-							agent.speed = 1;
-							agent.height = 1f;
+							agent.acceleration = 30;
+							agent.height = 1.3f;
+							agent.speed = 5f;
+							agent.baseOffset = 0.5f;
+							agent.stoppingDistance = 1f;
 
-							agent.radius = 0.1f;
+							agent.radius = 0.5f;
 							agent.areaMask = 1;
-							agent.obstacleAvoidanceType = ObstacleAvoidanceType.MedQualityObstacleAvoidance;
+							agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance; 
 						}
 
-						if (!a.gameObject.TryGetComponent<DummyAI>(out var ai))
-							a.gameObject.AddComponent<DummyAI>().Init(a, agent);
+						if (!dummyHub.gameObject.TryGetComponent<DummyAI>(out var ai))
+							dummyHub.gameObject.AddComponent<DummyAI>().Init(dummyHub, agent);
 
 						agent.SetDestination(pSender.ReferenceHub.transform.position);
 
-						foreach(var b in agent.path.corners)
+						foreach (var corner in agent.path.corners)
 						{
-							PluginAPI.Core.Log.Info($"{b} + {pSender.ReferenceHub.transform.position}");
+							PluginAPI.Core.Log.Info($"{corner} + {pSender.ReferenceHub.transform.position}");
 						}
 
-						response = $"Path set to {agent.pathEndPosition} | {agent.nextPosition}";
+						response = $"Path set with {agent.path.corners.Length} corners";
 					}
 				}
 			}
@@ -123,11 +125,15 @@ namespace CustomCommands.Features.Testing
 	{
 		private ReferenceHub _hub;
 		private NavMeshAgent _agent;
+		private float _speed;
+		private int _index;
 
-		public void Init(ReferenceHub hub, NavMeshAgent agent)
+		public void Init(ReferenceHub hub, NavMeshAgent _agent, float speed = 30f)
 		{
 			_hub = hub;
-			_agent = agent;
+			this._agent = _agent;
+			_speed = speed;
+			_index = 0;
 		}
 
 		private void Update()
@@ -138,27 +144,28 @@ namespace CustomCommands.Features.Testing
 				if (fpcRole != null)
 				{
 					FirstPersonMovementModule fpcModule = fpcRole.FpcModule;
+					Vector3 pos = _hub.transform.position;
+					var dist = Vector3.Distance(pos, _agent.destination);
+					if(dist > _agent.stoppingDistance)
+					{
+						fpcModule.MouseLook.LookAtDirection(fpcModule.Motor.Velocity);
+					}
 
-					Vector3 position = _hub.transform.position;
-
-					//PluginAPI.Core.Log.Info("EEEEEEEE");
-
-					
-
-					
-					Vector3 dir = _agent.nextPosition - position;
-					Vector3 b = Time.deltaTime * 1 * dir.normalized;
-					fpcModule.Motor.ReceivedPosition = new RelativePosition(position + b);
-					fpcModule.MouseLook.LookAtDirection(dir, 1f);
 					return;
 				}
 			}
+
 			Destroy(this);
 		}
 	}
 
 	public class TestingDummies
 	{
-
+		[PluginEvent]
+		public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
+		{
+			DummyUtils.SpawnDummy("Steve");
+			Round.IsLocked = true;
+		}
 	}
 }
