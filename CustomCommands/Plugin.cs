@@ -1,4 +1,5 @@
 ﻿using CustomCommands.Events;
+using CustomCommands.Features.Map;
 using CustomCommands.Features.Map.RollingBlackouts;
 using CustomCommands.ServerSettings;
 using HarmonyLib;
@@ -44,7 +45,9 @@ namespace CustomCommands
 
 			Log.Info($"Plugin is loading...");
 
-			if (Config.EnableDoorLocking)
+            EventManager.RegisterEvents<Features.Map.Carpincho>(this);
+
+            if (Config.EnableDoorLocking)
 			{
 				EventManager.RegisterEvents<Features.DoorLocking.LockingEvents>(this);
 			}
