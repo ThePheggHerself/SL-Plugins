@@ -149,7 +149,7 @@ namespace CustomCommands.Features.SCPs.Swap
                 MEC.Timing.CallDelayed(5f, () =>
                 {
                     string draw = "";
-                yoinkus: //Makes sure the person didn't leave in the 5 second draw time
+                yoinkus: //Makes sure the person didn't leave in the 5 second draw time and that all SCP slots are filled
                     if (RaffleParticipants.Count > 0)
                     {
                         List<string> DrawGroup = new List<string>();
@@ -167,11 +167,13 @@ namespace CustomCommands.Features.SCPs.Swap
                         return;
                     }
 
-                    if (!Player.TryGet(draw, out var drawPlr)) goto yoinkus;
-                    else
+                    if (Player.TryGet(draw, out var drawPlr)) 
                         SwapHumanToScp(drawPlr);
+		    else goto yoinkus;
 
-                    RaffleParticipants.Clear();
+		    if (SCPsToReplace == 0)
+			RaffleParticipants.Clear();
+		    else goto yoinkus;
                 });
             }
         }
