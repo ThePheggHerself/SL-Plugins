@@ -23,8 +23,6 @@ namespace CustomCommands.ServerSettings
 			SCP_ZombieSuicide = 3,
 			Human_HealOther = 4,
 			Human_Suicide = 5,
-			Human_Suicide2 = 6,
-			Human_Ragdoll = 7,
 		}
 
 		/// <summary>

@@ -40,7 +40,7 @@ namespace CustomCommands.Features.Ragdoll
 			return SpawnRagdoll(new RagdollData(null, dh, role, position, rotation, nickname, NetworkTime.time), dh);
 		}
 
-		public static void RagdollPlayer(this Player plr, float time = 3, float forceMultiplyer = 1)
+		public static void RagdollPlayer(this Player plr, float time = 3, float forceMultiplyer = 1, bool teleportOnEnd = true)
 		{
 			if (!plr.IsAlive)
 				return;
@@ -48,7 +48,7 @@ namespace CustomCommands.Features.Ragdoll
 			velocity += plr.Camera.transform.forward * UnityEngine.Random.Range(1, 1.5f) * forceMultiplyer;
 
 			velocity += plr.Camera.transform.up * UnityEngine.Random.Range(0.75f, 1.25f) * forceMultiplyer;
-			var basicRagdoll = SpawnRagdoll(plr.Nickname, plr.Role, plr.Position, plr.GameObject.transform.rotation, velocity, "guh");
+			var basicRagdoll = SpawnRagdoll(plr.Nickname, plr.Role, plr.Position, plr.Camera.rotation, velocity, "guh");
 
 			var items = plr.ReferenceHub.inventory.UserInventory.Items;
 			plr.CurrentItem = null;
@@ -58,11 +58,12 @@ namespace CustomCommands.Features.Ragdoll
 
 			MEC.Timing.CallDelayed(time, () =>
 			{
-
 				plr.ReferenceHub.inventory.UserInventory.Items = items;
-				plr.Position = basicRagdoll.CenterPoint.position + Vector3.up;
-				NetworkServer.Destroy(basicRagdoll.gameObject);
 
+				if(teleportOnEnd)
+					plr.Position = basicRagdoll.CenterPoint.position + Vector3.up;
+
+				NetworkServer.Destroy(basicRagdoll.gameObject);
 			});
 		}
 

@@ -86,6 +86,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>E:\SteamLibrary\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.AIModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>E:\SteamLibrary\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\UnityEngine.AIModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>E:\SteamLibrary\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
@@ -93,6 +97,10 @@
     <Reference Include="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>E:\SteamLibrary\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>E:\SteamLibrary\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\UnityEngine.TerrainModule.dll</HintPath>
     </Reference>
     <Reference Include="YamlDotNet, Version=11.0.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e, processorArchitecture=MSIL">
       <HintPath>..\packages\YamlDotNet.11.0.1\lib\net45\YamlDotNet.dll</HintPath>
@@ -107,7 +115,6 @@
     <Compile Include="Commands\Misc\BanCheck.cs" />
     <Compile Include="Features\Depricated\Hush.cs" />
     <Compile Include="Commands\Misc\MuteCheck.cs" />
-    <Compile Include="Features\Dummy\Commands\Fill.cs" />
     <Compile Include="Features\Events\WeeklyEvents\EventManager.cs" />
     <Compile Include="Features\Events\WeeklyEvents\Events.cs" />
     <Compile Include="Features\Humans\CustomHumanSettings.cs" />
@@ -120,6 +127,11 @@
     <Compile Include="Features\Items\Grenades\Commands\Ball.cs" />
     <Compile Include="Commands\Player\Drop.cs" />
     <Compile Include="Commands\Teleport\Pocket.cs" />
+    <Compile Include="Features\Testing\Navigation\NavigationEvents.cs" />
+    <Compile Include="Features\Testing\Navigation\NavMeshComponents\NavMeshLink.cs" />
+    <Compile Include="Features\Testing\Navigation\NavMeshComponents\NavMeshModifier.cs" />
+    <Compile Include="Features\Testing\Navigation\NavMeshComponents\NavMeshModifierVolume.cs" />
+    <Compile Include="Features\Testing\Navigation\NavMeshComponents\NavMeshSurface.cs" />
     <Compile Include="Features\Map\Carpincho.cs" />
     <Compile Include="Features\Map\RollingBlackouts\BlackoutEvents.cs" />
     <Compile Include="Features\Map\RollingBlackouts\BlackoutManager.cs" />
@@ -132,22 +144,17 @@
     <Compile Include="Features\Players\Size\SizeEvents.cs" />
     <Compile Include="Features\Players\Size\SizeManager.cs" />
     <Compile Include="Features\SCPs\CustomSCPSettings.cs" />
-    <Compile Include="Features\Testing\DebugTests.cs" />
     <Compile Include="Features\Depricated\NameFix.cs" />
     <Compile Include="Features\SCPs\SCP3114\SCP3114Overhaul.cs" />
     <Compile Include="Commands\Player\SendHint.cs" />
     <Compile Include="Features\DoorLocking\Commands\Destroy.cs" />
     <Compile Include="Features\DoorLocking\Commands\Lock.cs" />
     <Compile Include="Features\DoorLocking\LockingEvents.cs" />
-    <Compile Include="Features\Dummy\Commands\Create.cs" />
-    <Compile Include="Features\Dummy\Commands\Destroy.cs" />
-    <Compile Include="Features\Dummy\DummyConnection.cs" />
-    <Compile Include="Features\Dummy\DummyEvents.cs" />
-    <Compile Include="Features\Dummy\DummyManager.cs" />
     <Compile Include="Features\Map\SurfaceLightFix\LightFixEvents.cs" />
     <Compile Include="Features\Map\SurfaceLightFix\SurfaceLightObject.cs" />
     <Compile Include="Features\SCPs\DamageAnnouncements\AnnouncementEvents.cs" />
     <Compile Include="Features\SCPs\DamageAnnouncements\AnnouncementManager.cs" />
+    <Compile Include="Features\Testing\TestingDummies.cs" />
     <Compile Include="Misc\Extensions.cs" />
     <Compile Include="Misc\ICustomCommand.cs" />
     <Compile Include="Plugin.cs" />

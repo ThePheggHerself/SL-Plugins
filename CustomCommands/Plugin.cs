@@ -52,11 +52,6 @@ namespace CustomCommands
 				EventManager.RegisterEvents<Features.DoorLocking.LockingEvents>(this);
 			}
 
-			if (Config.EnableDummies)
-			{
-				EventManager.RegisterEvents<Features.Dummy.DummyEvents>(this);
-			}
-
 			if (Config.EnableEvents)
 			{
 				EventManager.RegisterEvents<Features.Events.GlobalEvents>(this);
@@ -112,7 +107,8 @@ namespace CustomCommands
 
 			if (Config.EnableDebugTests)
 			{
-				EventManager.RegisterEvents<Features.Testing.DebugTests>(this);
+				EventManager.RegisterEvents<Features.Map.Navigation.NavigationEvents>(this);
+				EventManager.RegisterEvents<Features.Testing.TestingDummies>(this);
 			}
 
 			if (Config.EnablePlayerVoting)
