@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace CustomCommands.Features.Map.Navigation
+namespace CustomCommands.Features.Testing.Navigation
 {
 	public class NavigationEvents
 	{

@@ -127,11 +127,11 @@
     <Compile Include="Features\Items\Grenades\Commands\Ball.cs" />
     <Compile Include="Commands\Player\Drop.cs" />
     <Compile Include="Commands\Teleport\Pocket.cs" />
-    <Compile Include="Features\Map\Navigation\NavigationEvents.cs" />
-    <Compile Include="Features\Map\Navigation\NavMeshComponents\NavMeshLink.cs" />
-    <Compile Include="Features\Map\Navigation\NavMeshComponents\NavMeshModifier.cs" />
-    <Compile Include="Features\Map\Navigation\NavMeshComponents\NavMeshModifierVolume.cs" />
-    <Compile Include="Features\Map\Navigation\NavMeshComponents\NavMeshSurface.cs" />
+    <Compile Include="Features\Testing\Navigation\NavigationEvents.cs" />
+    <Compile Include="Features\Testing\Navigation\NavMeshComponents\NavMeshLink.cs" />
+    <Compile Include="Features\Testing\Navigation\NavMeshComponents\NavMeshModifier.cs" />
+    <Compile Include="Features\Testing\Navigation\NavMeshComponents\NavMeshModifierVolume.cs" />
+    <Compile Include="Features\Testing\Navigation\NavMeshComponents\NavMeshSurface.cs" />
     <Compile Include="Features\Map\RollingBlackouts\BlackoutEvents.cs" />
     <Compile Include="Features\Map\RollingBlackouts\BlackoutManager.cs" />
     <Compile Include="Features\Players\Size\SizeCommand.cs" />

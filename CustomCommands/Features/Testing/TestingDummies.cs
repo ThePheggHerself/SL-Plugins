@@ -41,6 +41,12 @@ namespace CustomCommands.Features.Testing
 			if (!sender.CanRun(this, arguments, out response, out _, out _))
 				return false;
 
+			if (!Plugin.Config.EnableDebugTests)
+			{
+				response = "This command is disabled";
+				return false;
+			}
+
 			var dumsToMake = Server.MaxPlayers - Server.PlayerCount;
 
 			for (int i = 0; i < dumsToMake; i++)
@@ -63,7 +69,7 @@ namespace CustomCommands.Features.Testing
 
 		public string Description => "Basic AI for dummies";
 
-		public string[] Usage { get; } = { "ID" };
+		public string[] Usage => null;
 
 		public PlayerPermissions? Permission => null;
 		public string PermissionString => "cuscom.dummyf";
@@ -76,6 +82,12 @@ namespace CustomCommands.Features.Testing
 		{
 			if (!sender.CanRun(this, arguments, out response, out _, out _))
 				return false;
+
+			if (!Plugin.Config.EnableDebugTests)
+			{
+				response = "This command is disabled";
+				return false;
+			}
 
 			if (sender is PlayerCommandSender pSender)
 			{

@@ -58,7 +58,6 @@ namespace CustomCommands.Features.Ragdoll
 
 			MEC.Timing.CallDelayed(time, () =>
 			{
-
 				plr.ReferenceHub.inventory.UserInventory.Items = items;
 
 				if(teleportOnEnd)

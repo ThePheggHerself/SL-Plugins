@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace CustomCommands.Features.Map.Navigation.NavMeshComponents
+namespace CustomCommands.Features.Testing.Navigation.NavMeshComponents
 {
 	[ExecuteInEditMode]
 	[AddComponentMenu("Navigation/NavMeshModifierVolume", 31)]

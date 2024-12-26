@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine.AI;
 using UnityEngine;
 
-namespace CustomCommands.Features.Map.Navigation.NavMeshComponents
+namespace CustomCommands.Features.Testing.Navigation.NavMeshComponents
 {
 	[ExecuteInEditMode]
 	[DefaultExecutionOrder(-101)]
