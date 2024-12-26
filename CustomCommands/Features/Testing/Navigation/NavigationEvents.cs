@@ -1,4 +1,4 @@
-﻿using CustomCommands.Features.Map.Navigation.NavMeshComponents;
+﻿using CustomCommands.Features.Testing.Navigation.NavMeshComponents;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Events;

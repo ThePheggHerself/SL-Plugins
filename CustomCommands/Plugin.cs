@@ -45,7 +45,7 @@ namespace CustomCommands
 
 			Log.Info($"Plugin is loading...");
 
-            EventManager.RegisterEvents<Features.Map.Carpincho>(this);
+            EventManager.RegisterEvents<Carpincho>(this);
 
             if (Config.EnableDoorLocking)
 			{
@@ -57,7 +57,6 @@ namespace CustomCommands
 				EventManager.RegisterEvents<Features.Events.GlobalEvents>(this);
 				EventManager.RegisterEvents<Features.Events.Infection.InfectionEvents>(this);
 			}
-
 
 			if (Config.EnableBetterDisarming)
 			{
@@ -86,7 +85,7 @@ namespace CustomCommands
 
 			if (Config.EnableAdditionalSurfaceLighting)
 			{
-				//EventManager.RegisterEvents<Features.Map.SurfaceLightFix.LightFixEvents>(this);
+				EventManager.RegisterEvents<Features.Map.SurfaceLightFix.LightFixEvents>(this);
 			}
 
 			if (Config.EnableDamageAnnouncements)
@@ -107,7 +106,7 @@ namespace CustomCommands
 
 			if (Config.EnableDebugTests)
 			{
-				EventManager.RegisterEvents<Features.Map.Navigation.NavigationEvents>(this);
+				EventManager.RegisterEvents<Features.Testing.Navigation.NavigationEvents>(this);
 				EventManager.RegisterEvents<Features.Testing.TestingDummies>(this);
 			}
 
