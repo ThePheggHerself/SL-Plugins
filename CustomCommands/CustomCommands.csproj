@@ -132,6 +132,7 @@
     <Compile Include="Features\Testing\Navigation\NavMeshComponents\NavMeshModifier.cs" />
     <Compile Include="Features\Testing\Navigation\NavMeshComponents\NavMeshModifierVolume.cs" />
     <Compile Include="Features\Testing\Navigation\NavMeshComponents\NavMeshSurface.cs" />
+    <Compile Include="Features\Map\Carpincho.cs" />
     <Compile Include="Features\Map\RollingBlackouts\BlackoutEvents.cs" />
     <Compile Include="Features\Map\RollingBlackouts\BlackoutManager.cs" />
     <Compile Include="Features\Players\Size\SizeCommand.cs" />
