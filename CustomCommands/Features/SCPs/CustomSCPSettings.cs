@@ -36,7 +36,7 @@ namespace CustomCommands.Features.SCPs
 			new SSKeybindSetting((int) CustomSettingsManager.SettingsIDs.SCP_SwapToHuman, "Swap to Human", KeyCode.O, true, "Swap from an SCP to a Human role."),
 			new SSKeybindSetting((int) CustomSettingsManager.SettingsIDs.SCP_SwapFromHuman, "Swap to SCP", KeyCode.L, true, "Replaces an SCP if an SCP slot is available."),
 			//Custom setting with 2 toggle buttons. The 2nd option (Referred to as B in all code) is set as the default option for users. Also has a simple descriptive hint for the option.
-			new SSTwoButtonsSetting((int) CustomSettingsManager.SettingsIDs.SCP_NeverSCP, "Never Spawn as SCP", "Enabled", "Disabled", true, "Always get swapped to a human role if you spawn as an SCP")
+			new SSTwoButtonsSetting((int) CustomSettingsManager.SettingsIDs.SCP_NeverSCP, "Auto swap from SCP", "Enabled", "Disabled", true, "Always get swapped to a human role if you spawn as an SCP (And are not on cooldown from doing so)")
 		};
 
 		/// <summary>

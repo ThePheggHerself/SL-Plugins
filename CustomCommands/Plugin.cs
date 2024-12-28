@@ -8,6 +8,7 @@ using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Events;
 using System;
+using System.Reflection;
 using UserSettings.ServerSpecific;
 
 namespace CustomCommands
@@ -28,11 +29,12 @@ namespace CustomCommands
 		AutoEventVote = 2,
 	}
 
-
 	public class Plugin
 	{
 		[PluginConfig]
 		public static Config Config;
+
+		public static BindingFlags BindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
 
 		public static bool EventInProgress => CurrentEvent != EventType.NONE;
 		public static EventType CurrentEvent = EventType.NONE;
@@ -106,8 +108,8 @@ namespace CustomCommands
 
 			if (Config.EnableDebugTests)
 			{
-				EventManager.RegisterEvents<Features.Testing.Navigation.NavigationEvents>(this);
-				EventManager.RegisterEvents<Features.Testing.TestingDummies>(this);
+				//EventManager.RegisterEvents<Features.Testing.Navigation.NavigationEvents>(this);
+				//EventManager.RegisterEvents<Features.Testing.TestingDummies>(this);
 			}
 
 			if (Config.EnablePlayerVoting)

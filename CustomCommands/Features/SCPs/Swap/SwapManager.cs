@@ -17,6 +17,8 @@ namespace CustomCommands.Features.SCPs.Swap
 		public static int ReplaceBaseCooldownRounds = 4;
 		public static int SwapSeconds = 60;
 		public static Dictionary<string, int> triggers = new Dictionary<string, int>();
+		public static Dictionary<string, int> scpCooldown = new Dictionary<string, int>();
+		public static Dictionary<string, int> humanCooldown = new Dictionary<string, int>();
         public static List<KeyValuePair<string, uint>> RaffleParticipants = new List<KeyValuePair<string, uint>>();
 
         public static void ReplaceBroadcast()
@@ -46,8 +48,6 @@ namespace CustomCommands.Features.SCPs.Swap
 			}
 		}
 
-		public static Dictionary<string, int> Cooldown = new Dictionary<string, int>();
-
 		public static bool CanScpSwapToHuman(ReferenceHub plr, out string reason) => CanScpSwapToHuman(Player.Get(plr), out reason);
 		public static bool CanScpSwapToHuman(Player plr, out string reason)
 		{
@@ -66,6 +66,14 @@ namespace CustomCommands.Features.SCPs.Swap
 			{
 				reason = "You cannot swap back to human";
 				return false;
+			}
+			if(humanCooldown.TryGetValue(plr.UserId, out int roundCount))
+			{
+				if(roundCount > RoundRestart.UptimeRounds)
+				{
+					reason = $"You are on cooldown for another {roundCount - RoundRestart.UptimeRounds} round(s).";
+					return false;
+				}
 			}
 			if (Round.Duration > TimeSpan.FromSeconds(SwapSeconds))
 			{
@@ -95,7 +103,7 @@ namespace CustomCommands.Features.SCPs.Swap
 				reason = $"You can only replace an SCP within the first {SwapSeconds * 1.5} seconds of the round";
 				return false;
 			}
-			if (SwapManager.Cooldown.TryGetValue(plr.UserId, out int roundCount))
+			if (scpCooldown.TryGetValue(plr.UserId, out int roundCount))
 			{
 				if (roundCount > RoundRestart.UptimeRounds)
 				{
@@ -103,7 +111,7 @@ namespace CustomCommands.Features.SCPs.Swap
 					{
 						if (count > 2)
 						{
-							SwapManager.Cooldown[plr.UserId]++;
+							SwapManager.scpCooldown[plr.UserId]++;
 							SwapManager.triggers[plr.UserId] = 0;
 						}
 						else SwapManager.triggers[plr.UserId]++;
@@ -112,7 +120,7 @@ namespace CustomCommands.Features.SCPs.Swap
 						SwapManager.triggers.Add(plr.UserId, 1);
 
 
-					reason = $"You are on cooldown for another {SwapManager.Cooldown[plr.UserId] - RoundRestart.UptimeRounds} round(s).";
+					reason = $"You are on cooldown for another {SwapManager.scpCooldown[plr.UserId] - RoundRestart.UptimeRounds} round(s).";
 					return false;
 				}
 			}
@@ -128,6 +136,8 @@ namespace CustomCommands.Features.SCPs.Swap
 			HumanSpawner.SpawnLate(plr.ReferenceHub);
 			plr.TemporaryData.Add("startedasscp", true.ToString());
 			SwapManager.ReplaceBroadcast();
+
+			humanCooldown.AddToOrReplaceValue(plr.UserId, RoundRestart.UptimeRounds + SwapManager.ReplaceBaseCooldownRounds);
 		}
 
         public static void QueueSwapHumanToScp(ReferenceHub plr) => QueueSwapHumanToScp(Player.Get(plr));
@@ -188,11 +198,7 @@ namespace CustomCommands.Features.SCPs.Swap
             plr.TemporaryData.Add("replacedscp", plr.Role.ToString());
 
 			SwapManager.SCPsToReplace--;
-
-			if (SwapManager.Cooldown.ContainsKey(plr.UserId))
-				SwapManager.Cooldown[plr.UserId] = RoundRestart.UptimeRounds + SwapManager.ReplaceBaseCooldownRounds;
-			else
-				SwapManager.Cooldown.Add(plr.UserId, RoundRestart.UptimeRounds + SwapManager.ReplaceBaseCooldownRounds);
+			scpCooldown.AddToOrReplaceValue(plr.UserId, RoundRestart.UptimeRounds + SwapManager.ReplaceBaseCooldownRounds);
 		}
 	}
 }

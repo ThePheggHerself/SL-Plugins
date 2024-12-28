@@ -1,4 +1,5 @@
 ﻿using CommandSystem;
+using CustomCommands.Features.SCPs.Swap;
 using NWAPIPermissionSystem;
 using PlayerRoles;
 using PluginAPI.Core;
@@ -97,6 +98,21 @@ namespace CustomCommands
 				return role.ToString().ToLower().Replace("scp", "");
 			}
 			else return string.Empty;
+		}
+
+		public static void AddToOrReplaceValue<TKey, TValue>(this Dictionary<TKey, TValue> dict, TKey key, TValue value)
+		{
+			if (dict.ContainsKey(key))
+				dict[key] = value;
+			else
+				dict.Add(key, value);
+		}
+		public static void AddToOrUpdateValue<TKey>(this Dictionary<TKey, int> dict, TKey key, int value)
+		{
+			if (dict.ContainsKey(key))
+				dict[key] += value;
+			else
+				dict.Add(key, value);
 		}
 	}
 }
