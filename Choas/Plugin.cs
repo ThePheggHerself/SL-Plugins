@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
+using PluginAPI.Events;
 
 namespace Choas
 {
@@ -14,6 +15,7 @@ namespace Choas
         public void OnPluginStart()
         {
             Log.Info($"Let the choas begin");
+            EventManager.RegisterEvents<Events>(this);
         }
     }
 }
