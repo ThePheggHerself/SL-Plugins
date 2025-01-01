@@ -8,6 +8,7 @@ using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Events;
 using System;
+using System.Linq;
 using System.Reflection;
 using UserSettings.ServerSpecific;
 
@@ -129,10 +130,13 @@ namespace CustomCommands
 				new BlackoutManager();
 			}
 
-			ServerSpecificSettingsSync.DefinedSettings = CustomSettingsManager.GetAllSettings();
-			ServerSpecificSettingsSync.SendToAll();
+            if (ServerSpecificSettingsSync.DefinedSettings == null)
+                ServerSpecificSettingsSync.DefinedSettings = new ServerSpecificSettingBase[0];
 
-			RagdollManager.OnRagdollSpawned += Features.Ragdoll.PocketRagdollHandler.RagdollManager_OnRagdollSpawned;
+            ServerSpecificSettingsSync.DefinedSettings = ServerSpecificSettingsSync.DefinedSettings.Concat(CustomSettingsManager.GetAllSettings()).ToArray();
+            ServerSpecificSettingsSync.SendToAll();
+
+            RagdollManager.OnRagdollSpawned += Features.Ragdoll.PocketRagdollHandler.RagdollManager_OnRagdollSpawned;
 
 			EventManager.RegisterEvents<Features.Players.Size.SizeEvents>(this);
 		}
