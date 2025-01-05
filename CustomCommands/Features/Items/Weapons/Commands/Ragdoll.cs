@@ -1,10 +1,8 @@
 ﻿using CommandSystem;
 using PluginAPI.Core;
+using RedRightHand.Core;
+using RedRightHand.Core.Commands;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CustomCommands.Features.Items.Weapons.Commands
 {

@@ -1,18 +1,13 @@
-﻿using CustomCommands.Events;
-using CustomPlayerEffects;
+﻿using CustomPlayerEffects;
 using Mirror;
+using PlayerRoles;
 using PlayerRoles.FirstPersonControl;
 using PlayerRoles.Ragdolls;
-using PlayerRoles;
 using PlayerStatsSystem;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 using PluginAPI.Core;
+using System.Collections.Generic;
+using System.Reflection;
+using UnityEngine;
 
 namespace CustomCommands.Features.Ragdoll
 {
@@ -60,7 +55,7 @@ namespace CustomCommands.Features.Ragdoll
 			{
 				plr.ReferenceHub.inventory.UserInventory.Items = items;
 
-				if(teleportOnEnd)
+				if (teleportOnEnd)
 					plr.Position = basicRagdoll.CenterPoint.position + Vector3.up;
 
 				NetworkServer.Destroy(basicRagdoll.gameObject);

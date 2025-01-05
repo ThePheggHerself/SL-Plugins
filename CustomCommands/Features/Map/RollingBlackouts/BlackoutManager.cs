@@ -1,11 +1,8 @@
 ﻿using Interactables.Interobjects.DoorUtils;
 using MEC;
 using PluginAPI.Core;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CustomCommands.Features.Map.RollingBlackouts
 {
@@ -23,7 +20,7 @@ namespace CustomCommands.Features.Map.RollingBlackouts
 			{
 				Timing.RunCoroutine(CheckForLights());
 			});
-			
+
 		}
 
 

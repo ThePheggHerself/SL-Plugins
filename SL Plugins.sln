@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StatTracker", "StatTracker\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Choas", "Choas\Choas.csproj", "{BD1A008D-68D1-4656-902F-46F9DBFF0B53}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedRightHand", "RedRightHand\RedRightHand.csproj", "{47EBCBA8-07AA-44D5-988D-B67CDCCB3FD0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{BD1A008D-68D1-4656-902F-46F9DBFF0B53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD1A008D-68D1-4656-902F-46F9DBFF0B53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD1A008D-68D1-4656-902F-46F9DBFF0B53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47EBCBA8-07AA-44D5-988D-B67CDCCB3FD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47EBCBA8-07AA-44D5-988D-B67CDCCB3FD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47EBCBA8-07AA-44D5-988D-B67CDCCB3FD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47EBCBA8-07AA-44D5-988D-B67CDCCB3FD0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

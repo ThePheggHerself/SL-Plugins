@@ -1,21 +1,10 @@
-﻿using CustomCommands.Features.Ragdoll;
-using CustomCommands.Features.SCPs.Swap;
-using CustomCommands.ServerSettings;
-using CustomPlayerEffects;
+﻿using CustomPlayerEffects;
 using InventorySystem;
 using PlayerRoles;
-using PlayerRoles.FirstPersonControl;
-using PlayerRoles.Ragdolls;
 using PlayerStatsSystem;
-using PluginAPI.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RedRightHand.Core.CustomSettings;
 using UnityEngine;
 using UserSettings.ServerSpecific;
-using Utils;
 
 namespace CustomCommands.Features.Humans
 {
@@ -28,8 +17,8 @@ namespace CustomCommands.Features.Humans
 		public override ServerSpecificSettingBase[] SettingBases => new ServerSpecificSettingBase[]
 		{
 			new SSGroupHeader(Name, false, Description),
-			new SSKeybindSetting((int)CustomSettingsManager.SettingsIDs.Human_HealOther, "Heal Player", KeyCode.K, true, "Heals the player you are currently looking at (Requires a medkit)"),
-			new SSKeybindSetting((int)CustomSettingsManager.SettingsIDs.Human_Suicide, "Suicide", KeyCode.KeypadEquals, true, "Kill yourself and become a spectator"),
+			new SSKeybindSetting((int)SettingsIDs.Human_HealOther, "Heal Player", KeyCode.K, true, "Heals the player you are currently looking at (Requires a medkit)"),
+			new SSKeybindSetting((int)SettingsIDs.Human_Suicide, "Suicide", KeyCode.KeypadEquals, true, "Kill yourself and become a spectator"),
 		};
 
 		public override void Activate()
@@ -46,7 +35,7 @@ namespace CustomCommands.Features.Humans
 		{
 			switch (setting.SettingId)
 			{
-				case (int)CustomSettingsManager.SettingsIDs.Human_Suicide:
+				case (int)SettingsIDs.Human_Suicide:
 					{
 						if (setting is SSKeybindSetting kbSetting && kbSetting.SyncIsPressed && hub.IsHuman())
 						{
@@ -56,14 +45,15 @@ namespace CustomCommands.Features.Humans
 						break;
 					}
 
-				case (int)CustomSettingsManager.SettingsIDs.Human_HealOther:
+				case (int)SettingsIDs.Human_HealOther:
 					{
 						if (setting is SSKeybindSetting kbSetting && kbSetting.SyncIsPressed)
 						{
 							if (hub.inventory.CurItem.TypeId == ItemType.Medkit)
 							{
-								if(Physics.Raycast(hub.PlayerCameraReference.position, hub.PlayerCameraReference.forward, out RaycastHit info, 3.5f)){
-									if(info.collider.TryGetComponent(out HitboxIdentity hbI) && !HitboxIdentity.IsEnemy(hbI.TargetHub, hub) && hbI.TargetHub != hub)
+								if (Physics.Raycast(hub.PlayerCameraReference.position, hub.PlayerCameraReference.forward, out RaycastHit info, 3.5f))
+								{
+									if (info.collider.TryGetComponent(out HitboxIdentity hbI) && !HitboxIdentity.IsEnemy(hbI.TargetHub, hub) && hbI.TargetHub != hub)
 									{
 										hbI.TargetHub.playerStats.GetModule<HealthStat>().ServerHeal(40);
 										hub.inventory.ServerRemoveItem(hub.inventory.CurItem.SerialNumber, null);

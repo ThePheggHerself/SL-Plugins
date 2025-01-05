@@ -1,5 +1,7 @@
 ﻿using CommandSystem;
 using PluginAPI.Core;
+using RedRightHand.Core;
+using RedRightHand.Core.Commands;
 using System;
 
 namespace CustomCommands.Commands

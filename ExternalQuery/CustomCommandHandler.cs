@@ -1,37 +1,14 @@
-﻿using Cryptography;
-using Newtonsoft.Json.Linq;
-using PluginAPI.Core;
+﻿using PluginAPI.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using Extensions = RedRightHand.Core.Extensions;
 
 namespace ExternalQuery
 {
 	public class CustomCommandHandler
 	{
-		internal static char[] validUnits = { 'm', 'h', 'd', 'w', 'M', 'y' };
-
-		public static TimeSpan GetBanDuration(char unit, int amount)
-		{
-			switch (unit)
-			{
-				default:
-					return new TimeSpan(0, 0, amount, 0);
-				case 'h':
-					return new TimeSpan(0, amount, 0, 0);
-				case 'd':
-					return new TimeSpan(amount, 0, 0, 0);
-				case 'w':
-					return new TimeSpan(7 * amount, 0, 0, 0);
-				case 'M':
-					return new TimeSpan(30 * amount, 0, 0, 0);
-				case 'y':
-					return new TimeSpan(365 * amount, 0, 0, 0);
-			}
-		}
 		public static string BanCommand(string cmd)
 		{
 			try
@@ -68,12 +45,12 @@ namespace ExternalQuery
 
 				durationString = arg[0];
 				var chars = durationString.Where(Char.IsLetter).ToArray();
-				if (chars.Length < 1 || !int.TryParse(new string(durationString.Where(Char.IsDigit).ToArray()), out int amount) || !validUnits.Contains(chars[0]) || amount < 1)
+				if (chars.Length < 1 || !int.TryParse(new string(durationString.Where(Char.IsDigit).ToArray()), out int amount) || !Extensions.ValidDurationUnits.Contains(chars[0]) || amount < 1)
 					return "Invalid duration provided";
 
 				GetPlayer(searchvariable, out player);
 
-				duration = GetBanDuration(chars[0], amount);
+				duration = Extensions.GetBanDuration(chars[0], amount);
 				arg = arg.Skip(1).ToArray();
 				reason = string.Join(" ", arg);
 

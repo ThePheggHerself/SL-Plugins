@@ -4,11 +4,10 @@ using InventorySystem.Items.Firearms.Attachments;
 using InventorySystem.Items.Firearms.Modules;
 using MapGeneration;
 using PluginAPI.Core;
+using RedRightHand.Core;
+using RedRightHand.Core.Commands;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace CustomCommands.Features.Events.DClassBattle
@@ -71,7 +70,7 @@ namespace CustomCommands.Features.Events.DClassBattle
 					var firearm = itemBase as Firearm;
 
 					AttachmentsUtils.ApplyAttachmentsCode(firearm, 1170, true);
-					if(firearm.TryGetModule<IPrimaryAmmoContainerModule>(out var iPACM))
+					if (firearm.TryGetModule<IPrimaryAmmoContainerModule>(out var iPACM))
 					{
 						iPACM.ServerModifyAmmo(firearm.GetTotalMaxAmmo());
 					}

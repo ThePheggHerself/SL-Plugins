@@ -1,11 +1,7 @@
-﻿using PluginAPI.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
-using PluginAPI.Core;
+using PluginAPI.Events;
+using System;
 
 namespace CustomCommands.Features.Events.WeeklyEvents
 {
@@ -60,7 +56,7 @@ namespace CustomCommands.Features.Events.WeeklyEvents
 		{
 			var e = IsWeekend();
 
-			if(IsWeekend() && CurrentEvent == EventType.NONE)
+			if (IsWeekend() && CurrentEvent == EventType.NONE)
 			{
 				CurrentEvent = EventType.CoinFlipDeath;
 				//CurrentEvent = (EventType)UnityEngine.Random.Range(0, 6);

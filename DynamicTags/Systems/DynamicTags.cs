@@ -1,18 +1,13 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using CommandSystem;
 using Newtonsoft.Json;
+using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Enums;
+using PluginAPI.Events;
+using RemoteAdmin;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using PluginAPI.Core;
-using CommandSystem;
-using RemoteAdmin;
-using System.Net.Http;
-using PluginAPI.Events;
+using Extensions = RedRightHand.Core.Extensions;
 
 namespace DynamicTags.Systems
 {
@@ -163,7 +158,7 @@ namespace DynamicTags.Systems
 
 				foreach (var plr in Player.GetPlayers())
 					if (Tags.ContainsKey(plr.UserId))
-						SetDynamicTag(plr, Tags[plr.UserId]);			
+						SetDynamicTag(plr, Tags[plr.UserId]);
 			}
 			catch (Exception e)
 			{

@@ -1,16 +1,7 @@
 ﻿using CustomCommands.Features.SCPs.Swap;
-using CustomCommands.ServerSettings;
-using PlayerRoles;
-using PluginAPI.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RedRightHand.Core.CustomSettings;
 using UnityEngine;
 using UserSettings.ServerSpecific;
-using UserSettings.ServerSpecific.Examples;
-using UserSettings.UserInterfaceSettings;
 
 namespace CustomCommands.Features.SCPs
 {
@@ -33,10 +24,10 @@ namespace CustomCommands.Features.SCPs
 			//Basic header for this section of the settings list. This will be used to give a quick description of what all the settings below are used for.
 			new SSGroupHeader(Name, false, Description),
 			//Custom keybind option. Default bind set to O (not Zero), blocks input while GUIs are open, and adds a simple descriptive hint for the option.
-			new SSKeybindSetting((int) CustomSettingsManager.SettingsIDs.SCP_SwapToHuman, "Swap to Human", KeyCode.O, true, "Swap from an SCP to a Human role."),
-			new SSKeybindSetting((int) CustomSettingsManager.SettingsIDs.SCP_SwapFromHuman, "Swap to SCP", KeyCode.L, true, "Replaces an SCP if an SCP slot is available."),
+			new SSKeybindSetting((int) SettingsIDs.SCP_SwapToHuman, "Swap to Human", KeyCode.O, true, "Swap from an SCP to a Human role."),
+			new SSKeybindSetting((int) SettingsIDs.SCP_SwapFromHuman, "Swap to SCP", KeyCode.L, true, "Replaces an SCP if an SCP slot is available."),
 			//Custom setting with 2 toggle buttons. The 2nd option (Referred to as B in all code) is set as the default option for users. Also has a simple descriptive hint for the option.
-			new SSTwoButtonsSetting((int) CustomSettingsManager.SettingsIDs.SCP_NeverSCP, "Auto swap from SCP", "Enabled", "Disabled", true, "Always get swapped to a human role if you spawn as an SCP (And are not on cooldown from doing so)")
+			new SSTwoButtonsSetting((int) SettingsIDs.SCP_NeverSCP, "Auto swap from SCP", "Enabled", "Disabled", true, "Always get swapped to a human role if you spawn as an SCP (And are not on cooldown from doing so)")
 		};
 
 		/// <summary>
@@ -66,7 +57,7 @@ namespace CustomCommands.Features.SCPs
 			//All setting IDs are ints, and each setting has a unique ID given by us when the setting is registered.
 			switch (setting.SettingId)
 			{
-				case (int)CustomSettingsManager.SettingsIDs.SCP_SwapToHuman:
+				case (int)SettingsIDs.SCP_SwapToHuman:
 					{
 						//To get the data we need, we need to first cast the setting into it's appropriate SSSB (In this case, a KeybindSetting). We then need to check if the synced key is being pressed.
 						//If the key is being pressed, run whatever it is we need to run. In this case, it will swap the SCP to a human role.
@@ -80,7 +71,7 @@ namespace CustomCommands.Features.SCPs
 						break;
 					}
 
-				case (int)CustomSettingsManager.SettingsIDs.SCP_SwapFromHuman:
+				case (int)SettingsIDs.SCP_SwapFromHuman:
 					{
 						if (setting is SSKeybindSetting kbSetting && kbSetting.SyncIsPressed)
 						{

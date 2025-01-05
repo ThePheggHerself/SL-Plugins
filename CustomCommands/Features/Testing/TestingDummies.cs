@@ -1,18 +1,15 @@
 ﻿using CommandSystem;
 using GameCore;
 using Mirror;
-using PlayerRoles;
 using PlayerRoles.FirstPersonControl;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Events;
-using RelativePositioning;
+using RedRightHand.Core;
+using RedRightHand.Core.Commands;
 using RemoteAdmin;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -110,7 +107,7 @@ namespace CustomCommands.Features.Testing
 
 							agent.radius = 0.5f;
 							agent.areaMask = 1;
-							agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance; 
+							agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
 						}
 
 						if (!dummyHub.gameObject.TryGetComponent<DummyAI>(out var ai))
@@ -158,7 +155,7 @@ namespace CustomCommands.Features.Testing
 					FirstPersonMovementModule fpcModule = fpcRole.FpcModule;
 					Vector3 pos = _hub.transform.position;
 					var dist = Vector3.Distance(pos, _agent.destination);
-					if(dist > _agent.stoppingDistance)
+					if (dist > _agent.stoppingDistance)
 					{
 						fpcModule.MouseLook.LookAtDirection(fpcModule.Motor.Velocity);
 					}

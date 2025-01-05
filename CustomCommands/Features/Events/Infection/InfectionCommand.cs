@@ -2,11 +2,10 @@
 using Interactables.Interobjects.DoorUtils;
 using MapGeneration;
 using PluginAPI.Core;
+using RedRightHand.Core;
+using RedRightHand.Core.Commands;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace CustomCommands.Features.Events.Infection

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DynamicTags
+﻿namespace DynamicTags
 {
 	public enum ActionType
 	{
@@ -68,6 +62,6 @@ namespace DynamicTags
 	{
 		public ActionType Action { get; set; }
 		public string ReasonPlayer { get; set; }
-		public string ReasonServer { get; set; }	
+		public string ReasonServer { get; set; }
 	}
 }

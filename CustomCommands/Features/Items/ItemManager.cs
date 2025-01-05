@@ -1,23 +1,11 @@
-﻿using CommandSystem;
+﻿using InventorySystem.Items;
+using InventorySystem.Items.Pickups;
 using InventorySystem.Items.ThrowableProjectiles;
-using InventorySystem.Items;
-using Mirror;
-using PlayerRoles.FirstPersonControl;
-using PlayerRoles.Ragdolls;
-using PlayerRoles;
-using PlayerStatsSystem;
 using PluginAPI.Core;
-using PluginAPI.Core.Attributes;
-using PluginAPI.Enums;
-using PluginAPI.Events;
-using System.Reflection;
+using System.Collections.Generic;
 using UnityEngine;
-using System;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
-using InventorySystem.Items.Pickups;
-using CustomCommands.Features.SCPs.Swap.Commands;
-using System.Collections.Generic;
 
 namespace CustomCommands.Features.Items
 {
@@ -70,9 +58,9 @@ namespace CustomCommands.Features.Items
 		public static ItemPickupBase[] GetItemsOfType(ItemType Type)
 		{
 			List<ItemPickupBase> items = new List<ItemPickupBase>();
-			foreach(var item in Object.FindObjectsOfType<ItemPickupBase>())
+			foreach (var item in Object.FindObjectsOfType<ItemPickupBase>())
 			{
-				if(item.Info.ItemId == Type)
+				if (item.Info.ItemId == Type)
 					items.Add(item);
 			}
 

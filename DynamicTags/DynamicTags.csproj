@@ -98,7 +98,6 @@
     <Compile Include="Config.cs" />
     <Compile Include="Misc\DataClasses.cs" />
     <Compile Include="Systems\DynamicTags.cs" />
-    <Compile Include="Misc\Extensions.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Systems\Reporting.cs" />
@@ -107,6 +106,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\RedRightHand\RedRightHand.csproj">
+      <Project>{47ebcba8-07aa-44d5-988d-b67cdccb3fd0}</Project>
+      <Name>RedRightHand</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

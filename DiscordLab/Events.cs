@@ -15,6 +15,9 @@ using PluginAPI.Events;
 using RemoteAdmin;
 using System;
 using static RoundSummary;
+using RedRightHand.Core;
+using RedRightHand.Core.Commands;
+using Extensions = RedRightHand.Core.Extensions;
 
 namespace DiscordLab
 {

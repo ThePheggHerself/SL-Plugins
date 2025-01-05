@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace CustomCommands.Features.Testing.Navigation.NavMeshComponents
+namespace RedRightHand.Core.Navigation.NavMeshComponents
 {
 	[ExecuteInEditMode]
 	[AddComponentMenu("Navigation/NavMeshModifier", 32)]

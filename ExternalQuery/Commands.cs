@@ -2,9 +2,6 @@
 using PluginAPI.Core;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExternalQuery
 {
@@ -21,7 +18,7 @@ namespace ExternalQuery
 
 		public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
 		{
-			if(Server.PlayerCount < 1)
+			if (Server.PlayerCount < 1)
 			{
 				response = "No players currently online";
 				return true;
@@ -29,7 +26,7 @@ namespace ExternalQuery
 
 			var plrStrs = new List<string>();
 
-			foreach(var plr in Player.GetPlayers())
+			foreach (var plr in Player.GetPlayers())
 			{
 				if (plr.IsServer)
 					continue;

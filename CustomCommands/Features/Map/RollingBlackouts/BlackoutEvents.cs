@@ -1,13 +1,6 @@
 ﻿using Interactables.Interobjects.DoorUtils;
-using MEC;
-using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CustomCommands.Features.Map.RollingBlackouts
 {
@@ -27,6 +20,6 @@ namespace CustomCommands.Features.Map.RollingBlackouts
 		{
 			BlackoutManager.DelayThisRound = UnityEngine.Random.Range(Plugin.Config.MinBlackoutTime, Plugin.Config.MaxBlackoutTime);
 			BlackoutManager.TriggeredThisRound = false;
-		}		
+		}
 	}
 }
