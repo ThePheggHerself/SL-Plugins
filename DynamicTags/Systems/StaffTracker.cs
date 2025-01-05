@@ -15,7 +15,7 @@ namespace DynamicTags.Systems
 {
 	public class StaffTracker
 	{
-		[PluginEvent]
+		//[PluginEvent]
 		public void OnPlayerPreauth(PlayerPreauthEvent args)
 		{
 			Timing.RunCoroutine(CheckPreauth(args));
