@@ -12,6 +12,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using MEC;
 using System.Data;
+using RedRightHand.Core;
+using Extensions = RedRightHand.Core.Extensions;
 
 namespace DiscordLab
 {
@@ -36,10 +38,6 @@ namespace DiscordLab
         /// </summary>
         [Obsolete]
         public IPAddress Address;
-        /// <summary>
-        /// Characters used to convert ban legnth periods from human readable to minutes.
-        /// </summary>
-        internal static char[] validUnits = { 'm', 'h', 'd', 'w', 'M', 'y' };
 
         Timer StatusTimer, KeepAliveTimer;
 
@@ -208,25 +206,6 @@ namespace DiscordLab
             }
         }
 
-
-        private TimeSpan GetBanDuration(char unit, int amount)
-        {
-            switch (unit)
-            {
-                default:
-                    return new TimeSpan(0, 0, amount, 0);
-                case 'h':
-                    return new TimeSpan(0, amount, 0, 0);
-                case 'd':
-                    return new TimeSpan(amount, 0, 0, 0);
-                case 'w':
-                    return new TimeSpan(7 * amount, 0, 0, 0);
-                case 'M':
-                    return new TimeSpan(30 * amount, 0, 0, 0);
-                case 'y':
-                    return new TimeSpan(365 * amount, 0, 0, 0);
-            }
-        }
         private string BanCommand(string[] arg, JObject jObject)
         {
             try
@@ -261,12 +240,12 @@ namespace DiscordLab
 
                 durationString = arg[0];
                 var chars = durationString.Where(Char.IsLetter).ToArray();
-                if (chars.Length < 1 || !int.TryParse(new string(durationString.Where(Char.IsDigit).ToArray()), out int amount) || !validUnits.Contains(chars[0]) || amount < 1)
+                if (chars.Length < 1 || !int.TryParse(new string(durationString.Where(Char.IsDigit).ToArray()), out int amount) || !Extensions.ValidDurationUnits.Contains(chars[0]) || amount < 1)
                     return "```diff\n- Invalid duration provided```";
 
                 GetPlayer(searchvariable, out player);
 
-                duration = GetBanDuration(chars[0], amount);
+                duration = Extensions.GetBanDuration(chars[0], amount);
                 arg = arg.Skip(1).ToArray();
                 reason = string.Join(" ", arg);
 

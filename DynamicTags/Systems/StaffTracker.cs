@@ -1,27 +1,21 @@
-﻿using LiteNetLib.Utils;
-using LiteNetLib;
-using Newtonsoft.Json.Linq;
+﻿using MEC;
 using Newtonsoft.Json;
-using PluginAPI.Core.Attributes;
 using PluginAPI.Core;
+using PluginAPI.Core.Attributes;
 using PluginAPI.Enums;
+using PluginAPI.Events;
+using RemoteAdmin;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Net.Http;
-using RemoteAdmin;
-using CommandSystem;
-using PluginAPI.Events;
-using MEC;
+using System.Text;
+using Extensions = RedRightHand.Core.Extensions;
 
 namespace DynamicTags.Systems
 {
 	public class StaffTracker
 	{
-		[PluginEvent]
+		//[PluginEvent]
 		public void OnPlayerPreauth(PlayerPreauthEvent args)
 		{
 			Timing.RunCoroutine(CheckPreauth(args));

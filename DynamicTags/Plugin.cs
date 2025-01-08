@@ -1,6 +1,5 @@
 ﻿using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
-using PluginAPI.Core.Factories;
 using PluginAPI.Events;
 
 namespace DynamicTags
@@ -17,13 +16,13 @@ namespace DynamicTags
 
 			//Registers the events used in the DynamicTags class
 			if (Config.TagsEnabled)
-				
+
 				EventManager.RegisterEvents<Systems.DynamicTags>(this);
 
 
 			//Registers the events used in the Tracker class
-			if(Config.TrackerEnabled)
-			EventManager.RegisterEvents<Systems.StaffTracker>(this);
+			if (Config.TrackerEnabled)
+				EventManager.RegisterEvents<Systems.StaffTracker>(this);
 
 			EventManager.RegisterEvents<Systems.Reporting>(this);
 

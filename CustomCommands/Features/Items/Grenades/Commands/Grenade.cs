@@ -1,10 +1,9 @@
 ﻿using CommandSystem;
-using InventorySystem.Items;
 using InventorySystem.Items.ThrowableProjectiles;
-using Mirror;
 using PluginAPI.Core;
+using RedRightHand.Core;
+using RedRightHand.Core.Commands;
 using System;
-using UnityEngine;
 
 namespace CustomCommands.Features.Items.Grenades.Commands
 {

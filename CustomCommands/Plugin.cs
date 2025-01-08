@@ -1,19 +1,32 @@
-﻿using CustomCommands.Events;
+﻿using CustomCommands.Features.Humans;
 using CustomCommands.Features.Map;
 using CustomCommands.Features.Map.RollingBlackouts;
-using CustomCommands.ServerSettings;
+using CustomCommands.Features.SCPs;
 using HarmonyLib;
 using PlayerRoles.Ragdolls;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Events;
-using System;
+using RedRightHand.Core.CustomSettings;
 using System.Linq;
-using System.Reflection;
 using UserSettings.ServerSpecific;
 
 namespace CustomCommands
 {
+	//An enum containing every single custom setting ID that we will be using.
+	//To keep it simple and easier to track, IDs need to be prefixed with what they are being used for.
+	//SCP is used for CustomSCPSettings
+	//Human is used for CustomHumanSettings
+	public enum SettingsIDs
+	{
+		SCP_SwapToHuman = 0,
+		SCP_SwapFromHuman = 1,
+		SCP_NeverSCP = 2,
+		SCP_ZombieSuicide = 3,
+		Human_HealOther = 4,
+		Human_Suicide = 5,
+	}
+
 	public enum EventType
 	{
 		NONE = 0,
@@ -35,8 +48,6 @@ namespace CustomCommands
 		[PluginConfig]
 		public static Config Config;
 
-		public static BindingFlags BindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
-
 		public static bool EventInProgress => CurrentEvent != EventType.NONE;
 		public static EventType CurrentEvent = EventType.NONE;
 
@@ -48,9 +59,9 @@ namespace CustomCommands
 
 			Log.Info($"Plugin is loading...");
 
-            EventManager.RegisterEvents<Carpincho>(this);
+			EventManager.RegisterEvents<Carpincho>(this);
 
-            if (Config.EnableDoorLocking)
+			if (Config.EnableDoorLocking)
 			{
 				EventManager.RegisterEvents<Features.DoorLocking.LockingEvents>(this);
 			}
@@ -124,19 +135,25 @@ namespace CustomCommands
 				EventManager.RegisterEvents<Features.Events.WeeklyEvents.Events>(this);
 			}
 
-			if(Config.EnableBlackout)
+			if (Config.EnableBlackout)
 			{
 				EventManager.RegisterEvents<BlackoutEvents>(this);
 				new BlackoutManager();
 			}
 
-            if (ServerSpecificSettingsSync.DefinedSettings == null)
-                ServerSpecificSettingsSync.DefinedSettings = new ServerSpecificSettingBase[0];
+			if (ServerSpecificSettingsSync.DefinedSettings == null)
+				ServerSpecificSettingsSync.DefinedSettings = new ServerSpecificSettingBase[0];
 
-            ServerSpecificSettingsSync.DefinedSettings = ServerSpecificSettingsSync.DefinedSettings.Concat(CustomSettingsManager.GetAllSettings()).ToArray();
-            ServerSpecificSettingsSync.SendToAll();
+			var settings = new CustomSettingsBase[]
+			{
+				new CustomSCPSettings(),
+				new CustomHumanSettings(),
+			};
 
-            RagdollManager.OnRagdollSpawned += Features.Ragdoll.PocketRagdollHandler.RagdollManager_OnRagdollSpawned;
+			ServerSpecificSettingsSync.DefinedSettings = ServerSpecificSettingsSync.DefinedSettings.Concat(CustomSettingsManager.ActivateAllSettings(settings)).ToArray();
+			ServerSpecificSettingsSync.SendToAll();
+
+			RagdollManager.OnRagdollSpawned += Features.Ragdoll.PocketRagdollHandler.RagdollManager_OnRagdollSpawned;
 
 			EventManager.RegisterEvents<Features.Players.Size.SizeEvents>(this);
 		}

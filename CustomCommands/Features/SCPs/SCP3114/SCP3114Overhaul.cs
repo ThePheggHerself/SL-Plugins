@@ -6,17 +6,12 @@ using Mirror;
 using PlayerRoles;
 using PlayerRoles.PlayableScps.Scp3114;
 using PlayerRoles.Ragdolls;
-using PlayerRoles.RoleAssign;
 using PlayerStatsSystem;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
-using PluginAPI.Enums;
 using PluginAPI.Events;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using Utils.Networking;
 
 namespace CustomCommands.Features.SCPs.SCP3114
 {
@@ -55,9 +50,9 @@ namespace CustomCommands.Features.SCPs.SCP3114
 		[PluginEvent]
 		public bool PlayerItemPickupEvent(PlayerSearchPickupEvent ev)
 		{
-			if(ev.Player.Role == RoleTypeId.Scp3114)
+			if (ev.Player.Role == RoleTypeId.Scp3114)
 			{
-				if(ev.Item.Info.ItemId == ItemType.MicroHID || ev.Item.Info.ItemId == ItemType.SCP268 || ev.Item.Info.ItemId == ItemType.SCP207)
+				if (ev.Item.Info.ItemId == ItemType.MicroHID || ev.Item.Info.ItemId == ItemType.SCP268 || ev.Item.Info.ItemId == ItemType.SCP207)
 				{
 					ev.Player.ReceiveHint($"You cannot pick up this item", 3);
 					return false;
@@ -121,7 +116,7 @@ namespace CustomCommands.Features.SCPs.SCP3114
 		{
 			if (!Scp3114RevealPatchClass.canStrangle)
 			{
-				Player.Get(__instance.Owner).ReceiveHint("You must disguise yourself to use Strangulation again!");			
+				Player.Get(__instance.Owner).ReceiveHint("You must disguise yourself to use Strangulation again!");
 				__result = false;
 			}
 

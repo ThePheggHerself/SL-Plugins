@@ -1,6 +1,11 @@
 ﻿using CommandSystem;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace CustomCommands
+namespace RedRightHand.Core.Commands
 {
 	public interface ICustomCommand : ICommand, IUsageProvider
 	{

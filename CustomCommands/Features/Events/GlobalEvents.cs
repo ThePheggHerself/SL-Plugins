@@ -1,15 +1,6 @@
-﻿using Interactables.Interobjects;
-using Interactables.Interobjects.DoorUtils;
-using PlayerRoles;
+﻿using Interactables.Interobjects.DoorUtils;
 using PluginAPI.Core.Attributes;
-using PluginAPI.Core.Zones.Heavy;
-using PluginAPI.Enums;
 using PluginAPI.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CustomCommands.Features.Events
 {

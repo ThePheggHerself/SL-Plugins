@@ -1,13 +1,9 @@
 ﻿using CommandSystem;
-using PlayerRoles.RoleAssign;
 using PlayerRoles;
 using PluginAPI.Core;
+using RedRightHand.Core.Commands;
 using RemoteAdmin;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CustomCommands.Features.SCPs.Swap.Commands
 {
@@ -43,7 +39,7 @@ namespace CustomCommands.Features.SCPs.Swap.Commands
 					return true;
 				}
 
-				return false;				
+				return false;
 			}
 
 			response = "You must be an SCP to run this command";

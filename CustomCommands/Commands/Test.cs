@@ -1,8 +1,7 @@
-﻿#pragma warning disable IDE0059 // Unnecessary assignment of a value
-using CommandSystem;
-using PluginAPI.Core;
+﻿using CommandSystem;
+using RedRightHand.Core;
+using RedRightHand.Core.Commands;
 using System;
-using System.Reflection;
 
 namespace CustomCommands.Commands
 {

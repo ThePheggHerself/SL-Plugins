@@ -1,14 +1,9 @@
-﻿using CustomCommands.ServerSettings;
-using MEC;
+﻿using MEC;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
-using PluginAPI.Enums;
 using PluginAPI.Events;
+using RedRightHand.Core;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UserSettings.ServerSpecific;
 
 namespace CustomCommands.Features.SCPs.Swap
@@ -20,7 +15,7 @@ namespace CustomCommands.Features.SCPs.Swap
 		{
 			if (args.Player.Role.IsValidSCP() && Round.Duration < TimeSpan.FromMinutes(1) && !Plugin.EventInProgress)
 			{
-				if (ServerSpecificSettingsSync.TryGetSettingOfUser<SSTwoButtonsSetting>(args.Player.ReferenceHub, (int)CustomSettingsManager.SettingsIDs.SCP_NeverSCP, out SSTwoButtonsSetting settings)
+				if (ServerSpecificSettingsSync.TryGetSettingOfUser<SSTwoButtonsSetting>(args.Player.ReferenceHub, (int)SettingsIDs.SCP_NeverSCP, out SSTwoButtonsSetting settings)
 					&& settings.SyncIsA)
 				{
 					Timing.CallDelayed(0.15f, () =>
@@ -30,7 +25,7 @@ namespace CustomCommands.Features.SCPs.Swap
 				}
 				else
 					args.Player.SendBroadcast("You can swap SCP with another player by running the \".scpswap <SCP>\" command in your console", 5);
-					args.Player.SendBroadcast("You can change back to a human role by running the \".human\" command", 5);
+				args.Player.SendBroadcast("You can change back to a human role by running the \".human\" command", 5);
 			}
 		}
 

@@ -128,10 +128,6 @@
     <Compile Include="Commands\Player\Drop.cs" />
     <Compile Include="Commands\Teleport\Pocket.cs" />
     <Compile Include="Features\Testing\Navigation\NavigationEvents.cs" />
-    <Compile Include="Features\Testing\Navigation\NavMeshComponents\NavMeshLink.cs" />
-    <Compile Include="Features\Testing\Navigation\NavMeshComponents\NavMeshModifier.cs" />
-    <Compile Include="Features\Testing\Navigation\NavMeshComponents\NavMeshModifierVolume.cs" />
-    <Compile Include="Features\Testing\Navigation\NavMeshComponents\NavMeshSurface.cs" />
     <Compile Include="Features\Map\Carpincho.cs" />
     <Compile Include="Features\Map\RollingBlackouts\BlackoutEvents.cs" />
     <Compile Include="Features\Map\RollingBlackouts\BlackoutManager.cs" />
@@ -155,8 +151,6 @@
     <Compile Include="Features\SCPs\DamageAnnouncements\AnnouncementEvents.cs" />
     <Compile Include="Features\SCPs\DamageAnnouncements\AnnouncementManager.cs" />
     <Compile Include="Features\Testing\TestingDummies.cs" />
-    <Compile Include="Misc\Extensions.cs" />
-    <Compile Include="Misc\ICustomCommand.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Features\Depricated\SCP008.cs" />
@@ -190,15 +184,15 @@
     <Compile Include="Features\Voting\Commands\Yes.cs" />
     <Compile Include="Features\Voting\VoteManager.cs" />
     <Compile Include="Features\Voting\VotingEvents.cs" />
-    <Compile Include="ServerSettings\CustomSettingsBase.cs" />
-    <Compile Include="ServerSettings\CustomSettingsManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\.editorconfig">
-      <Link>.editorconfig</Link>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\RedRightHand\RedRightHand.csproj">
+      <Project>{47ebcba8-07aa-44d5-988d-b67cdccb3fd0}</Project>
+      <Name>RedRightHand</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

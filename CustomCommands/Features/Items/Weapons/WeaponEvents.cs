@@ -1,30 +1,19 @@
-﻿using InventorySystem.Items.ThrowableProjectiles;
-using InventorySystem.Items;
+﻿using CustomCommands.Features.Ragdoll;
+using InventorySystem.Items.Firearms.Modules;
+using InventorySystem.Items.ThrowableProjectiles;
 using Mirror;
 using PlayerRoles;
 using PlayerRoles.FirstPersonControl;
 using PlayerRoles.Ragdolls;
 using PlayerStatsSystem;
+using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
-using PluginAPI.Enums;
 using PluginAPI.Events;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
-using CustomCommands.Features.Ragdoll;
-using PluginAPI.Core.Items;
-using InventorySystem;
-using PluginAPI.Core;
-using InventorySystem.Items.Firearms;
-using InventorySystem.Items.Pickups;
-using MEC;
-using InventorySystem.Items.Firearms.Modules;
 
 namespace CustomCommands.Features.Items.Weapons
 {

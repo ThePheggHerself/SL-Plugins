@@ -1,12 +1,7 @@
-﻿using CustomCommands.Features.Testing.Navigation.NavMeshComponents;
-using PluginAPI.Core;
+﻿using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RedRightHand.Core.Navigation.NavMeshComponents;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -17,9 +12,9 @@ namespace CustomCommands.Features.Testing.Navigation
 		[PluginEvent]
 		public void MapGeneratedEvent(MapGeneratedEvent ev)
 		{
-			foreach(var door in Facility.Doors)
+			foreach (var door in Facility.Doors)
 			{
-				if(door.Permissions == Interactables.Interobjects.DoorUtils.KeycardPermissions.None)
+				if (door.Permissions == Interactables.Interobjects.DoorUtils.KeycardPermissions.None)
 				{
 					var nmo = door.GameObject.AddComponent<NavMeshObstacle>();
 					nmo.carving = true;

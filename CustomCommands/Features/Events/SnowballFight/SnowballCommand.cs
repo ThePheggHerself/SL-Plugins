@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CustomCommands.Features.Events.SnowballFight
+﻿namespace CustomCommands.Features.Events.SnowballFight
 {
 	//	[CommandHandler(typeof(RemoteAdminCommandHandler))]
 	//	public class SnowballCommand : ICustomCommand

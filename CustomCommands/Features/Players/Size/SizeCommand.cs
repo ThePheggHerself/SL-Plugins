@@ -1,6 +1,8 @@
 ﻿using CommandSystem;
 using Mirror;
 using PluginAPI.Core;
+using RedRightHand.Core;
+using RedRightHand.Core.Commands;
 using System;
 using System.Reflection;
 

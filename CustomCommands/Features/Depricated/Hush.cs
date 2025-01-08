@@ -5,6 +5,8 @@ using MapGeneration;
 using PlayerRoles;
 using PlayerRoles.FirstPersonControl;
 using PluginAPI.Core;
+using RedRightHand.Core;
+using RedRightHand.Core.Commands;
 using System;
 using System.Linq;
 using UnityEngine;

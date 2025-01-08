@@ -1,20 +1,11 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using PluginAPI.Commands;
 using PluginAPI.Core;
-using RemoteAdmin;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using UnityEngine;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace ExternalQuery
 {
@@ -130,7 +121,7 @@ namespace ExternalQuery
 									}
 								}
 							}
-							catch(Exception e)
+							catch (Exception e)
 							{
 								Log.Info($"Error executing remote command: {e}\nData: {data}");
 							}

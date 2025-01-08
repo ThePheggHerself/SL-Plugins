@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CustomCommands
+﻿namespace CustomCommands
 {
 	public class Config
 	{
@@ -46,7 +40,7 @@ namespace CustomCommands
 		public bool EnableRagdollLauncher { get; set; } = true;
 		public bool EnableTranqGun { get; set; } = true;
 
-		
+
 		public bool EnableAdditionalSurfaceLighting { get; set; } = true; //Enables extra surface lights
 		public bool EnableDamageAnnouncements { get; set; } = true; //Enables the SCP damage announcements at the end of the round
 		public bool EnableScp079Removal { get; set; } = true; //Enables the SCP-079 removal (Yes it's confusing, but it's being kept as Enable to keep configs consistant)

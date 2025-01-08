@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 using UserSettings.ServerSpecific.Examples;
 using UserSettings.ServerSpecific;
 
-namespace CustomCommands.ServerSettings
+namespace RedRightHand.Core.CustomSettings
 {
 	public abstract class CustomSettingsBase
 	{
-		private static CustomSettingsBase _instance;
-
 		/// <summary>
 		/// Name
 		/// </summary>

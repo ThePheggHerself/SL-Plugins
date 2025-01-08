@@ -1,21 +1,9 @@
-﻿using PluginAPI.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Utils;
-using PluginAPI.Core.Attributes;
-using PluginAPI.Core;
-using CustomPlayerEffects;
-using PlayerStatsSystem;
-using Scp914.Processors;
-using InventorySystem.Items;
-using Scp914;
+﻿using CustomPlayerEffects;
 using MapGeneration;
-using NorthwoodLib.Pools;
-using PluginAPI.Core.Items;
-using InventorySystem.Items.Coin;
+using PlayerStatsSystem;
+using PluginAPI.Core.Attributes;
+using PluginAPI.Events;
+using Utils;
 
 namespace CustomCommands.Features.Events.WeeklyEvents
 {
@@ -35,7 +23,7 @@ namespace CustomCommands.Features.Events.WeeklyEvents
 							ev.Player.RemoveItems(ItemType.Coin);
 							ev.Player.CurrentItem = null;
 							ExplosionUtils.ServerSpawnEffect(ev.Player.Position, ItemType.GrenadeHE);
-							
+
 						});
 					}
 				}

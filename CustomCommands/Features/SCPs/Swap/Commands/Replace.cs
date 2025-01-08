@@ -1,13 +1,9 @@
 ﻿using CommandSystem;
 using PlayerRoles;
 using PluginAPI.Core;
+using RedRightHand.Core.Commands;
 using RemoteAdmin;
-using RoundRestarting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CustomCommands.Features.SCPs.Swap.Commands
 {
@@ -38,7 +34,7 @@ namespace CustomCommands.Features.SCPs.Swap.Commands
 				if (SwapManager.CanHumanSwapToScp(player, out response))
 				{
 					SwapManager.QueueSwapHumanToScp(player);
-					
+
 					response = "You have replaced an SCP";
 					return true;
 				}

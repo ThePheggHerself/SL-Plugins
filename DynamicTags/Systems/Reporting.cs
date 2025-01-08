@@ -1,16 +1,13 @@
-﻿using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using PluginAPI.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net.Http;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Enums;
 using PluginAPI.Events;
+using System;
+using System.Net.Http;
+using System.Text;
+using Extensions = RedRightHand.Core.Extensions;
+
 
 namespace DynamicTags.Systems
 {
@@ -19,7 +16,7 @@ namespace DynamicTags.Systems
 		[PluginEvent(ServerEventType.PlayerReport), PluginPriority(LoadPriority.Highest)]
 		public bool OnPlayerReport(PlayerReportEvent args)
 		{
-			if(args.Player.TemporaryData.Contains("report") && (DateTime.Now - new DateTime(long.Parse(args.Player.TemporaryData.Get<string>("report")))).TotalMinutes < 5)
+			if (args.Player.TemporaryData.Contains("report") && (DateTime.Now - new DateTime(long.Parse(args.Player.TemporaryData.Get<string>("report")))).TotalMinutes < 5)
 			{
 				return false;
 			}

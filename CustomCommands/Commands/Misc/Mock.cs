@@ -1,13 +1,10 @@
 ﻿using CommandSystem;
 using InventorySystem.Disarming;
 using PlayerStatsSystem;
-using PluginAPI.Core;
+using RedRightHand.Core;
+using RedRightHand.Core.Commands;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Utils;
 
 namespace CustomCommands.Commands.Misc

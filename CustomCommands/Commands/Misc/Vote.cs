@@ -1,7 +1,8 @@
 ﻿using CommandSystem;
-using CustomCommands.Features;
 using CustomCommands.Features.Voting;
 using PluginAPI.Core;
+using RedRightHand.Core;
+using RedRightHand.Core.Commands;
 using System;
 
 namespace CustomCommands.Commands.Misc
