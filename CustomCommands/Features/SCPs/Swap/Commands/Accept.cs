@@ -44,7 +44,18 @@ namespace CustomCommands.Features.SCPs.Swap.Commands
 					return false;
 				}
 
-				RoleTypeId playerSCP = player.Role;
+                if (player.Health != player.MaxHealth)
+                {
+                    response = "You cannot swap as you have taken damage";
+                    return false;
+                }
+                else if (Round.Duration > TimeSpan.FromMinutes(1))
+                {
+                    response = "You can only swap your SCP within the first minute of a round";
+                    return false;
+                }
+
+                RoleTypeId playerSCP = player.Role;
 				RoleTypeId swapperSCP = swapper.Role;
 
 				swapper.ReceiveHint($"{player.Nickname} accepted your swap request", 5);
