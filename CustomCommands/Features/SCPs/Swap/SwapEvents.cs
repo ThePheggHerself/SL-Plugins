@@ -1,9 +1,11 @@
 ﻿using MEC;
+using PlayerStatsSystem;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Events;
 using RedRightHand.Core;
 using System;
+using System.Linq;
 using UserSettings.ServerSpecific;
 
 namespace CustomCommands.Features.SCPs.Swap
@@ -33,15 +35,28 @@ namespace CustomCommands.Features.SCPs.Swap
 		public void RoundStart(RoundStartEvent args)
 		{
 			SwapManager.SCPsToReplace = 0;
-			SwapManager.LateTimer = false;
 
+			Timing.CallDelayed(SwapManager.SwapToHumanSeconds, () =>
+			{
+				if(SwapManager.SCPsToReplace > 0)
+				{
+					foreach(var scpPlr in Player.GetPlayers().Where(p => p.IsSCP))
+					{
+						if (scpPlr.Role.IsValidSCP())
+						{
+							scpPlr.GetStatModule<HealthStat>().CurValue = scpPlr.MaxHealth + (500 * SwapManager.SCPsToReplace);
+						}
+					}
+
+					Server.SendBroadcast($"Due to {SwapManager.SCPsToReplace} missing SCP(s), All living SCPs have been buffed", 5, Broadcast.BroadcastFlags.Normal, true);
+				}
+			});
 		}
 
 		[PluginEvent]
 		public void RoundEnd(RoundEndEvent args)
 		{
 			SwapManager.SCPsToReplace = 0;
-			SwapManager.LateTimer = false;
 			SwapManager.triggers.Clear();
 		}
 

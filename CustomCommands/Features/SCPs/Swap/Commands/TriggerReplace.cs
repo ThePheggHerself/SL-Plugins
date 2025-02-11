@@ -1,4 +1,5 @@
 ﻿using CommandSystem;
+using PluginAPI.Core;
 using RedRightHand.Core.Commands;
 using System;
 
@@ -25,9 +26,14 @@ namespace CustomCommands.Features.SCPs.Swap.Commands
 
 		public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
 		{
+			if(Round.Duration > TimeSpan.FromSeconds(SwapManager.SwapToScpSeconds))
+			{
+				response = $"You can only replace an SCP within the first {SwapManager.SwapToScpSeconds} seconds of the round";
+				return false;
+			}
+
 			SwapManager.SCPsToReplace++;
 			SwapManager.ReplaceBroadcast();
-			SwapManager.LateTimer = true;
 			response = "SCP replace triggered";
 			return true;
 		}

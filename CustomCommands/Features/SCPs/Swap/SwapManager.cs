@@ -11,9 +11,12 @@ namespace CustomCommands.Features.SCPs.Swap
 {
 	public static class SwapManager
 	{
+		private static int _swapSeconds = 60;
+		public static int SwapToHumanSeconds => _swapSeconds;
+		public static int SwapToScpSeconds => (int)(_swapSeconds * 1.5f);
+
 		public static int SCPsToReplace = 0;
 		public static int ReplaceBaseCooldownRounds = 4;
-		public static int SwapSeconds = 60;
 		public static Dictionary<string, int> triggers = new Dictionary<string, int>();
 		public static Dictionary<string, int> scpCooldown = new Dictionary<string, int>();
 		public static Dictionary<string, int> humanCooldown = new Dictionary<string, int>();
@@ -24,7 +27,6 @@ namespace CustomCommands.Features.SCPs.Swap
 			Server.ClearBroadcasts();
 			Server.SendBroadcast($"There {(SCPsToReplace == 1 ? "is" : "are")} now {SCPsToReplace} SCP spot{(SCPsToReplace == 1 ? "" : "s")} available. Run \".scp\" to queue for an SCP", 5);
 		}
-		public static bool LateTimer = false;
 
 		public static RoleTypeId[] AvailableSCPs
 		{
@@ -73,9 +75,9 @@ namespace CustomCommands.Features.SCPs.Swap
 					return false;
 				}
 			}
-			if (Round.Duration > TimeSpan.FromSeconds(SwapSeconds))
+			if (Round.Duration > TimeSpan.FromSeconds(SwapToHumanSeconds))
 			{
-				reason = $"You can only swap from SCP within the first {SwapSeconds} seconds of a round";
+				reason = $"You can only swap from SCP within the first {SwapToHumanSeconds} seconds of a round";
 				return false;
 			}
 
@@ -96,9 +98,9 @@ namespace CustomCommands.Features.SCPs.Swap
 				reason = "You were already an SCP this round";
 				return false;
 			}
-			if (Round.Duration > TimeSpan.FromSeconds(SwapSeconds * 1.5) && !SwapManager.LateTimer || Round.Duration > TimeSpan.FromSeconds(SwapSeconds * 2))
+			if (Round.Duration > TimeSpan.FromSeconds(SwapToScpSeconds))
 			{
-				reason = $"You can only replace an SCP within the first {SwapSeconds * 1.5} seconds of the round";
+				reason = $"You can only replace an SCP within the first {SwapToScpSeconds} seconds of the round";
 				return false;
 			}
 			if (scpCooldown.TryGetValue(plr.UserId, out int roundCount))

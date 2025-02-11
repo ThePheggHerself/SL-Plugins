@@ -16,6 +16,9 @@
 		//Enables the weekly events
 		public bool EnableWeeklyEvents { get; set; } = false;
 
+		//Randomizes the delay for the nuke's DeadManSwitch
+		public bool EnableDmsRandomizedDelay { get; set; } = true;
+
 		//Enables the better disarming system (rewards more tokens for disarming and rescuing dclass and scientists)
 		public bool EnableBetterDisarming { get; set; } = true;
 

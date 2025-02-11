@@ -127,6 +127,7 @@
     <Compile Include="Features\Items\Grenades\Commands\Ball.cs" />
     <Compile Include="Commands\Player\Drop.cs" />
     <Compile Include="Commands\Teleport\Pocket.cs" />
+    <Compile Include="Features\Map\DMSBullshit\DMSEvents.cs" />
     <Compile Include="Features\Testing\Navigation\NavigationEvents.cs" />
     <Compile Include="Features\Map\Carpincho.cs" />
     <Compile Include="Features\Map\RollingBlackouts\BlackoutEvents.cs" />
