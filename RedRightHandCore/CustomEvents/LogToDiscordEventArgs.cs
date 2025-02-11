@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RedRightHandCore.CustomEvents
 {
-	public class LogToDiscordEventArgs
+	public class LogToDiscordEventArgs : CustomEventArgs
 	{
 		public string LogString {  get; set; }
 		public LogToDiscordEventArgs(string logString)

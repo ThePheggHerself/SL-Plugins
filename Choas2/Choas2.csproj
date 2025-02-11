@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{751BB329-B71B-4F52-881B-4EEF5DEB8612}</ProjectGuid>
+    <ProjectGuid>{CC458F06-6CA6-4763-B8CA-5E3D7CE6FCA0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RedRightHandCore</RootNamespace>
-    <AssemblyName>RedRightHandCore</AssemblyName>
+    <RootNamespace>Choas2</RootNamespace>
+    <AssemblyName>Choas2</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Builds\</OutputPath>
+    <OutputPath>..\Builds\Modules\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -31,8 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LabApi, Version=0.4.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="LabApi">
       <HintPath>E:\SteamLibrary\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\LabApi.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -45,10 +44,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomEvents\CustomEventArgs.cs" />
-    <Compile Include="CustomEvents\LogToDiscordEventArgs.cs" />
-    <Compile Include="ModuleCore.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RedRightHandCore\RedRightHandCore.csproj">
+      <Project>{751bb329-b71b-4f52-881b-4eef5deb8612}</Project>
+      <Name>RedRightHandCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RedRightHandMaster\RedRightHandMaster.csproj">
+      <Project>{08469bd2-b011-4ed1-83bd-ce875de8704a}</Project>
+      <Name>RedRightHandMaster</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

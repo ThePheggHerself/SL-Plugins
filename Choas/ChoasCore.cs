@@ -4,6 +4,9 @@ using LabApi.Features.Console;
 using LabApi.Loader.Features.Plugins;
 using LabApi.Loader.Features.Plugins.Enums;
 using RedRightHandCore;
+using RedRightHandCore.CustomEvents;
+using RedRightHandMaster;
+using RedRightHandMaster.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,23 +31,18 @@ namespace Choas
 		public override void Disable()
 		{
 			ServerEvents.WaitingForPlayers -= ServerEvents_WaitingForPlayers;
-			PlayerEvents.Joined -= PlayerEvents_Joined;
 		}
 
 		public override void Enable()
 		{
 			ServerEvents.WaitingForPlayers += ServerEvents_WaitingForPlayers;
-			PlayerEvents.Joined += PlayerEvents_Joined;
-		}
-
-		private void PlayerEvents_Joined(LabApi.Events.Arguments.PlayerEvents.PlayerJoinedEventArgs ev)
-		{
-			Logger.Info($"{ev.Player.LogName}");
 		}
 
 		public void ServerEvents_WaitingForPlayers()
 		{
-			Logger.Info("Meow EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+			Logger.Info("Testing custom event");
+
+			CustomEvents.InvokeLogToDiscord(new LogToDiscordEventArgs("MEOW MEOW MEOW MEOW"));
 		}
 	}
 }

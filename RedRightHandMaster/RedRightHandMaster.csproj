@@ -76,7 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MasterCore.cs" />
-    <Compile Include="Modules\ModuleEvents.cs" />
+    <Compile Include="CustomEvents.cs" />
     <Compile Include="Modules\ModuleLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
