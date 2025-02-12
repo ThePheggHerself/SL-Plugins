@@ -177,7 +177,7 @@ namespace RedRightHandCore
 
 		public static string ToLogString(this Player plr) => $"{plr.Nickname} ({plr.UserId})";
 
-		public static bool IsChaos(Player player)
+		public static bool IsChaos(Player player, bool includeCivs = false)
 		{
 			switch (player.Role)
 			{
@@ -186,12 +186,16 @@ namespace RedRightHandCore
 				case RoleTypeId.ChaosRepressor:
 				case RoleTypeId.ChaosMarauder:
 					return true;
+				case RoleTypeId.ClassD:
+					if (includeCivs)
+						return true;
+					else return false;
 				default:
 					return false;
 			}
 		}
 
-		public static bool IsMtf(Player player)
+		public static bool IsMtf(Player player, bool includeCivs = false)
 		{
 			switch (player.Role)
 			{
@@ -201,6 +205,10 @@ namespace RedRightHandCore
 				case RoleTypeId.NtfPrivate:
 				case RoleTypeId.NtfSergeant:
 					return true;
+				case RoleTypeId.Scientist:
+					if (includeCivs)
+						return true;
+					else return false;
 				default:
 					return false;
 			}
@@ -232,13 +240,13 @@ namespace RedRightHandCore
 			if (victimRole.Team == Team.SCPs || AttackerRole.Team == Team.SCPs)
 				return false;
 
-			if ((victimRole.RoleTypeId == RoleTypeId.ClassD || IsChaos(victim)) && (AttackerRole.Team == Team.ClassD || IsChaos(Attacker)))
+			if (IsChaos(victim, true) && IsChaos(Attacker, true))
 			{
 				if (victim.Role == RoleTypeId.ClassD && Attacker.Role == RoleTypeId.ClassD)
 					return false;
 				return true;
 			}
-			else if ((victimRole.RoleTypeId == RoleTypeId.Scientist || IsMtf(victim)) && (Attacker.Role == RoleTypeId.Scientist || IsMtf(Attacker)))
+			else if (IsMtf(victim, true) && IsMtf(Attacker, true))
 				return true;
 
 			return false;
