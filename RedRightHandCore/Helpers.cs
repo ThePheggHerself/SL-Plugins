@@ -14,6 +14,7 @@ using PlayerRoles.Ragdolls;
 using PlayerRoles;
 using PlayerStatsSystem;
 using System.Reflection;
+using RedRightHandCore.Misc;
 
 namespace RedRightHandCore
 {
