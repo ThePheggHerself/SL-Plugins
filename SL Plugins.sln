@@ -9,9 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedRightHandCore", "RedRigh
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{6F27A3F0-3850-45CE-B586-40B508227B66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Choas", "Choas\Choas.csproj", "{22222338-42AB-436C-A2C9-8DBEB9FB5843}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Choas", "RHH_modules\Choas\Choas.csproj", "{22222338-42AB-436C-A2C9-8DBEB9FB5843}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Choas2", "Choas2\Choas2.csproj", "{CC458F06-6CA6-4763-B8CA-5E3D7CE6FCA0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Choas2", "RHH_modules\Choas2\Choas2.csproj", "{CC458F06-6CA6-4763-B8CA-5E3D7CE6FCA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordLink", "RHH_modules\DiscordLink\DiscordLink.csproj", "{EBE96E6E-0CBC-41E7-AB76-8590D1D6D45E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{CC458F06-6CA6-4763-B8CA-5E3D7CE6FCA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC458F06-6CA6-4763-B8CA-5E3D7CE6FCA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC458F06-6CA6-4763-B8CA-5E3D7CE6FCA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBE96E6E-0CBC-41E7-AB76-8590D1D6D45E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBE96E6E-0CBC-41E7-AB76-8590D1D6D45E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBE96E6E-0CBC-41E7-AB76-8590D1D6D45E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBE96E6E-0CBC-41E7-AB76-8590D1D6D45E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,6 +48,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{22222338-42AB-436C-A2C9-8DBEB9FB5843} = {6F27A3F0-3850-45CE-B586-40B508227B66}
 		{CC458F06-6CA6-4763-B8CA-5E3D7CE6FCA0} = {6F27A3F0-3850-45CE-B586-40B508227B66}
+		{EBE96E6E-0CBC-41E7-AB76-8590D1D6D45E} = {6F27A3F0-3850-45CE-B586-40B508227B66}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {488D4727-90AC-4400-9CCC-B88E103D145E}

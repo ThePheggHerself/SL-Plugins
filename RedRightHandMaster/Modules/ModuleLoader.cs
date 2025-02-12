@@ -34,9 +34,9 @@ namespace RedRightHandMaster.Modules
 
 				foreach (var p in PluginLoader.Plugins.OrderBy(p => p.Key.Properties))
 				{
-					Logger.Info($"Checking: {p.Key.Name} {p.Key.TryLoadProperties()} {PluginLoader.EnabledPlugins.Contains(p.Key)}");
+					//Logger.Info($"Checking: {p.Key.Name} {p.Key.TryLoadProperties()} {p.Key.Name.Contains("RRH")} {p.Key is not ModuleCore mCore} {PluginLoader.EnabledPlugins.Contains(p.Key)}");
 
-					if (PluginLoader.EnabledPlugins.Contains(p.Key))
+					if (p.Key is not ModuleCore)
 						continue;
 
 					try

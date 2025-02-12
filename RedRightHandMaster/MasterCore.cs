@@ -33,14 +33,7 @@ namespace RedRightHandMaster
 			Logger.Info("Hello, World!");
 			Properties.IsEnabled = true;
 
-			//Wait for every other plugin to have finished loading
-			Timing.CallDelayed(0.5f, () =>
-			{
-				ModuleLoader = new ModuleLoader();
-			});
-			
-
-			
+			ModuleLoader = new ModuleLoader();
 		}
 
 		public override void Disable()
