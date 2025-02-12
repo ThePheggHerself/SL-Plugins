@@ -4,24 +4,28 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{751BB329-B71B-4F52-881B-4EEF5DEB8612}</ProjectGuid>
+    <ProjectGuid>{EBE96E6E-0CBC-41E7-AB76-8590D1D6D45E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RedRightHandCore</RootNamespace>
-    <AssemblyName>RedRightHandCore</AssemblyName>
+    <RootNamespace>DiscordLink</RootNamespace>
+    <AssemblyName>DiscordLink</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Commands\ICustomCommand.cs" />
-    <Compile Include="Extensions.cs" />
-    <Compile Include="Helpers.cs" />
-    <Compile Include="Misc\FakeRagdoll.cs" />
-    <Compile Include="PluginCore\CustomConfig.cs" />
-    <Compile Include="PluginCore\CustomPluginCore.cs" />
+    <Compile Include="BotLink.cs" />
+    <Compile Include="DataClasses.cs" />
+    <Compile Include="DiscordLinkConfig.cs" />
+    <Compile Include="DiscordLinkPluginCore.cs" />
+    <Compile Include="Events.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\RedRightHandCore\RedRightHandCore.csproj">
+      <Project>{751bb329-b71b-4f52-881b-4eef5deb8612}</Project>
+      <Name>RedRightHandCore</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

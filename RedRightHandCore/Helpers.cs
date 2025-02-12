@@ -40,7 +40,7 @@ namespace RedRightHandCore
 			grenade.ServerActivate();
 		}
 
-		public static BasicRagdoll SpawnRagdoll(RagdollData ragdollData, StandardDamageHandler dh)
+		public static BasicRagdoll SpawnRagdoll(RagdollData ragdollData)
 		{
 			PlayerRoleLoader.TryGetRoleTemplate(ragdollData.RoleType, out FpcStandardRoleBase ragdollRole);
 
@@ -53,13 +53,13 @@ namespace RedRightHandCore
 
 		public static BasicRagdoll SpawnRagdoll(string nickname, RoleTypeId role, Vector3 position, Quaternion rotation, Vector3 velocity, string deathReason)
 		{
-			PlayerRoleLoader.TryGetRoleTemplate(role, out FpcStandardRoleBase ragdollRole);
+			PlayerRoleLoader.TryGetRoleTemplate(role, out FpcStandardRoleBase _);
 
 			var dh = new CustomReasonDamageHandler(deathReason);
 
 			typeof(StandardDamageHandler).GetField("StartVelocity", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).SetValue(dh, velocity);
 
-			return SpawnRagdoll(new RagdollData(null, dh, role, position, rotation, nickname, NetworkTime.time), dh);
+			return SpawnRagdoll(new RagdollData(null, dh, role, position, rotation, nickname, NetworkTime.time));
 		}
 
 		public static void RagdollPlayer(this Player plr, float time = 3, float forceMultiplyer = 1, bool teleportOnEnd = true)
@@ -74,7 +74,7 @@ namespace RedRightHandCore
 
 			var items = plr.ReferenceHub.inventory.UserInventory.Items;
 			plr.CurrentItem = null;
-			plr.ReferenceHub.inventory.UserInventory.Items = new Dictionary<ushort, ItemBase>();
+			plr.ReferenceHub.inventory.UserInventory.Items = [];
 			plr.EnableEffect<Invisible>(1, time, false);
 			plr.EnableEffect<Ensnared>(1, time, false);
 

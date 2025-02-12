@@ -25,12 +25,12 @@ namespace RedRightHandCore
 
 		public static bool CanRun(this ICommandSender sender, ICustomCommand cmd, ArraySegment<string> args, out string Response, out List<Player> Players, out PlayerCommandSender PlrCmdSender)
 		{
-			Players = new List<Player>();
+			Players = [];
 			PlrCmdSender = null;
 
 			if (cmd.RequirePlayerSender)
 			{
-				if (!(sender is PlayerCommandSender pSender))
+				if (sender is not PlayerCommandSender pSender)
 				{
 					Response = "You must be a player to run this command";
 					return false;
@@ -106,10 +106,10 @@ namespace RedRightHandCore
 			else return RoleTypeId.None;
 		}
 
-		private static RoleTypeId[] _isCoreSCP = new RoleTypeId[]
-		{
+		private static readonly RoleTypeId[] _isCoreSCP =
+		[
 			RoleTypeId.Scp173, RoleTypeId.Scp049, RoleTypeId.Scp079,RoleTypeId.Scp096, RoleTypeId.Scp106,RoleTypeId.Scp939, RoleTypeId.Scp3114
-		};
+		];
 
 		public static bool IsValidSCP(this RoleTypeId role)
 		{
@@ -150,27 +150,27 @@ namespace RedRightHandCore
 		{
 			if (aDH is FirearmDamageHandler fDH)
 				return fDH.WeaponType.ToString();
-			else if (aDH is ExplosionDamageHandler eDH)
+			else if (aDH is ExplosionDamageHandler)
 				return "Grenade";
-			else if (aDH is MicroHidDamageHandler mhidDH)
+			else if (aDH is MicroHidDamageHandler)
 				return "Micro HID";
-			else if (aDH is RecontainmentDamageHandler reconDH)
+			else if (aDH is RecontainmentDamageHandler)
 				return "Recontainment";
-			else if (aDH is Scp018DamageHandler scp018DH)
+			else if (aDH is Scp018DamageHandler)
 				return "SCP 018";
-			else if (aDH is Scp096DamageHandler scp096DH)
+			else if (aDH is Scp096DamageHandler)
 				return "SCP 096";
-			else if (aDH is Scp049DamageHandler scp049DH)
+			else if (aDH is Scp049DamageHandler)
 				return "SCP 049";
-			else if (aDH is Scp939DamageHandler scp939DH)
+			else if (aDH is Scp939DamageHandler)
 				return "SCP 939";
-			else if (aDH is Scp3114DamageHandler scp3114DH)
+			else if (aDH is Scp3114DamageHandler)
 				return "SCP 3114";
 			else if (aDH is ScpDamageHandler scpDH)
 				return scpDH.Attacker.Role.ToString();
-			else if (aDH is DisruptorDamageHandler dDH)
+			else if (aDH is DisruptorDamageHandler)
 				return "Particle Disruptor";
-			else if (aDH is JailbirdDamageHandler jDH)
+			else if (aDH is JailbirdDamageHandler)
 				return "Jailbird";
 			else return $"{aDH.GetType().Name}";
 		}
@@ -216,20 +216,11 @@ namespace RedRightHandCore
 
 		public static bool IsSCP(Player player)
 		{
-			switch (player.Role)
+			return player.Role switch
 			{
-				case RoleTypeId.Scp173:
-				case RoleTypeId.Scp106:
-				case RoleTypeId.Scp049:
-				case RoleTypeId.Scp079:
-				case RoleTypeId.Scp096:
-				case RoleTypeId.Scp0492:
-				case RoleTypeId.Scp939:
-				case RoleTypeId.Scp3114:
-					return true;
-				default:
-					return false;
-			}
+				RoleTypeId.Scp173 or RoleTypeId.Scp106 or RoleTypeId.Scp049 or RoleTypeId.Scp079 or RoleTypeId.Scp096 or RoleTypeId.Scp0492 or RoleTypeId.Scp939 or RoleTypeId.Scp3114 => true,
+				_ => false,
+			};
 		}
 
 		public static bool IsFF(Player victim, Player Attacker)
@@ -254,21 +245,17 @@ namespace RedRightHandCore
 
 		public async static Task<HttpResponseMessage> Post(string Url, StringContent Content)
 		{
-			using (HttpClient client = new HttpClient())
-			{
-				client.BaseAddress = new Uri(Url);
+			using HttpClient client = new();
+			client.BaseAddress = new Uri(Url);
 
-				return await client.PostAsync(client.BaseAddress, Content);
-			}
+			return await client.PostAsync(client.BaseAddress, Content);
 		}
 		public async static Task<HttpResponseMessage> Get(string Url)
 		{
-			using (HttpClient client = new HttpClient())
-			{
-				client.BaseAddress = new Uri(Url);
+			using HttpClient client = new();
+			client.BaseAddress = new Uri(Url);
 
-				return await client.GetAsync(client.BaseAddress);
-			}
+			return await client.GetAsync(client.BaseAddress);
 		}
 
 		public static bool TryParseJSON(string json, out JObject jObject)
@@ -285,25 +272,19 @@ namespace RedRightHandCore
 			}
 		}
 
-		public static char[] ValidDurationUnits = { 'm', 'h', 'd', 'w', 'M', 'y' };
+		public static char[] ValidDurationUnits = ['m', 'h', 'd', 'w', 'M', 'y'];
 
 		public static TimeSpan GetBanDuration(char unit, int amount)
 		{
-			switch (unit)
+			return unit switch
 			{
-				default:
-					return new TimeSpan(0, 0, amount, 0);
-				case 'h':
-					return new TimeSpan(0, amount, 0, 0);
-				case 'd':
-					return new TimeSpan(amount, 0, 0, 0);
-				case 'w':
-					return new TimeSpan(7 * amount, 0, 0, 0);
-				case 'M':
-					return new TimeSpan(30 * amount, 0, 0, 0);
-				case 'y':
-					return new TimeSpan(365 * amount, 0, 0, 0);
-			}
+				'h' => new TimeSpan(0, amount, 0, 0),
+				'd' => new TimeSpan(amount, 0, 0, 0),
+				'w' => new TimeSpan(7 * amount, 0, 0, 0),
+				'M' => new TimeSpan(30 * amount, 0, 0, 0),
+				'y' => new TimeSpan(365 * amount, 0, 0, 0),
+				_ => new TimeSpan(0, 0, amount, 0),
+			};
 		}
 	}
 }

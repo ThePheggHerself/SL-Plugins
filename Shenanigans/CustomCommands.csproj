@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EF186922-5DE2-41CB-9E0A-EBD53EB3561E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CustomCommands</RootNamespace>
+    <AssemblyName>CustomCommands</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Commands\Check\Ban.cs" />
+    <Compile Include="Commands\Check\CheckParent.cs" />
+    <Compile Include="Commands\Check\Mute.cs" />
+    <Compile Include="Commands\Misc\rmute.cs" />
+    <Compile Include="Commands\Player\Drop.cs" />
+    <Compile Include="Commands\Player\Explode.cs" />
+    <Compile Include="Commands\Player\Hint.cs" />
+    <Compile Include="Commands\Player\PlayerParent.cs" />
+    <Compile Include="Commands\Player\Pocket.cs" />
+    <Compile Include="Commands\Player\SendTo.cs" />
+    <Compile Include="Commands\Player\Size.cs" />
+    <Compile Include="Commands\Player\Tower2.cs" />
+    <Compile Include="Commands\Player\TP.cs" />
+    <Compile Include="Commands\Player\Trip.cs" />
+    <Compile Include="Commands\Spawn\Ball.cs" />
+    <Compile Include="Commands\Spawn\Flashbang.cs" />
+    <Compile Include="Commands\Spawn\Grenade.cs" />
+    <Compile Include="Commands\Spawn\SpawnParent.cs" />
+    <Compile Include="Commands\Renaming\MassRename.cs" />
+    <Compile Include="Commands\Renaming\MassUnname.cs" />
+    <Compile Include="CustomCommandsConfig.cs" />
+    <Compile Include="CustomCommandsPluginCore.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RedRightHandCore\RedRightHandCore.csproj">
+      <Project>{751bb329-b71b-4f52-881b-4eef5deb8612}</Project>
+      <Name>RedRightHandCore</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

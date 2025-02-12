@@ -3,24 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34707.107
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedRightHandMaster", "RedRightHandMaster\RedRightHandMaster.csproj", "{08469BD2-B011-4ED1-83BD-CE875DE8704A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedRightHandCore", "RedRightHandCore\RedRightHandCore.csproj", "{751BB329-B71B-4F52-881B-4EEF5DEB8612}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{6F27A3F0-3850-45CE-B586-40B508227B66}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Choas", "RHH_modules\Choas\Choas.csproj", "{22222338-42AB-436C-A2C9-8DBEB9FB5843}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordLink", "RHH_modules\DiscordLink\DiscordLink.csproj", "{EBE96E6E-0CBC-41E7-AB76-8590D1D6D45E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FriendlyFireDetector", "RHH_modules\FriendlyFireDetector\FriendlyFireDetector.csproj", "{CFEEBEB1-8CE6-4527-B2F0-5234B11ABF05}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shenanigans", "RHH_modules\Shenanigans\Shenanigans.csproj", "{EF186922-5DE2-41CB-9E0A-EBD53EB3561E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8F34F9B7-95FD-443A-AA70-16B33F0591C2}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Choas", "Choas\Choas.csproj", "{22222338-42AB-436C-A2C9-8DBEB9FB5843}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordLink", "DiscordLink\DiscordLink.csproj", "{EBE96E6E-0CBC-41E7-AB76-8590D1D6D45E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FriendlyFireDetector", "FriendlyFireDetector\FriendlyFireDetector.csproj", "{CFEEBEB1-8CE6-4527-B2F0-5234B11ABF05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomCommands", "Shenanigans\CustomCommands.csproj", "{EF186922-5DE2-41CB-9E0A-EBD53EB3561E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,10 +24,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{08469BD2-B011-4ED1-83BD-CE875DE8704A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{08469BD2-B011-4ED1-83BD-CE875DE8704A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{08469BD2-B011-4ED1-83BD-CE875DE8704A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{08469BD2-B011-4ED1-83BD-CE875DE8704A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{751BB329-B71B-4F52-881B-4EEF5DEB8612}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{751BB329-B71B-4F52-881B-4EEF5DEB8612}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{751BB329-B71B-4F52-881B-4EEF5DEB8612}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -55,12 +47,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{22222338-42AB-436C-A2C9-8DBEB9FB5843} = {6F27A3F0-3850-45CE-B586-40B508227B66}
-		{EBE96E6E-0CBC-41E7-AB76-8590D1D6D45E} = {6F27A3F0-3850-45CE-B586-40B508227B66}
-		{CFEEBEB1-8CE6-4527-B2F0-5234B11ABF05} = {6F27A3F0-3850-45CE-B586-40B508227B66}
-		{EF186922-5DE2-41CB-9E0A-EBD53EB3561E} = {6F27A3F0-3850-45CE-B586-40B508227B66}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {488D4727-90AC-4400-9CCC-B88E103D145E}
